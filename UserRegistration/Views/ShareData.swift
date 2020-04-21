@@ -91,43 +91,6 @@ class ShareData:ObservableObject{
         //        self.getAllUsers()
     }
     
-    func getFavoriteUsers(){
-
-            db.collection("FavoriteTable").document(self.currentUserData["id"] as! String).collection("FavoriteUser")
-    //            .whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String)
-                .addSnapshotListener { (snap, err) in
-
-                    guard let snapshot = snap else {
-                        print("Error fetching snapshots: \(err!)")
-                        return
-                    }
-                    snapshot.documentChanges.forEach { diff in
-                        if (diff.type == .added) {
-                            self.favoriteUserIds.append(diff.document.data()["FavoriteUserId"] as! String)
-                        }
-    //                    if (diff.type == .modified) {
-    //                        print("Modified city: \(diff.document.data())")
-    //                    }
-                        if (diff.type == .removed) {
-                            for userId in self.favoriteUserIds{
-                                if userId == diff.document.data()["FavoriteUserId"] as! String{
-                                    if let index = self.favoriteUserIds.firstIndex(of: userId) {
-                                        self.favoriteUserIds.remove(at: index)
-                                    }
-                                }
-                            }
-                    }
-    //            if err != nil{
-    //                print(err?.localizedDescription ?? "エラー: getFavoriteUsers1")
-    //                return
-    //            }
-    //            for user in snap!.documents{
-    ////              print(user.documentID) documentID = user.IDだ
-    //                self.favoriteUserIds.append(user.documentID)
-    //            }
-             }
-        }
-        }
     
     
     

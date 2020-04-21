@@ -11,6 +11,8 @@
 import SwiftUI
 import FirebaseFirestore
 
+//このページをfavoriteに移植したい
+
 struct UserWindowView: View {
     var userId:String 
     @State var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
@@ -30,18 +32,25 @@ struct UserWindowView: View {
     }
     
     var body: some View {
-            VStack{
+//        NavigationView{
+            
+            VStack{ //このview自体が一つのセクションなのでnavilinkはうまく効かない
+//                NavigationLink(destination: UserProfileView(user: displayedUser)){
                 FirebaseImageView(imageURL: self.displayedUser.photoURL)
                 HStack{
                     Text(self.displayedUser.name)
                     Text(self.displayedUser.hometown)
                 }
+//            }
+            
             }
+        .buttonStyle(PlainButtonStyle())
+//        }
         .onAppear{
         self.getUserInfo()
         }
-    }
-}
+    } //body
+} //全体
 
 //struct UserWindowView_Previews: PreviewProvider {
 //    static var previews: some View {
