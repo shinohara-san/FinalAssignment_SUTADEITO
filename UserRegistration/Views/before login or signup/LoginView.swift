@@ -4,11 +4,9 @@
 //
 //  Created by Yuki Shinohara on 2020/04/16.
 //  Copyright © 2020 Yuki Shinohara. All rights reserved.
-//shino@aaa.com
-//　1234shino
+
 
 import SwiftUI
-import FirebaseFirestore
 
 struct LoginView: View {
     @State var email = ""

@@ -7,10 +7,9 @@
 //
 
 import SwiftUI
-import FirebaseStorage
 
 struct SettingView: View {
-    var datas: FirebaseData
+    var datas: FirebaseData //firebaseの処理とか
     @EnvironmentObject var shareData: ShareData
 
     var body: some View {
@@ -71,20 +70,16 @@ struct SettingView: View {
                 }
                 
                 Button("ログアウト"){
-  //                print(self.datas.session?.uid)
-//                    print(self.shareData.currentUserData["photoURL"] as? String ?? "") //urlはある
+                    
                    self.datas.logOut()
                    self.shareData.currentUserData = [String : Any]()
                    print("ログアウトしました")
                }
             }
-            
-           
-            
+
         }
-//    .onAppear(perform: loadImageFromFirebase)
             .onAppear{
-                self.shareData.loadImageFromFirebase()
+                self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")
         }
         .navigationBarTitle("")
         .navigationBarHidden(true)

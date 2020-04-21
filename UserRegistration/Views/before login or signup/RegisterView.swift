@@ -15,8 +15,8 @@ struct RegisterView: View {
     @State var name = ""
     let genders = ["女性", "男性"]
     @State var selectedGender = 0
-    var ages = [Int]()
-    @State var age:Double = 25
+    @State var ages = ["20代", "30代", "40代"] //foreachで中身を作りたい
+    @State var selectedAge = 0
     let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
     "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
     "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
@@ -67,9 +67,14 @@ struct RegisterView: View {
                                 }
                         }.pickerStyle(SegmentedPickerStyle()).padding(.horizontal)
                         
-                        Text("年齢: \(self.age, specifier: "%g")歳")
+                        Picker(selection: $selectedAge, label: Text("年齢")
+                            .font(.title)
+                            .padding(.leading)) {
+                                ForEach(0..<ages.count){ index in
+                                    Text(self.ages[index]).tag(index)
+                                }
+                        }
                         
-                        Slider(value: $age, in: 18...45, step: 1.0).padding(.horizontal)
 
                         Picker(selection: $selectedHometown, label: Text("居住地")
                             .font(.title)
@@ -91,7 +96,6 @@ struct RegisterView: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .padding()
                     }
-
                     //               Form { navigationviewとformで別ページでの設定できるはずなんだが
                     Section{
                         Picker(selection: $selectedPersonality, label: Text("性格")
@@ -119,10 +123,13 @@ struct RegisterView: View {
                         }
                     }
                     
-                    NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: Int(self.age), gender: self.genders[selectedGender], hometown: self.hometowns[selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.studystyle, hobby: self.hobby, personality: self.personalities[selectedPersonality], job: self.jobs[selectedWork], purpose: self.purposes[selectedPurpose])){
+                    NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.ages[selectedAge], gender: self.genders[selectedGender], hometown: self.hometowns[selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.studystyle, hobby: self.hobby, personality: self.personalities[selectedPersonality], job: self.jobs[selectedWork], purpose: self.purposes[selectedPurpose])){
                           Text("写真を追加")
                     }
                 }
+            }
+            .onAppear{
+                
             }
             .navigationBarTitle("")
             .navigationBarHidden(true)

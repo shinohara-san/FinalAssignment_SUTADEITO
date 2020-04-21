@@ -7,14 +7,12 @@
 //
 
 import SwiftUI
-import FirebaseStorage
-import FirebaseAuth
-//
+
 struct PictureUploadView: View {
     @State var email:String
     var password:String
     var name:String
-    var age:Int
+    var age:String
     var gender:String
     var hometown:String
     var subject:String
@@ -28,19 +26,7 @@ struct PictureUploadView: View {
     @State var imageURL = ""
     @State var shown = false
     @ObservedObject private var datas = firebaseData
-    
-    func loadImageFromFirebase(){
-        let storage = Storage.storage().reference(withPath: "images/pictureOf_\(email)")
-        storage.downloadURL { (url, error) in
-            if error != nil {
-                print((error?.localizedDescription)!)
-                print("Error: loadImageFromFirebase")
-                return
-            }
-            print("Download success")
-            self.imageURL = "\(url!)"
-        }
-    }
+    @EnvironmentObject var shareData: ShareData
     
     var body: some View {
         

@@ -8,13 +8,13 @@
 
 import Foundation
 
-struct User: Identifiable{
+struct User: Identifiable, Equatable, Hashable{
     let id: String
     let email: String
 //    var password: String
     let name: String
     let gender: String
-    let age: Int
+    let age: String
     let hometown: String
     let subject: String
     let introduction: String

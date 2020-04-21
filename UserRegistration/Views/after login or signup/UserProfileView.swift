@@ -16,7 +16,7 @@ struct UserProfileView: View {
     
     func giveUserLike(){
         db.collection("LikeTable").document(self.shareData.currentUserData["id"] as! String).setData([
-        "id" : dbCollection.document().documentID,
+            "id" : db.collection("Users").document().documentID,
         "LikeUserId": user.id])
          print("いいね: \(self.user.id)")
     }
@@ -102,7 +102,16 @@ struct UserProfileView: View {
                 self.giveUserLike()
             }
             
-        }.onAppear(perform: checkFavoriteTable)
+        }
+        .onAppear{
+            self.checkFavoriteTable()
+            print("プロフィールに来る")
+            }
+        .onDisappear{
+            print("プロフィールを去る")
+        }
+        .navigationBarTitle("")
+        .navigationBarHidden(false)
     }
 }
 

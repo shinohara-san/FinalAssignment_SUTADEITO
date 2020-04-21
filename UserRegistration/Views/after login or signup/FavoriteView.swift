@@ -4,76 +4,41 @@
 //
 //  Created by Yuki Shinohara on 2020/04/17.
 //  Copyright © 2020 Yuki Shinohara. All rights reserved.
-//  一回来てデータなくて戻ったらデータある
+
 import SwiftUI
 import FirebaseFirestore
 
 struct FavoriteView: View {
-    
-    let db = Firestore.firestore()
+    @State var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     @EnvironmentObject var shareData: ShareData
-    
-    @State var favoriteUserIds = [String]()
-    
-    func getFavoriteUsers(){
+    let db = Firestore.firestore()
+    func getUserInfo(favoriteUserId: String){
+        db.collection("Users").whereField("id", isEqualTo: favoriteUserId).getDocuments { (snap, err) in
+            if let err = err {
+                print(err.localizedDescription)
+                return
+            } else {
+                for user in snap!.documents{
+                    self.displayedUser = User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String)
+                }
+            }
+        }
         
-        db.collection("FavoriteTable").document(self.shareData.currentUserData["id"] as! String).collection("FavoriteUser")
-//            .whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String)
-            .addSnapshotListener { (snap, err) in
-                
-                guard let snapshot = snap else {
-                    print("Error fetching snapshots: \(err!)")
-                    return
-                }
-                snapshot.documentChanges.forEach { diff in
-                    if (diff.type == .added) {
-//                        print("New favorite:  \(diff.document.data()["FavoriteUserId"] ?? "")")
-                        self.favoriteUserIds.append(diff.document.data()["FavoriteUserId"] as! String)
-                    }
-//                    if (diff.type == .modified) {
-//                        print("Modified city: \(diff.document.data())")
-//                    }
-                    if (diff.type == .removed) {
-//                        print("Removed favorite: \(diff.document.data()["FavoriteUserId"] ?? "")")
-                        for userId in self.favoriteUserIds{
-                            if userId == diff.document.data()["FavoriteUserId"] as! String{
-                                if let index = self.favoriteUserIds.firstIndex(of: userId) {
-                                    self.favoriteUserIds.remove(at: index)
-                                }
-                            }
-                        }
-                }
-//            if err != nil{
-//                print(err?.localizedDescription ?? "エラー: getFavoriteUsers1")
-//                return
-//            }
-//            for user in snap!.documents{
-////              print(user.documentID) documentID = user.IDだ
-//                self.favoriteUserIds.append(user.documentID)
-//            }
-         }
-    }
-    }
-    func emptyFavoriteUsers(){
-        self.favoriteUserIds = [String]()
     }
     
     var body: some View {
-        VStack{
-            ForEach(self.favoriteUserIds, id: \.self) { favoriteUserId in
-                UserWindowView(userId: favoriteUserId)
-//                Text(favoriteUserId)
+            VStack{
+                Text("favorite view")
             }
-        }
+
         .navigationBarTitle("")
         .navigationBarHidden(true)
         .onAppear{
-            self.getFavoriteUsers()
-                
+            self.shareData.getFavoriteUsers()
         }
-//        .onDisappear{
-//            self.emptyFavoriteUsers()
-//        }
+        .onDisappear{
+            self.shareData.favoriteUserIds = []
+        }
     }
 }
 
