@@ -16,47 +16,72 @@ struct MainView: View {
     
     @EnvironmentObject var shareData: ShareData
     
-    @State var selection = 0
+    @State var selection = 0 //必要?
+    
+    @State var userProfileOn = false
+    
+    @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     var body: some View {
         
         TabView(selection: $selection) {
-//            ListView(datas: self.datas)
-//                NavigationView{
-                        ScrollView{
-                            VStack{
-                                ForEach(self.shareData.allUsers){ user in
-
-                                    NavigationLink(destination: UserProfileView(user: user)) {
-                                        FirebaseImageView(imageURL: user.photoURL)
-                                        HStack{
-                                            Text("\(user.gender)") //テスト
-                                            Text(user.age)
-                                            Text(user.hometown)
-                                        }
-                                        Text(user.introduction)
-//
-                                } //navigationlink
-                                .buttonStyle(PlainButtonStyle())
+            //            ListView(datas: self.datas)
+            //                NavigationView{
+            Group{
+                if !userProfileOn{
+                    ScrollView{
+                        VStack{
+                            ForEach(self.shareData.allUsers){ user in
+                                
+//                                NavigationLink(destination: UserProfileView(user: user)) {
+                                VStack{
+                                    FirebaseImageView(imageURL: user.photoURL)
+                                    HStack{
+                                        Text("\(user.gender)") //テスト
+                                        Text(user.age)
+                                        Text(user.hometown)
+                                    }
+                                    Text(user.introduction)
+                                    //
+                                }
+                                .onTapGesture {
+                                    self.userInfo = user
+                                    self.userProfileOn = true
+                                }
+//                                } //navigationlink
+//                                    .buttonStyle(PlainButtonStyle())
+                                
                             } //foreach
-                            
+                            .buttonStyle(PlainButtonStyle())
+                                
                         }//Vstack
+                        
                             
                             .onAppear{
                                 DispatchQueue.global().sync {
                                     self.shareData.getCurrentUser() //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
                                     print("リストビュー")
                                 }
-                                            }
-                        .onDisappear(){
-//                            self.allUsers = [User]()
                         }
+                        .onDisappear(){
+//                            self.shareData.allUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+                        }
+                        
+                    }//Scrollview
+                } else {
+                    VStack{
+                        UserProfileView(user: userInfo)
+                        Button("戻る"){
+                            self.userProfileOn = false
+                        }
+                    }
                     
-                }//Scrollview
-//             }//navigation
-            
-            .navigationBarTitle("")
-            .navigationBarHidden(false)
-            .tabItem {
+                }
+                
+            }//Profile
+                
+                .navigationBarTitle("")
+                .navigationBarHidden(false)
+                .tabItem {
                     VStack {
                         Image(systemName: "book")
                     }
@@ -67,12 +92,74 @@ struct MainView: View {
                         Image(systemName: "magnifyingglass")
                     }
             }.tag(2)
-             FavoriteView()
+            
+            ScrollView{
+                VStack{
+                    ForEach(self.shareData.favoriteUsers){ user in
+                        VStack{
+                              FirebaseImageView(imageURL: user.photoURL)
+                            Text(user.name)
+                            Text(user.gender)
+                            Text(user.age)
+                        }
+                    }
+               }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+            .onAppear{
+//                DispatchQueue.global().sync {
+                self.shareData.getAllFavoriteUsers()
+//                }
+            }
+            .onDisappear{
+                self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+            }
                 
-            .tabItem {
-                VStack {
-                    Image(systemName: "star")
-                }
+            } //scroll
+                
+//                ScrollView{
+//                                        VStack{
+//                                            ForEach(self.shareData.allUsers){ user in
+//
+//                //                                NavigationLink(destination: UserProfileView(user: user)) {
+//                                                VStack{
+//                                                    FirebaseImageView(imageURL: user.photoURL)
+//                                                    HStack{
+//                                                        Text("\(user.gender)") //テスト
+//                                                        Text(user.age)
+//                                                        Text(user.hometown)
+//                                                    }
+//                                                    Text(user.introduction)
+//                                                    //
+//                                                }
+//                                                .onTapGesture {
+//                                                    self.userInfo = user
+//                                                    self.userProfileOn = true
+//                                                }
+//                //                                } //navigationlink
+//                //                                    .buttonStyle(PlainButtonStyle())
+//
+//                                            } //foreach
+//                                            .buttonStyle(PlainButtonStyle())
+//
+//                                        }//Vstack
+//
+//
+//                                            .onAppear{
+//                                                DispatchQueue.global().sync {
+//                                                    self.shareData.getCurrentUser() //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
+//                                                    print("リストビュー")
+//                                                }
+//                                        }
+//                                        .onDisappear(){
+//                                            //                            self.allUsers = [User]()
+//                                        }
+//
+//                                    }//Scrollview
+                .tabItem {
+                    VStack {
+                        Image(systemName: "star")
+                    }
             }
             .tag(3)
             
@@ -88,10 +175,10 @@ struct MainView: View {
                         Image(systemName: "ellipsis")
                     }
             }.tag(5)
-            }.onAppear{
+        }.onAppear{
             print("メインビュー")
         }
-
+            
         .navigationBarTitle("")
         .navigationBarHidden(true)
         

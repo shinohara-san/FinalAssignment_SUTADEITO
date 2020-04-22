@@ -10,6 +10,7 @@
 		93C478EE80D5C5EC98BD90D8 /* Pods_UserRegistration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB47C0617E06AA2F429B756F /* Pods_UserRegistration.framework */; };
 		950D031C244D8FCE00E9F245 /* UserWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 950D031B244D8FCE00E9F245 /* UserWindowView.swift */; };
 		951FDBDA244EB3770094C9BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 951FDBD9244EB3770094C9BC /* GoogleService-Info.plist */; };
+		951FDBDC244FA7750094C9BC /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 951FDBDB244FA7750094C9BC /* ProfileEditView.swift */; };
 		952138E9244D0D600090F943 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952138E8244D0D600090F943 /* UserProfileView.swift */; };
 		953B24E124484C66007BD077 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953B24E024484C66007BD077 /* MainView.swift */; };
 		953B24EC244919EB007BD077 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953B24EB244919EB007BD077 /* SearchView.swift */; };
@@ -36,6 +37,7 @@
 /* Begin PBXFileReference section */
 		950D031B244D8FCE00E9F245 /* UserWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWindowView.swift; sourceTree = "<group>"; };
 		951FDBD9244EB3770094C9BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		951FDBDB244FA7750094C9BC /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		952138E8244D0D600090F943 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		953B24E024484C66007BD077 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		953B24EB244919EB007BD077 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				950D031B244D8FCE00E9F245 /* UserWindowView.swift */,
 				953B24EF24491A14007BD077 /* MatchView.swift */,
 				953B24F3244921D2007BD077 /* SettingView.swift */,
+				951FDBDB244FA7750094C9BC /* ProfileEditView.swift */,
 				952138E8244D0D600090F943 /* UserProfileView.swift */,
 			);
 			path = "after login or signup";
@@ -300,6 +303,7 @@
 			files = (
 				95CDFABD2446BDC30054FADF /* Firebase.swift in Sources */,
 				95DA4B63244A83B4009921D4 /* FirebaseImageView.swift in Sources */,
+				951FDBDC244FA7750094C9BC /* ProfileEditView.swift in Sources */,
 				953B24E124484C66007BD077 /* MainView.swift in Sources */,
 				953B24EE244919FE007BD077 /* FavoriteView.swift in Sources */,
 				950D031C244D8FCE00E9F245 /* UserWindowView.swift in Sources */,

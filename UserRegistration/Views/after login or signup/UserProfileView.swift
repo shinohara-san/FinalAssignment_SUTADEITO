@@ -43,25 +43,6 @@ struct UserProfileView: View {
             }
         }
 
-//        db.collection("FavoriteTable").whereField("FavoriteUserId", isEqualTo: user.id)
-//       .addSnapshotListener { querySnapshot, error in
-//           guard let snapshot = querySnapshot else {
-//               print("Error fetching snapshots: \(error!)")
-//               return
-//           }
-//           snapshot.documentChanges.forEach { diff in
-//               if (diff.type == .added) {
-//                   print("New city: \(diff.document.data())")
-//               }
-//               if (diff.type == .modified) {
-//                   print("Modified city: \(diff.document.data())")
-//               }
-//               if (diff.type == .removed) {
-//                   print("Removed city: \(diff.document.data())")
-//               }
-//           }
-//       }
-//        print("お気にいりから削除: \(self.user.name)")
     }
     
     @State var isFavorite = false
@@ -74,7 +55,7 @@ struct UserProfileView: View {
 //                print(document?.data())
                 self.isFavorite = true
             } else {
-                //反応なし -> つまりnilはない
+                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
                 self.isFavorite = false
             }
         }
@@ -105,10 +86,10 @@ struct UserProfileView: View {
         }
         .onAppear{
             self.checkFavoriteTable()
-            print("プロフィールに来る")
+//            print("プロフィールに来た")
             }
         .onDisappear{
-            print("プロフィールを去る")
+//            print("プロフィールを去った")
         }
         .navigationBarTitle("")
         .navigationBarHidden(false)
