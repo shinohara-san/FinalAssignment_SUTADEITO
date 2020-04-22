@@ -9,6 +9,7 @@
 import Foundation
 import FirebaseStorage
 import FirebaseFirestore
+import FirebaseAuth
 
 class ShareData:ObservableObject{
     
@@ -20,7 +21,7 @@ class ShareData:ObservableObject{
     @Published var allUsers : [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")] //ScrollViewには最初に配列に初期値を設定する必要あり
     @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
-    @Published var favoriteUserIds = [String]()
+//    @Published var favoriteUserIds = [String]()
     
     @Published var favoriteUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
     
@@ -116,5 +117,47 @@ class ShareData:ObservableObject{
             self.favoriteUsers.remove(at: 0)
         }
     }
+    
+    //    Auth
+        func deleteAccount(){
+            let user = Auth.auth().currentUser
+
+            user?.delete { error in
+              if let error = error {
+                // An error happened.
+                print("退会エラー")
+                print(error)
+              } else {
+                // Account deleted.
+                print("退会しました")
+              }
+            }
+        }
+    //     Firestore
+        func deleteUserData(){
+            dbCollection.whereField("id", isEqualTo: self.currentUserData["id"] ?? "").getDocuments { (snap, err) in
+                if err != nil {
+                    return
+                }
+                if let snap = snap {
+                    for user in snap.documents {
+//                        print(user.data()["name"] ?? "")
+                        user.reference.delete()
+                        
+                    }
+                }
+            }
+        }
+    let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
+    "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
+    "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
+    "静岡県","愛知県","三重県","滋賀県","京都府","大阪府","兵庫県",
+    "奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県",
+    "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
+    "熊本県","大分県","宮崎県","鹿児島県","沖縄県"]
+    let jobs = ["会社員", "教師", "医者", "公務員","フリーター", "学生", "その他"]
+    let personalities = ["おっとり", "社交的", "元気", "物静か", "その他"]
+    let purposes  = ["勉強", "出会い", "婚活", "その他"]
+    
     
 }

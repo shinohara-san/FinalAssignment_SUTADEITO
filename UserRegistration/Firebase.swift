@@ -51,7 +51,7 @@ class FirebaseData: ObservableObject{
                 "work": work,
                 "purpose": purpose,
 //                "uid": Auth.auth().currentUser?.uid ?? ""
-                "photoURL": photoURL
+                "photoURL": photoURL,
                 
             ]) { (err) in
                 if err != nil {
@@ -76,6 +76,7 @@ class FirebaseData: ObservableObject{
                 self.session = nil
 
         }
+    
 }
 
     
