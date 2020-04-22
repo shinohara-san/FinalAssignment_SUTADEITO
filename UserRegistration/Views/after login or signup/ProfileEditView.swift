@@ -11,6 +11,7 @@ import SwiftUI
 struct ProfileEditView: View {
     @EnvironmentObject var shareData: ShareData
     
+    
     @State var name:String = ""
     @State var subject:String = ""
     @State var hometown:String = ""
@@ -21,14 +22,19 @@ struct ProfileEditView: View {
     @State var work:String = ""
     @State var purpose = ""
     
-    @State var selectedHometown = 12 //ユーザーの居住地に合わせておきたい
+    @State var selectedHometown = 12
     @State var selectedWork = 0
     @State var selectedPersonality = 0
     @State var selectedPurpose = 0
+    var datas: FirebaseData
+//    func getUser() {
+//        datas.listen()
+//    }
     
     var body: some View {
-        ScrollView{
+        
             VStack{
+                ScrollView{
                 TextField("名前", text: $name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 TextField("勉強中のもの", text: $subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 Picker(selection: $selectedHometown, label: Text("居住地")
@@ -63,10 +69,35 @@ struct ProfileEditView: View {
                             Text(self.shareData.purposes[index]).tag(index)
                         }
                 }
-     
-            }
-        }
-        .onAppear {
+                
+                Section{
+                    Button("戻る"){
+                        self.shareData.editOn = false
+                    }
+                    
+                    Button("保存する"){
+                        self.shareData.saveEditInfo(name: self.name, subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.work, purpose: self.shareData.purposes[self.selectedPurpose])
+                        self.shareData.getCurrentUser() //編集後のログインしているユーザーのデータを入れ直す
+                        self.shareData.editOn = false
+                    }
+                    
+                    Button(action: {
+                        //アラート出したいなー
+                        self.shareData.deleteAccount() //Auth削除 内部でstorage/firestoreも
+                        
+                        
+                        self.shareData.currentUserData = [String : Any]()
+                        self.datas.session = nil
+                        
+                    }){
+                        Text("退会する")
+                    }
+                }
+                
+            }//scroll view
+
+        } //vstack
+            .onAppear {
             // ここで初期値を代入
             self.name = self.shareData.currentUserData["name"] as! String
             self.subject = self.shareData.currentUserData["subject"] as! String
@@ -78,6 +109,10 @@ struct ProfileEditView: View {
             self.work = self.shareData.currentUserData["work"] as! String
             self.purpose = self.shareData.currentUserData["purpose"] as! String
             self.getIndex()
+//            self.shareData.deleteUserPicture() //テスト 消えた！
+        }
+        .onDisappear{
+            self.shareData.editOn = false
         }
     }
     func getIndex() {
@@ -94,7 +129,6 @@ struct ProfileEditView: View {
 //            print(selectedHometown)
         }
     }
-    
     
 }
 

@@ -96,7 +96,12 @@ class ShareData:ObservableObject{
     }
     
     func getAllFavoriteUsers(){
-        db.collection("FavoriteTable").document(self.currentUserData["id"] as! String).collection("FavoriteUser").getDocuments { (snap, err) in
+        db.collection("FavoriteTable").document(self.currentUserData["id"] as? String ?? "").collection("FavoriteUser").getDocuments { (snap, err) in
+            if let err = err{
+                print(err.localizedDescription)
+                return
+            }
+            
             if let snap = snap {
                 for user1 in snap.documents {
 //                    print(user.data()["FavoriteUserId"] as? String ?? "")
@@ -127,9 +132,12 @@ class ShareData:ObservableObject{
                 // An error happened.
                 print("退会エラー")
                 print(error)
+                return
               } else {
                 // Account deleted.
-                print("退会しました")
+                print("Auth削除！")
+                self.deleteUserData()
+                self.deleteUserPicture()
               }
             }
         }
@@ -143,11 +151,29 @@ class ShareData:ObservableObject{
                     for user in snap.documents {
 //                        print(user.data()["name"] ?? "")
                         user.reference.delete()
-                        
+                        print("firestore削除！")
                     }
                 }
             }
         }
+    //storage
+    func deleteUserPicture(){
+//        print(self.currentUserData["email"] ?? "")
+        let storageRef = Storage.storage().reference()
+
+        // Delete the file
+        storageRef.child("images/pictureOf_\(self.currentUserData["email"] ?? "")").delete { error in
+            if error != nil {
+            // Uh-oh, an error occurred!
+                print(error?.localizedDescription ?? "エラー@deleteUserPictuire")
+                return
+          } else {
+            // File deleted successfully
+                print("storage削除！")
+          }
+        }
+    }
+    
     let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
     "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
     "新潟県","富山県","石川県","福井県","山梨県","長野県","岐阜県",
@@ -160,4 +186,36 @@ class ShareData:ObservableObject{
     let purposes  = ["勉強", "出会い", "婚活", "その他"]
     
     
+    func saveEditInfo(name: String, subject: String, hometown: String, hobby: String, introduction: String, personality: String, studystyle:String, work:String,purpose:String){
+        db.collection("Users").whereField("id", isEqualTo: self.currentUserData["id"] ?? "").getDocuments { (snap, err) in
+            if let err = err {
+                // Some error occured
+                print(err.localizedDescription)
+                return
+            } else if snap!.documents.count != 1 {
+                // Perhaps this is an error for you?
+                print(err?.localizedDescription ?? "")
+                return
+            } else {
+                let document = snap!.documents.first
+                document?.reference.updateData([
+                    "name": name,
+                    "subject": subject,
+                    "hometown": hometown,
+                    "hobby" : hobby,
+                    "introduction" : introduction,
+                    "personality" : personality,
+                    "studystyle" : studystyle,
+                    "work" : work,
+                    "purpose" : purpose
+
+                ])
+                print("編集しました。")
+            }
+        }
+        
+    }
+    
+    
+    @Published var editOn = false
 }

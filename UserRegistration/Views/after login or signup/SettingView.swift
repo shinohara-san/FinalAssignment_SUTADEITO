@@ -9,13 +9,11 @@
 import SwiftUI
 
 struct SettingView: View {
-    @State var editOn = false
+    
     var datas: FirebaseData //firebaseの処理とか
     @EnvironmentObject var shareData: ShareData
     
-    func getUser() {
-        datas.listen()
-    }
+    
     
     var body: some View {
         
@@ -23,7 +21,7 @@ struct SettingView: View {
         if datas.session != nil {
         VStack {
             Group{
-                if !editOn{
+                if !self.shareData.editOn{
                     FirebaseImageView(imageURL: self.shareData.imageURL)
                     ProfileUserDetailView(
                         name: String(describing: self.shareData.currentUserData["name"] ?? ""),
@@ -38,6 +36,12 @@ struct SettingView: View {
                         work: String(describing: self.shareData.currentUserData["work"] ?? ""),
                         purpose: String(describing: self.shareData.currentUserData["purpose"] ?? ""))
                     
+                        Button(action: {
+                            self.shareData.editOn = true
+                        }) {
+                            Text("編集する")
+                        }
+                    
                         Button("ログアウト"){
                             
                             self.datas.logOut()
@@ -47,28 +51,13 @@ struct SettingView: View {
                     
                     
                 } else {
-                    ProfileEditView()
+                    ProfileEditView(datas: self.datas)
                 }
             }//Group
             
-            Button(action: {
-                self.editOn.toggle()
-            }) {
-                Text(editOn ? "保存する" : "編集する")
-            }
             
-            Button(action: {
-                //アラート出したいなー
-                self.shareData.deleteAccount() //Auth削除
-                self.shareData.deleteUserData() //Firestore削除
-                
-                self.shareData.currentUserData = [String : Any]()
-                self.datas.listen()
-                //Storageにおいてある写真の削除も忘れずに
-                
-            }){
-                Text("退会する")
-            }
+            
+            
             
             
         }//VStack
@@ -79,7 +68,7 @@ struct SettingView: View {
         .navigationBarHidden(true)
         } else {
             TopPageView()
-            }
+        }
             
         }
            

@@ -34,6 +34,8 @@ struct PictureUploadView: View {
                     if datas.session != nil {
                         MainView(datas: self.datas)
                         .navigationBarBackButtonHidden(true)
+//                        .navigationBarTitle("")
+//                        .navigationBarHidden(true)
         //                , userData: self.datas.session
                         
                     } else {
