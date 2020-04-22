@@ -15,10 +15,36 @@ struct UserProfileView: View {
     @EnvironmentObject var shareData: ShareData
     
     func giveUserLike(){
-        db.collection("LikeTable").document(self.shareData.currentUserData["id"] as! String).setData([
+        db.collection("LikeTable").document(self.shareData.currentUserData["id"] as! String).collection("LikeUser").document(user.id).setData([
             "id" : db.collection("Users").document().documentID,
             "LikeUserId": user.id])
-        print("いいね: \(self.user.id)")
+        //LikeUserコレクションがないと複数保存できない
+        print("いいねに追加: \(self.user.name)")
+        //お気に入りから削除
+        //一覧から削除
+        //特設一覧ページ。プロフィールからお気に入りの項目削除
+        self.checkUserLike()
+    }
+    
+    func checkUserLike(){ db.collection("LikeTable").document(user.id).collection("LikeUser").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
+        if let err = err{
+            print(err.localizedDescription)
+            return
+        }
+        
+        if let snap = snap{
+            for i in snap.documents{
+                print("マッチ！")
+                return
+            }
+        }
+            
+        }
+
+//        いいねを押す(自分のliketableにその相手ユーザーが追加される)
+//          相手idでLiketableに検索かける(giveUserLikeの後にメソッド発動)
+//        一覧をfor文
+//        自分があったprint
     }
     
     func addUserToFavorite(){

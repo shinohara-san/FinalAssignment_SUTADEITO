@@ -11,20 +11,7 @@ import SwiftUI
 struct MatchView: View {
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                ForEach(0..<10) {
-                    Text("Item \($0)")
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .frame(width: 200, height: 200)
-                        .background(Color.red)
-                } //foreach
-            } //vstack
-        } //scroll
-        .onAppear{
-            print("スクロールビュー")
-        }
+        Text("マッチここ")
     } //body
 } //struct
 

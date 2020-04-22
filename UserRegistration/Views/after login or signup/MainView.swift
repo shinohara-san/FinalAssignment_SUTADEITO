@@ -144,6 +144,8 @@ struct MainView: View {
                         Button("戻る"){
                             self.favoriteProfileOn = false
                         }
+                    }.onDisappear{
+                        self.favoriteProfileOn = false
                     }
                     
                 }
