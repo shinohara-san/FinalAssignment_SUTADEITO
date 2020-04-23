@@ -252,5 +252,21 @@ class ShareData:ObservableObject{
     
     @Published var editOn = false
     
+    @Published var matchUserArray = [User]()
     
+    func getAllMatchUser(){
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+            if let err = err{
+                print(err.localizedDescription)
+                return
+            }
+            if let snap = snap{
+                            for matchData in snap.documents{
+                                print(matchData.data())
+                //                self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String))
+                            }
+            }
+
+        }
+    }
 }

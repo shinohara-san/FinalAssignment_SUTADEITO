@@ -30,6 +30,8 @@ struct MainView: View {
     
     @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
+    @State var messageOn = false
+    
     var body: some View {
         
         TabView(selection: $selection) {
@@ -94,9 +96,6 @@ struct MainView: View {
                     }
             }.tag(1)
             
-            
-            
-            
             ////                    検索ページ
             SearchView()
                 .tabItem {
@@ -104,8 +103,6 @@ struct MainView: View {
                         Image(systemName: "magnifyingglass")
                     }
             }.tag(2)
-            
-            
             
             
             ////                    お気に入りユーザーのページ
@@ -223,7 +220,31 @@ struct MainView: View {
             
             
             ////                   マッチングページ
-            MatchView()
+            Group{
+                
+                if !messageOn{
+                    VStack{
+                        ForEach(self.shareData.matchUserArray){ user in
+                            Text(user.name)
+                        }
+                        Button("ボタン"){
+                            self.messageOn.toggle()
+                        }
+                    Text("マッチ一覧")
+                    }
+//                    ユーザーをタップしたらそのuser情報をメッセージ一覧にパス、msgOnをtrueにする
+                } else {
+                    VStack{
+                        Button("戻る"){
+                            self.messageOn.toggle()
+                        }
+                        Text("メッセージ画面")
+                    }
+                    
+                }
+            }.onAppear{
+                self.shareData.getAllMatchUser()
+            }
                 .tabItem {
                     VStack {
                         Image(systemName: "suit.heart")

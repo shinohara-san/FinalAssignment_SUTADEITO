@@ -12,29 +12,16 @@ import FirebaseFirestore
 struct MatchView: View {
     @EnvironmentObject var shareData: ShareData
     
-    let db = Firestore.firestore().collection("LikeTable")
-    
-    func getAllLikeGivenUser(){
-        print("いいいい")
-        db.document("nqIuqrFw8ww1F4FiQUrL").collection("LikeUser").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as? String ?? "").getDocuments { (snap, err) in
-            if let err = err{
-                print(err.localizedDescription)
-                return
-            }
-            if let snap = snap{
-                for i in snap.documents{
-                    print(i.data()["MyUserId"] ?? "")
-                }
+    var body: some View {
+        VStack{
+            ForEach(self.shareData.matchUserArray){ user in
+                Text(user.name)
             }
         }
-    }
-    
-    var body: some View {
-        Text("MatchingView here")
+        
         .onAppear{
-//            DispatchQueue.global().sync {
-                self.getAllLikeGivenUser()
-//            }
+            self.shareData.getAllMatchUser()
+//            print(self.shareData.matchUserArray)
         }
     } //body
     

@@ -71,13 +71,15 @@ struct UserProfileView: View {
 
         if let snap = snap{
             for i in snap.documents{
-//                print(i.data())
-//                ["LikeUserId": nqIuqrFw8ww1F4FiQUrL, "id": iVpcdD7P6UFi1etqnTtB]
-//                self.shareData.givenLikeArray.append(i.data()["LikeUserId"] as? String ?? "")
                 print("マッチ！")
-
-//                roomを作る関数
+//                print(i.data()["LikeUserId"] as? String ?? "") //相手
+//                print(i.data()["MyUserId"] as? String ?? "") //自分
+                self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
+                    "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
+                    "MyUserId": i.data()["MyUserId"] as? String ?? ""
+                ])
                 
+                ///マッチ後の後処理忘れずに！！！
             }
         }
 
