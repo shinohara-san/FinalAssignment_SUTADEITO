@@ -118,6 +118,7 @@ struct MainView: View {
                                 Button("いいね一覧へ"){
                                     self.likeListOn = true
                                 }
+                                Text("お気に入りユーザー")
                                 ForEach(self.shareData.favoriteUsers){ user in
                                     VStack{
                                         FirebaseImageView(imageURL: user.photoURL)
@@ -131,7 +132,7 @@ struct MainView: View {
                                     }
                                 }
                             }
-                            .navigationBarTitle("")
+                            .navigationBarTitle("お気に入りユーザー一覧")
                             .navigationBarHidden(true)
                             .onAppear{
                                 //                DispatchQueue.global().sync {
@@ -166,20 +167,34 @@ struct MainView: View {
                             Button("お気に入り一覧へ"){
                                 self.likeListOn = false
                             }
-                            ForEach(self.shareData.likeUsers){ user in
-                                VStack{
-                                    FirebaseImageView(imageURL: user.photoURL)
-                                    Text(user.name)
-                                    Text(user.gender)
-                                    Text(user.age)
+                            Text("いいねを送ったユーザー")
+                            if !self.likeProfileOn{
+                                ForEach(self.shareData.likeUsers){ user in
+                                    VStack{
+                                        FirebaseImageView(imageURL: user.photoURL)
+                                        Text(user.name)
+                                        Text(user.gender)
+                                        Text(user.age)
+                                    }
+                                    .onTapGesture {
+                                        self.likeUserInfo = user
+                                        self.likeProfileOn = true
+                                    }
                                 }
-                                .onTapGesture {
-                                    self.likeUserInfo = user
-//                                    self.likeProfileOn = true
+                            } else {
+                                UserProfileView(user: likeUserInfo)
+                                .onDisappear{
+                                    
+                                    self.shareData.getAllLikeUsers()
+
+                                }
+                                Button("戻る"){
+                                    self.likeProfileOn = false
                                 }
                             }
+                           
                         }
-                        .navigationBarTitle("")
+                        .navigationBarTitle("いいねしたユーザー")
                         .navigationBarHidden(true)
                         .onAppear{
                             //                DispatchQueue.global().sync {

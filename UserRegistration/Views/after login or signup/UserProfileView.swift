@@ -10,14 +10,15 @@ import SwiftUI
 import FirebaseFirestore
 
 struct UserProfileView: View {
-    var user: User
-
+    var user: User //mainviewから来た
+    @State var isFavorite = false
+    @State var gaveLike = false
     let db = Firestore.firestore()
     @EnvironmentObject var shareData: ShareData
     
     func giveUserLike(){
 
-        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).addSnapshotListener { (snap, err) in
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
             if err != nil{
                 return
             }
@@ -29,26 +30,27 @@ struct UserProfileView: View {
                 "LikeUserId": self.user.id,
                 "MyUserId": self.shareData.currentUserData["id"] as! String
                     ])
+            self.gaveLike = true
             //addDocumentを使うことで自動生成idの下にデータ保存できる
                     print("いいねに追加: \(self.user.name)")
                     ///お気に入りから削除
                     ///一覧から削除
                     ///いいねから削除
-                    self.checkUserLike()
+                    self.checkMatch()
                 }
         }
-    
-    ///ここから
+
         
     func removeUserFromLike(){
         db.collection("LikeTable")
-            .whereField("id", isEqualTo: user.id).getDocuments { (snap, err) in
+            .whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
                 if err != nil {
                     return
                 }
                 if let snap = snap {
                     for user in snap.documents{
                         user.reference.delete()
+                        self.gaveLike = false
                         print("\(self.user.name)へのいいねを取り消しました")
                     }
                 }
@@ -60,7 +62,7 @@ struct UserProfileView: View {
     
     
 //    マッチチェック
-    func checkUserLike(){
+    func checkMatch(){
         db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).whereField("MyUserId", isEqualTo: user.id).getDocuments { (snap, err) in
         if let err = err{
             print(err.localizedDescription)
@@ -69,7 +71,7 @@ struct UserProfileView: View {
 
         if let snap = snap{
             for i in snap.documents{
-                print(i.data())
+//                print(i.data())
 //                ["LikeUserId": nqIuqrFw8ww1F4FiQUrL, "id": iVpcdD7P6UFi1etqnTtB]
 //                self.shareData.givenLikeArray.append(i.data()["LikeUserId"] as? String ?? "")
                 print("マッチ！")
@@ -107,8 +109,7 @@ struct UserProfileView: View {
         
     }
     
-    @State var isFavorite = false
-    @State var gaveLike = false
+    
     
     func checkFavoriteTable() {
         db.collection("FavoriteTable").document(self.shareData.currentUserData["id"] as! String).collection("FavoriteUser").document(user.id).getDocument { (document, err) in
@@ -125,16 +126,28 @@ struct UserProfileView: View {
     }
     
     func checkLikeTable() {
-        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).getDocuments { (document, err) in
-            //            print(document?.data()?.count)
-            //            print(document?.data())
-            if document?.count != nil {
-                //                print(document?.data())
-                self.gaveLike = true
-            } else {
-                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
-                self.gaveLike = false
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if err != nil{
+                print(err?.localizedDescription as Any)
+                return
             }
+            if let snap = snap {
+                if snap.count > 0{
+                    self.gaveLike = true
+                    return
+                } else {
+                    self.gaveLike = false
+                }
+            }
+//            if snap!.documents.count > 0 {
+//                self.gaveLike = true
+//                return
+//            } else {
+//                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
+//                print(snap!.documents.count)
+//                print("まだいいねしてない")
+//                self.gaveLike = false
+//            }
         }
     }
     
