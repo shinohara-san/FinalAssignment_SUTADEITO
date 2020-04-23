@@ -15,36 +15,53 @@ struct UserProfileView: View {
     @EnvironmentObject var shareData: ShareData
     
     func giveUserLike(){
-        db.collection("LikeTable").document(self.shareData.currentUserData["id"] as! String).collection("LikeUser").document(user.id).setData([
-            "id" : db.collection("Users").document().documentID,
-            "LikeUserId": user.id])
-        //LikeUserコレクションがないと複数保存できない
-        print("いいねに追加: \(self.user.name)")
-        //お気に入りから削除
-        //一覧から削除
-        //特設一覧ページ。プロフィールからお気に入りの項目削除
-        self.checkUserLike()
-    }
+
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).addSnapshotListener { (snap, err) in
+            if err != nil{
+                return
+            }
+            if snap!.count > 0{
+                print("おなじユーザーにいいねしてるよ")
+                return
+            }
+            self.db.collection("LikeTable").addDocument(data: [
+                "LikeUserId": self.user.id,
+                "MyUserId": self.shareData.currentUserData["id"] as! String
+                    ])
+            //addDocumentを使うことで自動生成idの下にデータ保存できる
+                    print("いいねに追加: \(self.user.name)")
+                    //お気に入りから削除
+                    //一覧から削除
+                    //特設一覧ページ。プロフィールからお気に入りの項目削除
+                    self.checkUserLike()
+                }
+        }
+        
+        
+       
     
-    func checkUserLike(){ db.collection("LikeTable").document(user.id).collection("LikeUser").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
+    
+//    マッチチェック
+    func checkUserLike(){
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).whereField("MyUserId", isEqualTo: user.id).getDocuments { (snap, err) in
         if let err = err{
             print(err.localizedDescription)
             return
         }
-        
+
         if let snap = snap{
             for i in snap.documents{
+                print(i.data())
+//                ["LikeUserId": nqIuqrFw8ww1F4FiQUrL, "id": iVpcdD7P6UFi1etqnTtB]
+//                self.shareData.givenLikeArray.append(i.data()["LikeUserId"] as? String ?? "")
                 print("マッチ！")
-                return
+                //roomを作る関数
+                
             }
         }
-            
+
         }
 
-//        いいねを押す(自分のliketableにその相手ユーザーが追加される)
-//          相手idでLiketableに検索かける(giveUserLikeの後にメソッド発動)
-//        一覧をfor文
-//        自分があったprint
     }
     
     func addUserToFavorite(){

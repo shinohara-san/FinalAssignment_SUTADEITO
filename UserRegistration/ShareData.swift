@@ -218,4 +218,7 @@ class ShareData:ObservableObject{
     
     
     @Published var editOn = false
+    
+    
+//    @Published var givenLikeArray = [String]()
 }

@@ -89,6 +89,8 @@ struct ProfileEditView: View {
                         self.shareData.currentUserData = [String : Any]()
                         self.datas.session = nil
                         
+//                        firestoreのliketableやfavoritetableも空っぽに？
+                        
                     }){
                         Text("退会する")
                     }
