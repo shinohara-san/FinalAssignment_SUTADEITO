@@ -410,3 +410,32 @@
 //
 //}
 
+
+///マッチ一覧で使えそう
+//func getAllLikeUsers(){
+//      db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.currentUserData["id"] as? String ?? "").getDocuments { (snap, err) in
+//              if let err = err{
+//                  print(err.localizedDescription)
+//                  return
+//              }
+//
+//              if let snap = snap {
+//                  for user1 in snap.documents {
+//  //                    print(user.data()["FavoriteUserId"] as? String ?? "")
+//                      self.db.collection("Users").whereField("id", isEqualTo: user1.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+//                          if let snap = snap {
+//                              for user in snap.documents {
+//
+//                                  self.likeUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
+//
+//                              }
+//                              } else {
+//                              print(err?.localizedDescription ?? "")
+//                              return
+//                          }
+//                      }
+//                  }
+//              } else { return }
+//              self.likeUsers.remove(at: 0)
+//          }
+//      }

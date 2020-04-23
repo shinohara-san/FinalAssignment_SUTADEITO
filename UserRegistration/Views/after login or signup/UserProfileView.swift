@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 struct UserProfileView: View {
     var user: User
+
     let db = Firestore.firestore()
     @EnvironmentObject var shareData: ShareData
     
@@ -30,13 +31,30 @@ struct UserProfileView: View {
                     ])
             //addDocumentを使うことで自動生成idの下にデータ保存できる
                     print("いいねに追加: \(self.user.name)")
-                    //お気に入りから削除
-                    //一覧から削除
-                    //特設一覧ページ。プロフィールからお気に入りの項目削除
+                    ///お気に入りから削除
+                    ///一覧から削除
+                    ///いいねから削除
                     self.checkUserLike()
                 }
         }
+    
+    ///ここから
         
+    func removeUserFromLike(){
+        db.collection("LikeTable")
+            .whereField("id", isEqualTo: user.id).getDocuments { (snap, err) in
+                if err != nil {
+                    return
+                }
+                if let snap = snap {
+                    for user in snap.documents{
+                        user.reference.delete()
+                        print("\(self.user.name)へのいいねを取り消しました")
+                    }
+                }
+        }
+        
+    }
         
        
     
@@ -55,7 +73,8 @@ struct UserProfileView: View {
 //                ["LikeUserId": nqIuqrFw8ww1F4FiQUrL, "id": iVpcdD7P6UFi1etqnTtB]
 //                self.shareData.givenLikeArray.append(i.data()["LikeUserId"] as? String ?? "")
                 print("マッチ！")
-                //roomを作る関数
+
+//                roomを作る関数
                 
             }
         }
@@ -89,6 +108,7 @@ struct UserProfileView: View {
     }
     
     @State var isFavorite = false
+    @State var gaveLike = false
     
     func checkFavoriteTable() {
         db.collection("FavoriteTable").document(self.shareData.currentUserData["id"] as! String).collection("FavoriteUser").document(user.id).getDocument { (document, err) in
@@ -100,6 +120,20 @@ struct UserProfileView: View {
             } else {
                 //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
                 self.isFavorite = false
+            }
+        }
+    }
+    
+    func checkLikeTable() {
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).getDocuments { (document, err) in
+            //            print(document?.data()?.count)
+            //            print(document?.data())
+            if document?.count != nil {
+                //                print(document?.data())
+                self.gaveLike = true
+            } else {
+                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
+                self.gaveLike = false
             }
         }
     }
@@ -124,13 +158,22 @@ struct UserProfileView: View {
                 Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
             }
             
-            Button("いいね"){
-                self.giveUserLike()
+            Button(action: {
+                self.checkLikeTable()
+                
+                if self.gaveLike == false {
+                    self.giveUserLike()
+                } else {
+                    self.removeUserFromLike()
+                }
+            }) {
+                Text(self.gaveLike ? "いいねを取り消す" : "いいね")
             }
             
         }
         .onAppear{
             self.checkFavoriteTable()
+            self.checkLikeTable()
             //            print("プロフィールに来た")
         }
         .onDisappear{

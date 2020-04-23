@@ -25,6 +25,8 @@ class ShareData:ObservableObject{
     
     @Published var favoriteUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
     
+    @Published var likeUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    
     @Published var MatchUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
     
     @Published var imageURL = ""
@@ -79,6 +81,8 @@ class ShareData:ObservableObject{
         }
     }
     
+    
+    
     func getCurrentUser() {
         db.collection("Users").whereField("email", isEqualTo: datas.session!.email!).getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -122,6 +126,35 @@ class ShareData:ObservableObject{
             self.favoriteUsers.remove(at: 0)
         }
     }
+    
+    func getAllLikeUsers(){
+        db.collection("LikeTable").whereField("MyUserId", isEqualTo: self.currentUserData["id"] as? String ?? "").getDocuments { (snap, err) in
+                if let err = err{
+                    print(err.localizedDescription)
+                    return
+                }
+                
+                if let snap = snap {
+                    for user1 in snap.documents {
+    //                    print(user.data()["FavoriteUserId"] as? String ?? "")
+                        self.db.collection("Users").whereField("id", isEqualTo: user1.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                            if let snap = snap {
+                                for user in snap.documents {
+                                    
+                                    self.likeUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
+
+                                }
+                                } else {
+                                print(err?.localizedDescription ?? "")
+                                return
+                            }
+                        }
+                    }
+                } else { return }
+                self.likeUsers.remove(at: 0)
+            }
+        }
+    
     
     //    Auth
         func deleteAccount(){
@@ -220,5 +253,4 @@ class ShareData:ObservableObject{
     @Published var editOn = false
     
     
-//    @Published var givenLikeArray = [String]()
 }

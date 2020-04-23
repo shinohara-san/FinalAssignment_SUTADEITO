@@ -19,12 +19,16 @@ struct MainView: View {
     @State var selection = 0 //必要?
     
     @State var userProfileOn = false
-    
     @State var favoriteProfileOn = false
+    
+    @State var likeListOn = false
+    @State var likeProfileOn = false
     
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    
+    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     var body: some View {
         
@@ -104,12 +108,65 @@ struct MainView: View {
             
             
             
-////                    お気に入りユーザーのページ
+            ////                    お気に入りユーザーのページ
             Group{
-                if !favoriteProfileOn{
+                
+                if !self.likeListOn{
+                    if !favoriteProfileOn{
+                        ScrollView{
+                            VStack{
+                                Button("いいね一覧へ"){
+                                    self.likeListOn = true
+                                }
+                                ForEach(self.shareData.favoriteUsers){ user in
+                                    VStack{
+                                        FirebaseImageView(imageURL: user.photoURL)
+                                        Text(user.name)
+                                        Text(user.gender)
+                                        Text(user.age)
+                                    }
+                                    .onTapGesture {
+                                        self.favoriteUserInfo = user
+                                        self.favoriteProfileOn = true
+                                    }
+                                }
+                            }
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true)
+                            .onAppear{
+                                //                DispatchQueue.global().sync {
+                                self.shareData.getAllFavoriteUsers()
+                                //                }
+                            }
+                            .onDisappear{
+                                self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+                                self.userProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
+                            }
+                            
+                        } //scroll
+                        
+                    } else {
+                        
+                        VStack{
+                            UserProfileView(user: favoriteUserInfo)
+                            Button("戻る"){
+                                self.favoriteProfileOn = false
+                            }
+                        }.onDisappear{
+                            self.favoriteProfileOn = false
+                        }
+                        
+                    } //お気に入り一覧閉じ
+                } //if !self.likeListOn　いいね一覧表示off閉じ
+                else
+                { ///いいね一覧スタート
+                    
                     ScrollView{
                         VStack{
-                            ForEach(self.shareData.favoriteUsers){ user in
+                            Button("お気に入り一覧へ"){
+                                self.likeListOn = false
+                            }
+                            ForEach(self.shareData.likeUsers){ user in
                                 VStack{
                                     FirebaseImageView(imageURL: user.photoURL)
                                     Text(user.name)
@@ -117,8 +174,8 @@ struct MainView: View {
                                     Text(user.age)
                                 }
                                 .onTapGesture {
-                                    self.favoriteUserInfo = user
-                                    self.favoriteProfileOn = true
+                                    self.likeUserInfo = user
+//                                    self.likeProfileOn = true
                                 }
                             }
                         }
@@ -126,30 +183,21 @@ struct MainView: View {
                         .navigationBarHidden(true)
                         .onAppear{
                             //                DispatchQueue.global().sync {
-                            self.shareData.getAllFavoriteUsers()
+                            self.shareData.getAllLikeUsers()
                             //                }
                         }
                         .onDisappear{
-                            self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
-                            self.userProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
+                            self.shareData.likeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+                            self.likeProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
                         }
                         
                     } //scroll
                     
-                } else {
-
-                    
-                    VStack{
-                        UserProfileView(user: favoriteUserInfo)
-                        Button("戻る"){
-                            self.favoriteProfileOn = false
-                        }
-                    }.onDisappear{
-                        self.favoriteProfileOn = false
-                    }
-                    
-                }
-            } //Group
+                } //いいねとじ
+                
+                
+            } //Group全体とじ
+                
                 .tabItem {
                     VStack {
                         Image(systemName: "star")
@@ -177,8 +225,10 @@ struct MainView: View {
                         Image(systemName: "ellipsis")
                     }
             }.tag(5)
-        }.onAppear{
-            print("メインビュー")
+            
+        } //tabView
+            .onAppear{
+                print("メインビュー")
         }
             
         .navigationBarTitle("")
