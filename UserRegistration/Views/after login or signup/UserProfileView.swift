@@ -72,14 +72,18 @@ struct UserProfileView: View {
         if let snap = snap{
             for i in snap.documents{
                 print("マッチ！")
-//                print(i.data()["LikeUserId"] as? String ?? "") //相手
-//                print(i.data()["MyUserId"] as? String ?? "") //自分
+//                自分用マッチテーブル
                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
                     "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
                     "MyUserId": i.data()["MyUserId"] as? String ?? ""
                 ])
+//                相手用マッチテーブル
+                self.db.collection("MatchTable").document(i.data()["LikeUserId"] as? String ?? "").collection("MatchUser").document().setData([
+                    "MatchUserId": i.data()["MyUserId"] as? String ?? "",
+                    "MyUserId": i.data()["LikeUserId"] as? String ?? ""
+                ])
                 
-                ///マッチ後の後処理忘れずに！！！
+                ///マッチ後の後処理忘れずに！！！このままだと何回でもunmatch/rematchできまくる
             }
         }
 

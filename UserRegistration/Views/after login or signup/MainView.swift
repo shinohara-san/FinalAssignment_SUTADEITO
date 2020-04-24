@@ -30,6 +30,8 @@ struct MainView: View {
     
     @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
+    @State var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    
     @State var messageOn = false
     
     var body: some View {
@@ -223,28 +225,37 @@ struct MainView: View {
             Group{
                 
                 if !messageOn{
+                    
                     VStack{
-                        ForEach(self.shareData.matchUserArray){ user in
-                            Text(user.name)
+                        Text("マッチ一覧")
+                        List(self.shareData.matchUserArray){ user in
+                            HStack{
+                                Text(user.name)
+                                Text(user.age)
+                            }.onTapGesture {
+                                self.messageOn = true
+                                self.matchUserInfo = user
+                            }
                         }
-                        Button("ボタン"){
-                            self.messageOn.toggle()
-                        }
-                    Text("マッチ一覧")
                     }
 //                    ユーザーをタップしたらそのuser情報をメッセージ一覧にパス、msgOnをtrueにする
+                    //メッセージ画面では送り先、送り元、時間を下にmsgをダウンロード？時間かかるからdocumentchangeを使って追加分だけ取得したいけどできるかな？
                 } else {
                     VStack{
+                        Text("\(self.matchUserInfo.name)とのメッセージ画面")
                         Button("戻る"){
-                            self.messageOn.toggle()
+                            self.messageOn = false
                         }
-                        Text("メッセージ画面")
                     }
                     
                 }
             }.onAppear{
                 self.shareData.getAllMatchUser()
-            }
+            }.onDisappear{
+                self.shareData.matchUserArray = [User]()
+                }
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
                 .tabItem {
                     VStack {
                         Image(systemName: "suit.heart")

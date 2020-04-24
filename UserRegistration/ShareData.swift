@@ -112,17 +112,28 @@ class ShareData:ObservableObject{
                     self.db.collection("Users").whereField("id", isEqualTo: user1.data()["FavoriteUserId"] as? String ?? "").getDocuments { (snap, err) in
                         if let snap = snap {
                             for user in snap.documents {
-                                
-                                self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
+//                                if user.data()["id"] as! String がMatchUserIdになかったら
+//                                if
+//                                self.db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isLessThan: user.data()["id"] as! String).whereField("MatchUserId", isGreaterThan: user.data()["id"] as! String).getDocuments { (snap, err) in
+//                                    if let snap = snap {
+//                                       for user in snap.documents{
+//                                            print("おおおおおい")
+//                                            print(user.data()["name"] as! String)
+                                            self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
 
-                            }
-                            } else {
-                            print(err?.localizedDescription ?? "")
-                            return
-                        }
-                    }
+//                                            }
+//                                       }
+//                                    }
+                                
+
+                                }
+                                
+                                 
+                            } //snap = snap
+                        
+                    } // getDocuments
                 }
-            } else { return }
+            }
             self.favoriteUsers.remove(at: 0)
         }
     }
@@ -198,7 +209,7 @@ class ShareData:ObservableObject{
         storageRef.child("images/pictureOf_\(self.currentUserData["email"] ?? "")").delete { error in
             if error != nil {
             // Uh-oh, an error occurred!
-                print(error?.localizedDescription ?? "エラー@deleteUserPictuire")
+                print(error?.localizedDescription ?? "エラーがdeleteUserPictuireで発生なう")
                 return
           } else {
             // File deleted successfully
@@ -261,12 +272,23 @@ class ShareData:ObservableObject{
                 return
             }
             if let snap = snap{
-                            for matchData in snap.documents{
-                                print(matchData.data())
-                //                self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String))
+                for matchData in snap.documents{
+                  print(matchData.data()["MatchUserId"] as? String ?? "")
+                    self.db.collection("Users").whereField("id", isEqualTo: matchData.data()["MatchUserId"] as? String ?? "").getDocuments { (snap, err) in
+                        if err != nil{
+                            return
+                        }
+                        if let snap = snap{
+                            for user in snap.documents{
+//                                print(user.data()["name"] as! String)
+                                 self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String))
                             }
+                        }
+                    }
+                                                   
+                }
             }
-
+            
         }
     }
 }
