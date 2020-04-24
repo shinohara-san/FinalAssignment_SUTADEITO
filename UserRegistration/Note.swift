@@ -439,3 +439,38 @@
 //              self.likeUsers.remove(at: 0)
 //          }
 //      }
+
+
+
+
+
+//                    VStack{
+//
+//                        Button("戻る"){
+//                            self.messageOn = false
+//                        }
+//                        Text("\(self.matchUserInfo.name)とのメッセージ画面")
+//
+//                        List(msgVM.messages, id: \.id){ i in
+//                            if i.fromUser == self.shareData.currentUserData["id"] as! String && i.toUser == self.matchUserInfo.id {
+//                                MessageRow(message: i.msg, isMyMessage: true)
+//                            } else if i.fromUser == self.matchUserInfo.id && i.toUser == self.shareData.currentUserData["id"] as! String {
+//                                MessageRow(message: i.msg, isMyMessage: false)
+//                            }
+//                        }
+////                        .onAppear { UITableView.appearance().separatorStyle = .none }
+////                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+//
+//
+//                        HStack{
+//                            TextField("メッセージ", text: $text).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+//                            Button(action: {
+//                                print("メッセージ送信 \(self.text)")
+//                                self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String)
+//                                self.text = ""
+//                            }) {
+//                                Image(systemName: "paperplane")
+//                            }.padding(.trailing)
+//                        }
+//
+//                    }

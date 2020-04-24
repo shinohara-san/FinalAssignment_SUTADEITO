@@ -72,6 +72,8 @@ struct UserProfileView: View {
         if let snap = snap{
             for i in snap.documents{
                 print("マッチ！")
+                
+                ///マッチテーブル作成
 //                自分用マッチテーブル
                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
                     "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
@@ -82,6 +84,58 @@ struct UserProfileView: View {
                     "MatchUserId": i.data()["MyUserId"] as? String ?? "",
                     "MyUserId": i.data()["LikeUserId"] as? String ?? ""
                 ])
+                
+                ///マッチ後マッチユーザー同士をお気に入りから削除
+                self.db.collection("FavoriteTable").document(i.data()["MyUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    if err != nil {
+                        return
+                    }
+                    if let snap = snap {
+                        for user in snap.documents{
+                            user.reference.delete()
+                            print("マッチしたのでお気に入りから削除しました。")
+                        }
+                    }
+                }
+                
+                self.db.collection("FavoriteTable").document(i.data()["LikeUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    if err != nil {
+                        return
+                    }
+                    if let snap = snap {
+                        for user in snap.documents{
+                            user.reference.delete()
+                            print("マッチしたのでお気に入りから削除しました。")
+                        }
+                    }
+                }
+                
+                ///マッチ後お互いをいいねユーザーから削除
+                
+                self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    if err != nil {
+                        return
+                    }
+                    if let snap = snap {
+                        for user in snap.documents{
+                            user.reference.delete()
+                            print("マッチしたのでいいねから削除しました。")
+                        }
+                    }
+                }
+                
+                self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    if err != nil {
+                        return
+                    }
+                    if let snap = snap {
+                        for user in snap.documents{
+                            user.reference.delete()
+                            print("マッチしたのでいいねから削除しました。")
+                        }
+                    }
+                }
+                
                 
                 ///マッチ後の後処理忘れずに！！！このままだと何回でもunmatch/rematchできまくる
             }

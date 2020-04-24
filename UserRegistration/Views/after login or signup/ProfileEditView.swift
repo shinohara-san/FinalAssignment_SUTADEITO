@@ -84,8 +84,7 @@ struct ProfileEditView: View {
                     Button(action: {
                         //アラート出したいなー
                         self.shareData.deleteAccount() //Auth削除 内部でstorage/firestoreも
-                        
-                        
+
                         self.shareData.currentUserData = [String : Any]()
                         self.datas.session = nil
                         

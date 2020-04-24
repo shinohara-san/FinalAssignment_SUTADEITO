@@ -34,6 +34,10 @@ struct MainView: View {
     
     @State var messageOn = false
     
+    @State var text = ""
+    
+    @ObservedObject var msgVM = MessageViewModel()
+    
     var body: some View {
         
         TabView(selection: $selection) {
@@ -238,16 +242,9 @@ struct MainView: View {
                             }
                         }
                     }
-//                    ユーザーをタップしたらそのuser情報をメッセージ一覧にパス、msgOnをtrueにする
-                    //メッセージ画面では送り先、送り元、時間を下にmsgをダウンロード？時間かかるからdocumentchangeを使って追加分だけ取得したいけどできるかな？
+
                 } else {
-                    VStack{
-                        Text("\(self.matchUserInfo.name)とのメッセージ画面")
-                        Button("戻る"){
-                            self.messageOn = false
-                        }
-                    }
-                    
+                    MessageView(matchUserInfo: self.matchUserInfo, messageOn: $messageOn)                    
                 }
             }.onAppear{
                 self.shareData.getAllMatchUser()
