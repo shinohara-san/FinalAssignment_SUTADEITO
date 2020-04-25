@@ -67,7 +67,7 @@ class ShareData:ObservableObject{
     }
     
     var matchUserData: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
-//    var index = 0
+    //    var index = 0
     func filterUsers(){
         ///        マッチを先に送った方の表示Ok, 後から送った方の表示Ok、でもマッチ二人以上だとsucks
         db.collection("MatchTable").document(self.currentUserData["id"] as? String ?? "").collection("MatchUser").getDocuments { (snap, err) in
@@ -80,7 +80,6 @@ class ShareData:ObservableObject{
             case 0:
                 print("マッチなし")
                 self.getAllUsers()
-                
             case 1:
                 print("マッチあり") //マッチあるとき
                 print("マッチ数: \(snap!.count)")
@@ -123,21 +122,22 @@ class ShareData:ObservableObject{
                                     else {
                                         print("\(String(describing: user.data()["name"]))はマッチずみ")
                                         print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
-
+                                        
                                     }
                                 }
                                 else {
                                     print("\(String(describing: user.data()["name"]))は同性")
-                              
+                                    
                                 }
                                 
                             }
                         }
-                      
+                        
                         
                     }
                     
                 }
+                
             default:
                 
                 print("マッチあり") //マッチが二つ以上あるとき
@@ -153,64 +153,42 @@ class ShareData:ObservableObject{
                         }
                         if let snap = querySnapshot {
                             for user in snap.documents {
-                                //                                print("マチのID: \(id.data()["MatchUserId"] as! String)")
-                                //                                print("全員のID: \(user.data()["id"] as! String)")
+                                
+
                                 if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
                                 {
-                                    if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
-                                        
-                                    {
-                                        self.allUsers.append(User(
-                                            id: user.data()["id"] as! String,
-                                            email: user.data()["email"] as! String,
-                                            name: user.data()["name"] as! String,
-                                            gender: user.data()["gender"] as! String,
-                                            age: user.data()["age"] as! String,
-                                            hometown: user.data()["hometown"] as! String,
-                                            subject: user.data()["subject"] as! String,
-                                            introduction: user.data()["introduction"] as! String,
-                                            studystyle: user.data()["studystyle"] as! String,
-                                            hobby: user.data()["hobby"] as! String,
-                                            personality: user.data()["personality"] as! String,
-                                            work: user.data()["work"] as! String,
-                                            purpose: user.data()["purpose"] as! String,
-                                            photoURL: user.data()["photoURL"] as! String
-                                        ))
-                                        
+                                    print("\(String(describing: user.data()["name"] as? String))はユーザーです。")
+                                    if user.data()["id"] as? String == id.data()["MatchUserId"] as? String {
+                                        print("\(String(describing: user.data()["name"] as? String))はIDが\(String(describing: id.data()["MatchUserId"] as? String))でマッチしています。")
+                                        return
                                     }
-                                    else {
-                                        print("\(String(describing: user.data()["name"]))はマッチずみ")
-                                        print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
-                                        //                                        print("\(String(describing: id.data()["MatchUserId"] as? String))はマッチずみ")
-                                        
-                                        self.matchUserData = User(id: user.data()["id"] as! String, email: (user.data()["email"] as! String), name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String)
-                                        self.MatchUsers.append(self.matchUserData)
-//                                        self.index = self.allUsers.firstIndex(of: self.matchUserData)!
-                                        //                                        let matchUserIndex = self.MatchUsers.firstIndex(of: matchUserData)
-                                        
-                                        
-                                        //                                        self.allUsers.remove(at: matchUserIndex!)
-                                        
-                                    }
-                                }
+                                    
+                                    self.allUsers.append(User(
+                                        id: user.data()["id"] as! String,
+                                        email: user.data()["email"] as! String,
+                                        name: user.data()["name"] as! String,
+                                        gender: user.data()["gender"] as! String,
+                                        age: user.data()["age"] as! String,
+                                        hometown: user.data()["hometown"] as! String,
+                                        subject: user.data()["subject"] as! String,
+                                        introduction: user.data()["introduction"] as! String,
+                                        studystyle: user.data()["studystyle"] as! String,
+                                        hobby: user.data()["hobby"] as! String,
+                                        personality: user.data()["personality"] as! String,
+                                        work: user.data()["work"] as! String,
+                                        purpose: user.data()["purpose"] as! String,
+                                        photoURL: user.data()["photoURL"] as! String
+                                    ))
+                                    
+                                    
+                                } //閉じ
                                 else {
                                     print("\(String(describing: user.data()["name"]))は同性")
-                                    //                                    print(self.allUsers) //男性全員
+                                    
                                 }
                                 
                             }
                         }
-//                        let index = self.allUsers.firstIndex(of: self.matchUserData)
-//                        self.allUsers.remove(at: self.index)
-                        
-//                        for user in self.MatchUsers {
-//                            let index = self.allUsers.firstIndex(of: user)
-//                            self.allUsers.remove(at: index!)
-//                        }
-//                        print("インデックス: \(self.index)")
-//                        print("オールユーザーズ配列: \(self.allUsers)")
-//                        print("マッチユーザーず配列: \(self.MatchUsers)")
-                        self.secondFilter()
                         
                     }
                     
@@ -222,15 +200,17 @@ class ShareData:ObservableObject{
         } //matchtable loop
     }
     
-    func secondFilter(){
-        print("セカンド: \(self.allUsers)")
-        print("セカンドマッチ: \(self.MatchUsers)")
-        for user in self.MatchUsers{
-            let index = self.allUsers.firstIndex(of: user)
-//            print(index)
-            self.allUsers.remove(at: index ?? 1)
-        }
-    }
+    //    func secondFilter(){
+    //        print("セカンド: \(self.allUsers)")
+    //        print("セカンドマッチ: \(self.MatchUsers)")
+    //        for user in self.MatchUsers{
+    //            let index = self.allUsers.firstIndex(of: user)
+    //            let index1 = self.MatchUsers.firstIndex(of: user)
+    //            print(index)
+    //            self.allUsers.remove(at: index ?? 0)
+    //            self.MatchUsers.remove(at: index1 ?? 0)
+    //        }
+    //    }
     
     func getAllUsers(){
         ///マッチユーザーが退会したら表示消えるけどMatchTableは残るのでそれ使ってこのユーザーは退会しました表示したい

@@ -50,7 +50,7 @@ struct MainView: View {
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
-                                
+                            
                                 VStack{
                                     FirebaseImageView(imageURL: user.photoURL)
                                     HStack{
@@ -64,7 +64,9 @@ struct MainView: View {
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
-                                }
+                                    }
+                                
+
                             } //foreach
                                 .buttonStyle(PlainButtonStyle())
                             
@@ -77,9 +79,9 @@ struct MainView: View {
                                 }
 //                                print(self.shareData.allUsers)
                         }
-                        //                        .onDisappear(){
-                        //                            self.userProfileOn = false
-                        //                        }
+//                        .onDisappear(){
+//                            self.shareData.allUsers = [User]()
+//                        }
                         
                     }//Scrollview
                 } else {

@@ -73,6 +73,7 @@ struct UserProfileView: View {
                 print("マッチ！")
                 
                 ///マッチテーブル作成
+
 //                自分用マッチテーブル
                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
                     "MatchUserId": i.data()["LikeUserId"] as? String ?? "",

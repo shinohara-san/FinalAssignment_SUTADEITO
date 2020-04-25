@@ -620,3 +620,92 @@
 //Optional(しの)はマッチずみ
 //Optional("bBMOxqhM6o5bsHeiuQUm")はマッチずみ
 //Optional("bBMOxqhM6o5bsHeiuQUm")はマッチずみ
+
+
+//            自分用マッチ
+//                self.db.collection("Users").whereField("id", isEqualTo:  i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+//                    if err != nil{
+//                        return
+//                    }
+//                    if let snap = snap {
+//                        for user in snap.documents{
+//                            user.reference.collection("matchUser").document().setData([
+//                                "MatchUserId" : i.data()["LikeUserId"] as? String ?? "",
+//                                "MyUserId": i.data()["MyUserId"] as? String ?? ""
+//                            ])
+//                        }
+//                    }
+//                }
+//                相手用マッチ
+//                self.db.collection("Users").whereField("id", isEqualTo:  i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+//                    if err != nil{
+//                        return
+//                    }
+//                    if let snap = snap {
+//                        for user in snap.documents{
+//                            user.reference.collection("matchUser").document().setData([
+//                                "MatchUserId" : i.data()["MyUserId"] as? String ?? "",
+//                                "MyUserId": i.data()["LikeUserId"] as? String ?? ""
+//                            ])
+//                        }
+//                    }
+//                }
+                
+
+//case 1:
+//             print("マッチあり") //マッチあるとき
+//             print("マッチ数: \(snap!.count)")
+//             for id in snap!.documents{
+//
+//                 self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
+//
+//                 self.db.collection("Users").getDocuments { (querySnapshot, err) in
+//                     if let err = err {
+//                         print("Error getting documents: \(err)")
+//                         return
+//                     }
+//                     if let snap = querySnapshot {
+//                         for user in snap.documents {
+//                             //                                print("マチのID: \(id.data()["MatchUserId"] as! String)")
+//                             //                                print("全員のID: \(user.data()["id"] as! String)")
+//                             if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
+//                             {
+//                                 if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
+//
+//                                 {
+//                                     self.allUsers.append(User(
+//                                         id: user.data()["id"] as! String,
+//                                         email: user.data()["email"] as! String,
+//                                         name: user.data()["name"] as! String,
+//                                         gender: user.data()["gender"] as! String,
+//                                         age: user.data()["age"] as! String,
+//                                         hometown: user.data()["hometown"] as! String,
+//                                         subject: user.data()["subject"] as! String,
+//                                         introduction: user.data()["introduction"] as! String,
+//                                         studystyle: user.data()["studystyle"] as! String,
+//                                         hobby: user.data()["hobby"] as! String,
+//                                         personality: user.data()["personality"] as! String,
+//                                         work: user.data()["work"] as! String,
+//                                         purpose: user.data()["purpose"] as! String,
+//                                         photoURL: user.data()["photoURL"] as! String
+//                                     ))
+//
+//                                 }
+//                                 else {
+//                                     print("\(String(describing: user.data()["name"]))はマッチずみ")
+//                                     print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
+//
+//                                 }
+//                             }
+//                             else {
+//                                 print("\(String(describing: user.data()["name"]))は同性")
+//
+//                             }
+//
+//                         }
+//                     }
+//
+//
+//                 }
+//
+//             }
