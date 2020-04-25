@@ -33,9 +33,8 @@ struct UserProfileView: View {
             self.gaveLike = true
             //addDocumentを使うことで自動生成idの下にデータ保存できる
                     print("いいねに追加: \(self.user.name)")
-                    ///お気に入りから削除
                     ///一覧から削除
-                    ///いいねから削除
+                 
                     self.checkMatch()
                 }
         }
@@ -135,9 +134,7 @@ struct UserProfileView: View {
                         }
                     }
                 }
-                
-                
-                ///マッチ後の後処理忘れずに！！！このままだと何回でもunmatch/rematchできまくる
+            
             }
         }
 

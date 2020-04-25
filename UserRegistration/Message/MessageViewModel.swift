@@ -18,28 +18,16 @@ struct Message: Identifiable {
 }
 
 
-
+///明日こいつらをshareDataを使ってもう一度書いてみるところからスタート
 class MessageViewModel: ObservableObject {
     
     let db = Firestore.firestore()
-//    var currentUserId = ""
-//    func getCurrentUserId(){
-//        db.collection("Users").whereField("email", isEqualTo: firebaseData.session!.email ?? "").getDocuments { (snap, err) in
-//            if let err = err{
-//                print(err.localizedDescription)
-//                return
-//            }
-//            if let snap = snap{
-//                for user in snap.documents{
-//                    self.currentUserId = user.data()["id"] as! String
-//                }
-//            }
-//        }
-//    }
+//    let matchUser: User
     
     @Published var messages = [Message]()
     
     init(){
+        
 //        getCurrentUserId()
 //        .document(currentUserId).collection("messageRoom").order(by: "date")
         db.collection("Messages").order(by: "date").addSnapshotListener { (snap, error) in
@@ -74,13 +62,6 @@ class MessageViewModel: ObservableObject {
             "date": Timestamp()
             ] as [String : Any]
         
-//        let data2  = [
-//                   "message": msg,
-//                   "toUser": fromUser,
-//                   "fromUser": toUser,
-//                   "date": Timestamp()
-//                   ] as [String : Any]
-        
         db.collection("Messages").addDocument(data: data1){ error in
             if let err = error {
                 print(err.localizedDescription)
@@ -89,15 +70,5 @@ class MessageViewModel: ObservableObject {
             print("メッセージを送信しました")
         }
         
-//        db.collection("Messages").document(toUser).collection("messageRoom").addDocument(data: data2){ error in
-//            if let err = error {
-//                print(err.localizedDescription)
-//                return
-//            }
-//            print("メッセージを送信しました")
-//        }
-//    }
-    
-    
 }//func
 }//class

@@ -74,8 +74,8 @@ struct MainView: View {
                             .onAppear{
                                 DispatchQueue.global().sync {
                                     self.shareData.getCurrentUser() //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
-                                    print("リストビュー")
                                 }
+//                                print(self.shareData.allUsers)
                         }
                         //                        .onDisappear(){
                         //                            self.userProfileOn = false
@@ -93,7 +93,7 @@ struct MainView: View {
                 }
                 
             }//Profile
-                
+               
                 .navigationBarTitle("")
                 .navigationBarHidden(false)
                 .tabItem {
@@ -186,16 +186,16 @@ struct MainView: View {
                                 }
                             } else {
                                 UserProfileView(user: likeUserInfo)
-                                .onDisappear{
-                                    
-                                    self.shareData.getAllLikeUsers()
-
+                                    .onDisappear{
+                                        
+                                        self.shareData.getAllLikeUsers()
+                                        
                                 }
                                 Button("戻る"){
                                     self.likeProfileOn = false
                                 }
                             }
-                           
+                            
                         }
                         .navigationBarTitle("いいねしたユーザー")
                         .navigationBarHidden(true)
@@ -228,42 +228,44 @@ struct MainView: View {
             ////                   マッチングページ
             Group{
                 
-                if !messageOn{
-                    
-                    VStack{
-                        Text("マッチ一覧")
-                        List(self.shareData.matchUserArray){ user in
+                //                if !messageOn{  //
+                
+                VStack{
+                    Text("マッチ一覧")
+                    List(self.shareData.matchUserArray){ user in
+                        NavigationLink(destination: MessageView(matchUserInfo: user)){
                             HStack{
                                 Text(user.name)
                                 Text(user.age)
-                            }.onTapGesture {
-                                self.messageOn = true
-                                self.matchUserInfo = user
                             }
-                        }
-                    }
 
-                } else {
-                    MessageView(matchUserInfo: self.matchUserInfo, messageOn: $messageOn)                    
+                        }
+                        
+                    }
                 }
+                
+                //                }//
+                //                else {
+                
+                //                }
             }.onAppear{
                 self.shareData.getAllMatchUser()
             }.onDisappear{
                 self.shareData.matchUserArray = [User]()
+            }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+            .tabItem {
+                VStack {
+                    Image(systemName: "suit.heart")
                 }
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "suit.heart")
-                    }
             }.tag(4)
             
             
             
             
             ////                    自分のプロフィールページ
-            SettingView(datas: self.datas)  //environmentに書き換えたい
+            SettingView(datas: self.datas)
                 .tabItem {
                     VStack {
                         Image(systemName: "ellipsis")

@@ -474,3 +474,149 @@
 //                        }
 //
 //                    }
+
+
+
+//    @Published var messages = [Message]()
+//
+//    func messageModel(){
+//        db.collection("Messages").document(self.currentUserData["id"] as! String).collection("messageRoom").order(by: "date").addSnapshotListener { (snap, error) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                return
+//            }
+//            if let snap = snap {
+//                for i in snap.documentChanges {
+//                    if i.type == .added {
+//                        let toUser = i.document.get("toUser") as! String
+//                        let fromUser = i.document.get("fromUser") as! String
+//                        let message = i.document.get("message") as! String
+//                        let id = i.document.documentID
+//                        let date = i.document.get("date") as! Timestamp
+//
+//                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date))
+//
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    func sendMsg(msg: String, toUser: String, fromUser: String){
+//            let data1 = [
+//                "message": msg,
+//                "toUser": toUser,
+//                "fromUser": fromUser,
+//                "date": Timestamp()
+//                ] as [String : Any]
+//
+//            let data2  = [
+//                       "message": msg,
+//                       "toUser": fromUser,
+//                       "fromUser": toUser,
+//                       "date": Timestamp()
+//                       ] as [String : Any]
+//
+//            db.collection("Messages").addDocument(data: data1){ error in
+//                if let err = error {
+//                    print(err.localizedDescription)
+//                    return
+//                }
+//                print("メッセージを送信しました")
+//            }
+//
+//          messages 自分ID messageroom 相手ID db.collection("Messages").document(toUser).collection("messageRoom").addDocument(data: data2){ error in
+//                if let err = error {
+//                    print(err.localizedDescription)
+//                    return
+//                }
+//                print("メッセージを送信しました")
+//            }
+//        }
+        
+
+
+//func filterUsers(){
+/////        マッチを先に送った方の表示Ok, 後から送った方の表示Ok、でもマッチ二人以上だとsucks
+//        db.collection("MatchTable").document(self.currentUserData["id"] as? String ?? "").collection("MatchUser").getDocuments { (snap, err) in
+//            if err != nil{
+//                print(err?.localizedDescription as Any)
+//                return
+//            }
+//            if snap!.count > 0 {
+//                for id in snap!.documents{
+//                    print("マッチあり") //マッチあるとき
+//                    self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
+//
+//
+//                    self.db.collection("Users").getDocuments { (querySnapshot, err) in
+//                        if let err = err {
+//                            print("Error getting documents: \(err)")
+//                            return
+//                        }
+//                        if let snap = querySnapshot {
+//                            for user in snap.documents {
+//                                //                                print("マチのID: \(id.data()["MatchUserId"] as! String)")
+//                                //                                print("全員のID: \(user.data()["id"] as! String)")
+//                                if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
+//                                {
+//                                    if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
+////                                        && user.data()["id"] as? String != id.data()["MyUserId"] as? String
+//                                    {
+//                                        self.allUsers.append(User(
+//                                            id: user.data()["id"] as! String,
+//                                            email: user.data()["email"] as! String,
+//                                            name: user.data()["name"] as! String,
+//                                            gender: user.data()["gender"] as! String,
+//                                            age: user.data()["age"] as! String,
+//                                            hometown: user.data()["hometown"] as! String,
+//                                            subject: user.data()["subject"] as! String,
+//                                            introduction: user.data()["introduction"] as! String,
+//                                            studystyle: user.data()["studystyle"] as! String,
+//                                            hobby: user.data()["hobby"] as! String,
+//                                            personality: user.data()["personality"] as! String,
+//                                            work: user.data()["work"] as! String,
+//                                            purpose: user.data()["purpose"] as! String,
+//                                            photoURL: user.data()["photoURL"] as! String
+//                                        ))
+//
+//                                    }
+//                                    else {
+//                                        print("\(String(describing: user.data()["name"]))はマッチずみ")
+//                                        print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
+//                                        print("\(String(describing: id.data()["MatchUserId"] as? String))はマッチずみ")
+//
+//                                    }
+//                                }
+//                                else {
+//                                    print("\(String(describing: user.data()["name"]))は同性")
+//                                    //                                    print(self.allUsers) //男性全員
+//                                }
+//
+//                            }
+//                        }
+//                        //            self.allUsers.remove(at: 0)
+//                    }
+//
+//                    
+//                }
+//
+//            } else {
+//                print("マッチなし") //マッチないとき
+//                self.getAllUsers()
+//
+//            }
+//
+//        } //matchtable loop
+//
+//    }
+
+
+//マッチあり
+//マッチ数: 1
+//Optional(ここみ)は同性
+//Optional(さとみ)は同性
+//Optional(あい)は同性
+//Optional(しの)はマッチずみ
+//Optional("bBMOxqhM6o5bsHeiuQUm")はマッチずみ
+//Optional("bBMOxqhM6o5bsHeiuQUm")はマッチずみ
