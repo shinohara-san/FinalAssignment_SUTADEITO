@@ -18,9 +18,8 @@ struct Message: Identifiable {
 }
 
 
-///明日こいつらをshareDataを使ってもう一度書いてみるところからスタート
 class MessageViewModel: ObservableObject {
-    
+    var datas = FirebaseData()
     let db = Firestore.firestore()
 //    let matchUser: User
     
@@ -69,6 +68,7 @@ class MessageViewModel: ObservableObject {
             }
             print("メッセージを送信しました")
         }
+        
         
 }//func
 }//class

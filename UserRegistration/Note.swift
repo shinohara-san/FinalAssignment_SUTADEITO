@@ -709,3 +709,336 @@
 //                 }
 //
 //             }
+
+
+
+//func filterUsers(){
+//        ///        マッチを先に送った方の表示Ok, 後から送った方の表示Ok、でもマッチ二人以上だとsucks
+//        db.collection("MatchTable").document(self.currentUserData["id"] as? String ?? "").collection("MatchUser").getDocuments { (snap, err) in
+//            if err != nil{
+//                print(err?.localizedDescription as Any)
+//                return
+//            }
+//
+//            switch snap!.count{
+//            case 0:
+//                print("マッチなし")
+//                self.getAllUsers()
+//            default:
+//                print("マッチあり") //マッチあるとき
+//                print("マッチ数: \(snap!.count)")
+//                for id in snap!.documents{
+//
+//                    self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
+//
+//                    self.db.collection("Users").getDocuments { (querySnapshot, err) in
+//                        if let err = err {
+//                            print("Error getting documents: \(err)")
+//                            return
+//                        }
+//                        if let snap = querySnapshot {
+//                            for user in snap.documents {
+//                                //                                print("マチのID: \(id.data()["MatchUserId"] as! String)")
+//                                //                                print("全員のID: \(user.data()["id"] as! String)")
+//                                if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
+//                                {
+//                                    if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
+//
+//                                    {
+//                                        self.allUsers.append(User(
+//                                            id: user.data()["id"] as! String,
+//                                            email: user.data()["email"] as! String,
+//                                            name: user.data()["name"] as! String,
+//                                            gender: user.data()["gender"] as! String,
+//                                            age: user.data()["age"] as! String,
+//                                            hometown: user.data()["hometown"] as! String,
+//                                            subject: user.data()["subject"] as! String,
+//                                            introduction: user.data()["introduction"] as! String,
+//                                            studystyle: user.data()["studystyle"] as! String,
+//                                            hobby: user.data()["hobby"] as! String,
+//                                            personality: user.data()["personality"] as! String,
+//                                            work: user.data()["work"] as! String,
+//                                            purpose: user.data()["purpose"] as! String,
+//                                            photoURL: user.data()["photoURL"] as! String
+//                                        ))
+//
+//                                    }
+//                                    else {
+//                                        print("\(String(describing: user.data()["name"]))はマッチずみ")
+//                                        print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
+//
+//                                    }
+//                                }
+//                                else {
+//                                    print("\(String(describing: user.data()["name"]))は同性")
+//
+//                                }
+//
+//                            }
+//                        }
+//
+//
+//                    }
+//
+//                }
+//
+////            default:
+////
+////                print("マッチあり") //マッチが二つ以上あるとき
+////                print("マッチ数: \(snap!.count)")
+////                for id in snap!.documents{
+////                    print("相手id: \(String(describing: id.data()["MatchUserId"]))")
+////                    print("自分id: \(String(describing: id.data()["MyUserId"]))")
+////                    self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
+////
+////                    self.db.collection("Users").getDocuments { (snap, err) in
+////                        if let err = err {
+////                            print("Error getting documents: \(err)")
+////                            return
+////                        }
+////                        if let snap = snap {
+////                            for user in snap.documents {
+////                                 print("\(String(describing: user.data()["name"] as? String))はすべてのユーザーの一人です。(ループ前)")
+////
+////                                if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
+////                                {
+////                                    print("\(String(describing: user.data()["name"] as? String))はユーザーです。")
+////
+////                                    if user.data()["id"] as? String == id.data()["MatchUserId"] as? String {
+////                                        print("\(String(describing: user.data()["name"] as? String))はIDが\(String(describing: id.data()["MatchUserId"] as? String))でマッチしています。")
+////                                        self.MatchUsers.append(User(
+////                                        id: user.data()["id"] as! String,
+////                                        email: user.data()["email"] as! String,
+////                                        name: user.data()["name"] as! String,
+////                                        gender: user.data()["gender"] as! String,
+////                                        age: user.data()["age"] as! String,
+////                                        hometown: user.data()["hometown"] as! String,
+////                                        subject: user.data()["subject"] as! String,
+////                                        introduction: user.data()["introduction"] as! String,
+////                                        studystyle: user.data()["studystyle"] as! String,
+////                                        hobby: user.data()["hobby"] as! String,
+////                                        personality: user.data()["personality"] as! String,
+////                                        work: user.data()["work"] as! String,
+////                                        purpose: user.data()["purpose"] as! String,
+////                                        photoURL: user.data()["photoURL"] as! String
+////                                        ))
+////                                        return
+////                                    } else {
+////
+////                                    self.allUsers.append(User(
+////                                        id: user.data()["id"] as! String,
+////                                        email: user.data()["email"] as! String,
+////                                        name: user.data()["name"] as! String,
+////                                        gender: user.data()["gender"] as! String,
+////                                        age: user.data()["age"] as! String,
+////                                        hometown: user.data()["hometown"] as! String,
+////                                        subject: user.data()["subject"] as! String,
+////                                        introduction: user.data()["introduction"] as! String,
+////                                        studystyle: user.data()["studystyle"] as! String,
+////                                        hobby: user.data()["hobby"] as! String,
+////                                        personality: user.data()["personality"] as! String,
+////                                        work: user.data()["work"] as! String,
+////                                        purpose: user.data()["purpose"] as! String,
+////                                        photoURL: user.data()["photoURL"] as! String
+////                                    ))
+////                                    }
+////
+////                                } //閉じ
+////                                else {
+////                                    print("\(String(describing: user.data()["name"]))は同性")
+////
+////                                }
+////                                self.secondFilter()
+////                            }
+//////                            print("allUsers2: \(self.allUsers)")
+////                        }
+//////                        print("allUsers3: \(self.allUsers)")
+////                    }
+//////                    print("allUsers4: \(self.allUsers)")
+////                }
+////                print("allUsers5: \(self.allUsers)")
+//            }
+//
+//
+//
+//        } //matchtable loop
+//    }
+//
+//        func secondFilter(){
+//            print("セカンドフィルター: \(self.allUsers)")
+//            print("セカンドマッチ: \(self.MatchUsers)")
+////            for user in self.MatchUsers{
+////                let index = self.allUsers.firstIndex(of: user)
+////                let index1 = self.MatchUsers.firstIndex(of: user)
+////                print(index as Any)
+////                if let index = index {
+////                    self.allUsers.remove(at: index)
+////                } else {
+////                    print("ナンジャこりゃ")
+////                }
+////
+////                self.MatchUsers.remove(at: index1 ?? 0)
+////            }
+//        }
+//
+
+
+
+//                                    self.shareData.allUsers = self.shareData.allUsers.filter { v in return !self.shareData.MatchUsers.contains(v) }
+//                                    print("オール: \(self.shareData.allUsers)")
+//                                    print("マッチ: \(self.shareData.MatchUsers)")
+
+
+// func filterUsers(){
+//        ///        マッチを先に送った方の表示Ok, 後から送った方の表示Ok、でもマッチ二人以上だとsucks
+//        db.collection("MatchTable").document(self.currentUserData["id"] as? String ?? "").collection("MatchUser").getDocuments { (snap, err) in
+//
+//            case 0:
+//                print("マッチなし")
+//                self.getAllUsers()
+//
+//            case 1:
+//                print("マッチあり") //マッチあるとき
+//                print("マッチ数: \(snap!.count)")
+//
+//                                    else {
+//                                        print("\(String(describing: user.data()["name"]))はマッチずみ")
+//                                        print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
+//
+//
+//                                    }
+//                                }
+//                                else {
+//                                    print("\(String(describing: user.data()["name"]))は同性")
+//
+//
+//                                }
+//
+//                            }
+//                        }
+//
+//
+//
+//                    }
+//
+//                }
+//
+//            default:
+//
+//                print("マッチあり") //マッチが二つ以上あるとき
+//@@ -153,64 +153,42 @@ class ShareData:ObservableObject{
+//                        }
+//                        if let snap = querySnapshot {
+//                            for user in snap.documents {
+//                                //                                print("マチのID: \(id.data()["MatchUserId"] as! String)")
+//                                //                                print("全員のID: \(user.data()["id"] as! String)")
+//
+//
+//                                if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
+//                                {
+//                                    if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
+//
+//                                    {
+//                                        self.allUsers.append(User(
+//                                            id: user.data()["id"] as! String,
+//                                            email: user.data()["email"] as! String,
+//                                            name: user.data()["name"] as! String,
+//                                            gender: user.data()["gender"] as! String,
+//                                            age: user.data()["age"] as! String,
+//                                            hometown: user.data()["hometown"] as! String,
+//                                            subject: user.data()["subject"] as! String,
+//                                            introduction: user.data()["introduction"] as! String,
+//                                            studystyle: user.data()["studystyle"] as! String,
+//                                            hobby: user.data()["hobby"] as! String,
+//                                            personality: user.data()["personality"] as! String,
+//                                            work: user.data()["work"] as! String,
+//                                            purpose: user.data()["purpose"] as! String,
+//                                            photoURL: user.data()["photoURL"] as! String
+//                                        ))
+//
+//                                    }
+//                                    else {
+//                                        print("\(String(describing: user.data()["name"]))はマッチずみ")
+//                                        print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
+//                                        //                                        print("\(String(describing: id.data()["MatchUserId"] as? String))はマッチずみ")
+//
+//                                        self.matchUserData = User(id: user.data()["id"] as! String, email: (user.data()["email"] as! String), name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String)
+//                                        self.MatchUsers.append(self.matchUserData)
+////                                        self.index = self.allUsers.firstIndex(of: self.matchUserData)!
+//                                        //                                        let matchUserIndex = self.MatchUsers.firstIndex(of: matchUserData)
+//
+//
+//                                        //                                        self.allUsers.remove(at: matchUserIndex!)
+//
+//                                    print("\(String(describing: user.data()["name"] as? String))はユーザーです。")
+//                                    if user.data()["id"] as? String == id.data()["MatchUserId"] as? String {
+//                                        print("\(String(describing: user.data()["name"] as? String))はIDが\(String(describing: id.data()["MatchUserId"] as? String))でマッチしています。")
+//                                        return
+//                                    }
+//                                }
+//
+//                                    self.allUsers.append(User(
+//                                        id: user.data()["id"] as! String,
+//                                        email: user.data()["email"] as! String,
+//                                        name: user.data()["name"] as! String,
+//                                        gender: user.data()["gender"] as! String,
+//                                        age: user.data()["age"] as! String,
+//                                        hometown: user.data()["hometown"] as! String,
+//                                        subject: user.data()["subject"] as! String,
+//                                        introduction: user.data()["introduction"] as! String,
+//                                        studystyle: user.data()["studystyle"] as! String,
+//                                        hobby: user.data()["hobby"] as! String,
+//                                        personality: user.data()["personality"] as! String,
+//                                        work: user.data()["work"] as! String,
+//                                        purpose: user.data()["purpose"] as! String,
+//                                        photoURL: user.data()["photoURL"] as! String
+//                                    ))
+//
+//
+//                                } //閉じ
+//                                else {
+//                                    print("\(String(describing: user.data()["name"]))は同性")
+//                                    //                                    print(self.allUsers) //男性全員
+//
+//                                }
+//
+//                            }
+//                        }
+////                        let index = self.allUsers.firstIndex(of: self.matchUserData)
+////                        self.allUsers.remove(at: self.index)
+//
+////                        for user in self.MatchUsers {
+////                            let index = self.allUsers.firstIndex(of: user)
+////                            self.allUsers.remove(at: index!)
+////                        }
+////                        print("インデックス: \(self.index)")
+////                        print("オールユーザーズ配列: \(self.allUsers)")
+////                        print("マッチユーザーず配列: \(self.MatchUsers)")
+//                        self.secondFilter()
+//
+//                    }
+//
+//@@ -222,15 +200,17 @@ class ShareData:ObservableObject{
+//        } //matchtable loop
+//    }
+//
+//    func secondFilter(){
+//        print("セカンド: \(self.allUsers)")
+//        print("セカンドマッチ: \(self.MatchUsers)")
+//        for user in self.MatchUsers{
+//            let index = self.allUsers.firstIndex(of: user)
+////            print(index)
+//            self.allUsers.remove(at: index ?? 1)
+//        }
+//    }
+    //    func secondFilter(){
+    //        print("セカンド: \(self.allUsers)")
+    //        print("セカンドマッチ: \(self.MatchUsers)")
+    //        for user in self.MatchUsers{
+    //            let index = self.allUsers.firstIndex(of: user)
+    //            let index1 = self.MatchUsers.firstIndex(of: user)
+    //            print(index)
+    //            self.allUsers.remove(at: index ?? 0)
+    //            self.MatchUsers.remove(at: index1 ?? 0)
+    //        }
+    //    }

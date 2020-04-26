@@ -29,7 +29,7 @@ struct MessageView: View {
             .onAppear { UITableView.appearance().separatorStyle = .none }
             .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
             ///問題点　
-            ///２、メッセージを送信すると、他のページでは１行開いちゃう
+            ///メッセージを送信すると、他のuserページでは１行開いちゃう
             
             HStack{
                 TextField("メッセージ", text: $text).textFieldStyle(RoundedBorderTextFieldStyle()).padding()

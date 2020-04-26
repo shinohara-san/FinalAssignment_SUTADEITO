@@ -18,22 +18,12 @@ struct MainView: View {
     
     @State var selection = 0 //必要?
     
-    @State var userProfileOn = false
-    @State var favoriteProfileOn = false
-    
-    @State var likeListOn = false
-    @State var likeProfileOn = false
-    
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
-    
-    @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
-    
-    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
-    
+
     @State var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     @State var messageOn = false
-    
+    @State var userProfileOn = false
     @State var text = ""
     
     @ObservedObject var msgVM = MessageViewModel()
@@ -50,7 +40,10 @@ struct MainView: View {
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
-                            
+//                              filter  for user1 in self.shareData.MatchUsers {
+//                                    if user == user1{
+//                                        return
+//                                    }
                                 VStack{
                                     FirebaseImageView(imageURL: user.photoURL)
                                     HStack{
@@ -65,6 +58,8 @@ struct MainView: View {
                                     self.userInfo = user
                                     self.userProfileOn = true
                                     }
+                                    
+//                                } //追加
                                 
 
                             } //foreach
@@ -75,13 +70,30 @@ struct MainView: View {
                             
                             .onAppear{
                                 DispatchQueue.global().sync {
-                                    self.shareData.getCurrentUser() //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
+//                                    ispatchQueue.global().sync {
+                                    self.shareData.getCurrentUser()
+                                    //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
+//                                    print(self.shareData.allUsers)
+//                                    print(self.shareData.MatchUsers)
                                 }
-//                                print(self.shareData.allUsers)
+//                                DispatchQueue.global().sync {
+//                                    print("フィルター前: \(self.shareData.allUsers)")
+//                                    print(self.shareData.MatchUsers)
+//                                    for user in self.shareData.allUsers{
+//                                        for match in self.shareData.MatchUsers{
+//                                            if user == match {
+//                                                self.shareData.allUsers = self.shareData.allUsers.filter{ !self.shareData.MatchUsers.contains($0)}
+//                                                print("フィルター後: \(self.shareData.allUsers)")
+//                                            }
+//                                        }
+//                                    }
+//                                }
+                                
+                                
                         }
-//                        .onDisappear(){
-//                            self.shareData.allUsers = [User]()
-//                        }
+                        .onDisappear(){
+//                            self.shareData.matchUserId = [String]()
+                        }
                         
                     }//Scrollview
                 } else {
@@ -112,111 +124,9 @@ struct MainView: View {
                     }
             }.tag(2)
             
+            ///お気に入りいいね一覧ページ
             
-            ////                    お気に入りユーザーのページ
-            Group{
-                
-                if !self.likeListOn{
-                    if !favoriteProfileOn{
-                        ScrollView{
-                            VStack{
-                                Button("いいね一覧へ"){
-                                    self.likeListOn = true
-                                }
-                                Text("お気に入りユーザー")
-                                ForEach(self.shareData.favoriteUsers){ user in
-                                    VStack{
-                                        FirebaseImageView(imageURL: user.photoURL)
-                                        Text(user.name)
-                                        Text(user.gender)
-                                        Text(user.age)
-                                    }
-                                    .onTapGesture {
-                                        self.favoriteUserInfo = user
-                                        self.favoriteProfileOn = true
-                                    }
-                                }
-                            }
-                            .navigationBarTitle("お気に入りユーザー一覧")
-                            .navigationBarHidden(true)
-                            .onAppear{
-                                //                DispatchQueue.global().sync {
-                                self.shareData.getAllFavoriteUsers()
-                                //                }
-                            }
-                            .onDisappear{
-                                self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
-                                self.userProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
-                            }
-                            
-                        } //scroll
-                        
-                    } else {
-                        
-                        VStack{
-                            UserProfileView(user: favoriteUserInfo)
-                            Button("戻る"){
-                                self.favoriteProfileOn = false
-                            }
-                        }.onDisappear{
-                            self.favoriteProfileOn = false
-                        }
-                        
-                    } //お気に入り一覧閉じ
-                } //if !self.likeListOn　いいね一覧表示off閉じ
-                else
-                { ///いいね一覧スタート
-                    
-                    ScrollView{
-                        VStack{
-                            Button("お気に入り一覧へ"){
-                                self.likeListOn = false
-                            }
-                            Text("いいねを送ったユーザー")
-                            if !self.likeProfileOn{
-                                ForEach(self.shareData.likeUsers){ user in
-                                    VStack{
-                                        FirebaseImageView(imageURL: user.photoURL)
-                                        Text(user.name)
-                                        Text(user.gender)
-                                        Text(user.age)
-                                    }
-                                    .onTapGesture {
-                                        self.likeUserInfo = user
-                                        self.likeProfileOn = true
-                                    }
-                                }
-                            } else {
-                                UserProfileView(user: likeUserInfo)
-                                    .onDisappear{
-                                        
-                                        self.shareData.getAllLikeUsers()
-                                        
-                                }
-                                Button("戻る"){
-                                    self.likeProfileOn = false
-                                }
-                            }
-                            
-                        }
-                        .navigationBarTitle("いいねしたユーザー")
-                        .navigationBarHidden(true)
-                        .onAppear{
-                            //                DispatchQueue.global().sync {
-                            self.shareData.getAllLikeUsers()
-                            //                }
-                        }
-                        .onDisappear{
-                            self.shareData.likeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
-                            self.likeProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
-                        }
-                        
-                    } //scroll
-                    
-                } //いいねとじ
-                
-                
-            } //Group全体とじ
+            FavoriteAndLikeUserView(userProfileOn: $userProfileOn)
                 
                 .tabItem {
                     VStack {
@@ -229,8 +139,6 @@ struct MainView: View {
             
             ////                   マッチングページ
             Group{
-                
-                //                if !messageOn{  //
                 
                 VStack{
                     Text("マッチ一覧")
@@ -246,10 +154,6 @@ struct MainView: View {
                     }
                 }
                 
-                //                }//
-                //                else {
-                
-                //                }
             }.onAppear{
                 self.shareData.getAllMatchUser()
             }.onDisappear{
