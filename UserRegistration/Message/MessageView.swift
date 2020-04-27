@@ -12,7 +12,7 @@ import SwiftUI
 struct MessageView: View {
     var matchUserInfo: User
 //    @Binding var messageOn: Bool
-    @ObservedObject var msgVM = MessageViewModel()
+    @ObservedObject var msgVM = MessageViewModel(shareData: ShareData.init())
 //    let msgVM1 = msgVM.init()
     @EnvironmentObject var shareData : ShareData
     @State var text = ""
@@ -24,6 +24,8 @@ struct MessageView: View {
                     MessageRow(message: i.msg, isMyMessage: true)
                 } else if i.fromUser == self.matchUserInfo.id && i.toUser == self.shareData.currentUserData["id"] as? String ?? "" {
                     MessageRow(message: i.msg, isMyMessage: false)
+                } else if i.fromUser != self.shareData.currentUserData["id"] as? String ?? "" && i.toUser != self.shareData.currentUserData["id"] as? String ?? ""{
+                    
                 }
             }
             .onAppear { UITableView.appearance().separatorStyle = .none }

@@ -30,6 +30,8 @@ class ShareData:ObservableObject{
     
     @Published var likeUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
     
+    @Published var searchedUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    
     @Published var MatchUsers: [User] = [User]()
     
     @Published var imageURL = ""
@@ -95,187 +97,17 @@ class ShareData:ObservableObject{
             for match in self.MatchUsers{
                 if user == match {
                     self.allUsers = self.allUsers.filter{ !self.MatchUsers.contains($0)}
-                    print("フィルター後: \(self.allUsers)")
+//                    print("フィルター後: \(self.allUsers)")
                 }
             }
         }
     }
-    
-    
-    func filterUsers(){
-        self.db.collection("MatchTable")
-            .document(self.currentUserData["id"] as! String)
-            .collection("MatchUser")
-            .getDocuments { (snap, err) in
-                if let snap = snap {
-                    
-                    for id in snap.documents{
-                        switch snap.count{
-                        case 0:
-                            print("マッチなし")
-                            print("マッチ数: \(snap.count)")
-                            self.getAllUsers()
-                            
-                        case 1:
-                            print("マッチあり") //マッチあるとき
-                            print("マッチ数: \(snap.count)")
-                            for id in snap.documents{
-                                
-                                self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
-                                
-                                self.db.collection("Users").getDocuments { (snap, err) in
-                                    if let err = err {
-                                        print("Error getting documents: \(err)")
-                                        return
-                                    }
-                                    if let snap = snap {
-                                        for user in snap.documents {
-                                            
-                                            if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
-                                            {
-                                                if user.data()["id"] as? String != id.data()["MatchUserId"] as? String
-                                                    
-                                                {
-                                                    self.allUsers.append(User(
-                                                        id: user.data()["id"] as! String,
-                                                        email: user.data()["email"] as! String,
-                                                        name: user.data()["name"] as! String,
-                                                        gender: user.data()["gender"] as! String,
-                                                        age: user.data()["age"] as! String,
-                                                        hometown: user.data()["hometown"] as! String,
-                                                        subject: user.data()["subject"] as! String,
-                                                        introduction: user.data()["introduction"] as! String,
-                                                        studystyle: user.data()["studystyle"] as! String,
-                                                        hobby: user.data()["hobby"] as! String,
-                                                        personality: user.data()["personality"] as! String,
-                                                        work: user.data()["work"] as! String,
-                                                        purpose: user.data()["purpose"] as! String,
-                                                        photoURL: user.data()["photoURL"] as! String
-                                                    ))
-                                                    
-                                                } else {
-                                                    print("\(String(describing: user.data()["name"]))はマッチずみ")
-                                                    print("\(String(describing: user.data()["id"] as? String))はマッチずみ")
-                                                    
-                                                }
-                                            } else {
-                                                print("\(String(describing: user.data()["name"]))は同性")
-                                                
-                                            }
-                                            
-                                        }
-                                    }
-                                    
-                                    
-                                }
-                                
-                            }
-                            
-                        default:
-                            print("マッチあり")
-                            print("マッチ数: \(snap.count)")
-                            print(id.data()["MatchUserId"] as! String)
-                            self.matchUserId.append(id.data()["MatchUserId"] as! String)
-                            print(self.matchUserId)
-                            self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
-                            self.db.collection("Users").getDocuments { (querySnapshot, err) in
-                                if let err = err {
-                                    print("Error getting documents: \(err)")
-                                    return
-                                }
-                                
-                                if let snap = querySnapshot {
-                                    for user in snap.documents{
-                                        for matchId in self.matchUserId {
-                                            
-                                            if user.data()["id"] as? String == matchId {
-                                                self.MatchUsers.append(User(
-                                                    id: user.data()["id"] as! String,
-                                                    email: user.data()["email"] as! String,
-                                                    name: user.data()["name"] as! String,
-                                                    gender: user.data()["gender"] as! String,
-                                                    age: user.data()["age"] as! String,
-                                                    hometown: user.data()["hometown"] as! String,
-                                                    subject: user.data()["subject"] as! String,
-                                                    introduction: user.data()["introduction"] as! String,
-                                                    studystyle: user.data()["studystyle"] as! String,
-                                                    hobby: user.data()["hobby"] as! String,
-                                                    personality: user.data()["personality"] as! String,
-                                                    work: user.data()["work"] as! String,
-                                                    purpose: user.data()["purpose"] as! String,
-                                                    photoURL: user.data()["photoURL"] as! String
-                                                ))
-                                            }
-                                            
-                                        }
-                                        
-                                        
-                                        if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
-                                            //                                                && user.data()["id"] as? String != matchId
-                                            //                                            (id.data()["MatchUserId"] as! String)
-                                            //                                            "SzhAsVFVirchWm63jSsV"
-                                        {
-                                            self.allUsers.append(User(
-                                                id: user.data()["id"] as! String,
-                                                email: user.data()["email"] as! String,
-                                                name: user.data()["name"] as! String,
-                                                gender: user.data()["gender"] as! String,
-                                                age: user.data()["age"] as! String,
-                                                hometown: user.data()["hometown"] as! String,
-                                                subject: user.data()["subject"] as! String,
-                                                introduction: user.data()["introduction"] as! String,
-                                                studystyle: user.data()["studystyle"] as! String,
-                                                hobby: user.data()["hobby"] as! String,
-                                                personality: user.data()["personality"] as! String,
-                                                work: user.data()["work"] as! String,
-                                                purpose: user.data()["purpose"] as! String,
-                                                photoURL: user.data()["photoURL"] as! String
-                                            ))
-                                            //                        }
-                                            //                                            }
-                                        }
-                                        
-                                        //matchtableLoopここまで
-                                        
-                                        //                    print("オールユーザー: \(self.allUsers)")
-                                        //                    self.allUsers = self.allUsers.filter { v in return !self.MatchUsers.contains(v) }
-                                        //                    print()
-                                        self.secondFilter()
-                                        //                                            }
-                                        //
-                                        //                                        }
-                                        
-                                    }
-                                }
-                                //            self.allUsers.remove(at: 0)
-                                
-                            }
-                            
-                            
-                            
-                            
-                            
-                        }
-                        
-                    }
-                }
-        } //getD
-    }
-    
-    func secondFilter(){
-        print("セカンドフィルター: \(self.allUsers)")
-        print("セカンドフィルターマッチ: \(self.MatchUsers)")
-//        for user in self.MatchUsers{
-//            let index = self.allUsers.firstIndex(of: user)
-//            //            print(index)
-//            self.allUsers.remove(at: index ?? 1)
-//        }
-    }
+
     
     func getAllUsers(){
         self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
         //        self.filterUsers()
-        self.filtering()
+//        self.filtering()
         self.db.collection("Users").getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
@@ -563,8 +395,74 @@ class ShareData:ObservableObject{
     }
     
     
+    @Published var messages = [Message]()
     
+    func messageManager(userId: String, partnerId:String){
+        db.collection("Messages").whereField("fromUser", isEqualTo: self.currentUserData["id"] as! String).whereField("toUser", isEqualTo: partnerId)
+                .addSnapshotListener{ (querySnapshot, error) in
+                guard let snapshot = querySnapshot
+                    else{
+                        print("Error fetching snapshots: \(error!)")
+                        return
+                }
+                snapshot.documentChanges.forEach{ diff in
+                    if (diff.type == .added){
+                        let toUser = diff.document.get("toUser") as! String
+                        let fromUser = diff.document.get("fromUser") as! String
+                        let message = diff.document.get("message") as! String
+                        let id = diff.document.documentID
+                        let date = diff.document.get("date") as! Timestamp
+                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date))
+                    }
+//                    if (diff.type == .modified){
+//                        print("Modified Vegetables: \(diff.document.data())")
+//                    }
+//                    if (diff.type == .removed){
+//                        print("Removed Vegetables: \(diff.document.data())")
+//                    }
+                }
+            }
+    }
     
+    func sendMsg(msg: String, toUser: String, fromUser: String){
+          let data1 = [
+              "message": msg,
+              "toUser": toUser,
+              "fromUser": fromUser,
+              "date": Timestamp()
+              ] as [String : Any]
+          
+        db.collection("Messages").addDocument(data: data1){ error in
+              if let err = error {
+                  print(err.localizedDescription)
+                  return
+              }
+              print("メッセージを送信しました")
+          }
+          
+    }
+    
+    @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    
+    func searchUser(key: String, value: String){
+        
+        self.searchedUsers = [User]()
+        db.collection("Users").whereField(key, isEqualTo: value).getDocuments { (snap, err) in
+            if let err = err{
+                print(err.localizedDescription)
+                return
+            }
+            
+            if let snap = snap {
+                for user in snap.documents{
+                    let ref = user.data()
+                    if ref["gender"] as? String != self.currentUserData["gender"] as? String{
+                    self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String))
+                    } //同性を外す条件分岐
+                }
+            }
+        }
+    }
     
     
     

@@ -20,17 +20,17 @@ struct MainView: View {
     
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
 
-    @State var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+//    @State var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     @State var messageOn = false
     @State var userProfileOn = false
     @State var text = ""
     
-    @ObservedObject var msgVM = MessageViewModel()
+    @ObservedObject var msgVM = MessageViewModel(shareData: ShareData.init())
     
     var body: some View {
         
-        TabView(selection: $selection) {
+        TabView {
             ////ユーザー一覧のページ
             
             //            ListView(datas: self.datas)
@@ -40,10 +40,7 @@ struct MainView: View {
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
-//                              filter  for user1 in self.shareData.MatchUsers {
-//                                    if user == user1{
-//                                        return
-//                                    }
+
                                 VStack{
                                     FirebaseImageView(imageURL: user.photoURL)
                                     HStack{
@@ -156,6 +153,7 @@ struct MainView: View {
                 
             }.onAppear{
                 self.shareData.getAllMatchUser()
+               
             }.onDisappear{
                 self.shareData.matchUserArray = [User]()
             }

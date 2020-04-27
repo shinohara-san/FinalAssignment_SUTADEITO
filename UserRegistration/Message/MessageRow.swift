@@ -18,14 +18,14 @@ struct MessageRow: View {
 
                 Text(message)
                 .padding(8)
-                .background(Color.red)
+                .background(Color.gray)
                 .cornerRadius(6)
                 .foregroundColor(Color.white)
             } else {
                 VStack(alignment: .leading) {
                     Text(message)
                     .padding(8)
-                    .background(Color.green)
+                    .background(Color.blue)
                     .cornerRadius(6)
                     .foregroundColor(Color.white)
 

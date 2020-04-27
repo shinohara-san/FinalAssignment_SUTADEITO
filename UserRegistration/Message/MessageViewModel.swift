@@ -21,35 +21,40 @@ struct Message: Identifiable {
 class MessageViewModel: ObservableObject {
     var datas = FirebaseData()
     let db = Firestore.firestore()
-//    let matchUser: User
+    var shareData:ShareData
     
     @Published var messages = [Message]()
     
-    init(){
-        
+    init(shareData: ShareData){
+        self.shareData = shareData
 //        getCurrentUserId()
+        
 //        .document(currentUserId).collection("messageRoom").order(by: "date")
         db.collection("Messages").order(by: "date").addSnapshotListener { (snap, error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
             }
+            //毎回messagesを空っぽにする。そのユザーになるたびにそれに対応したやつをmessagesにappend
             if let snap = snap {
                 for i in snap.documentChanges {
-                    if i.type == .added {
+//
+                    if i.type == .added{
                         let toUser = i.document.get("toUser") as! String
                         let fromUser = i.document.get("fromUser") as! String
                         let message = i.document.get("message") as! String
                         let id = i.document.documentID
                         let date = i.document.get("date") as! Timestamp
-                        
+                      
                         self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date))
-
+                        
                     }
                 }
             }
+//            print("シェアデータ: \(String(describing: shareData.datas.session?.email))")
         }
     }
+    
     
     
     
