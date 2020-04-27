@@ -458,10 +458,19 @@ class ShareData:ObservableObject{
                     let ref = user.data()
                     if ref["gender"] as? String != self.currentUserData["gender"] as? String{
                     self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String))
-                    } //同性を外す条件分岐
+                        
+                        for user in self.searchedUsers {
+                                   for matchUser in self.MatchUsers {
+                                       if user == matchUser{
+                                        self.searchedUsers = self.searchedUsers.filter{ !self.MatchUsers.contains($0)}
+                                       }
+                                   }
+                               } //マッチしてるユーザをフィルターにかける
+                    } //同性を外す条件分岐とじ
                 }
             }
         }
+
     }
     
     

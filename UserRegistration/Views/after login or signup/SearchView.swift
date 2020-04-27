@@ -63,7 +63,7 @@ struct SearchView: View {
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.searchedUsers){ user in
-                                NavigationLink(destination: UserProfileView(user: self.userInfo)){
+                                
                                     VStack{
                                         FirebaseImageView(imageURL: user.photoURL)
                                         HStack{
@@ -78,7 +78,7 @@ struct SearchView: View {
                                         self.userInfo = user
                                         self.userProfileOn = true
                                     }
-                                }
+                                
                                 
                                 
                                 
@@ -89,24 +89,27 @@ struct SearchView: View {
                     } //scroll
                     
                 } // if
-                //             else {
-                //                    VStack{
-                //                        UserProfileView(user: userInfo)
-                //                        Button("戻る"){
-                //                            self.userProfileOn = false
-                //                        }
-                //                    }
-                //                }
+                else {
+                    VStack{
+                        UserProfileView(user: userInfo)
+                        Button("戻る"){
+                            self.userProfileOn = false
+                        }
+                    }
+                }
             } //group
-                .onDisappear{
-                    self.shareData.searchedUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
-                    self.userProfileOn = false
-            }
+//                .onDisappear{
+//                    self.shareData.searchedUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+//            }
             
         } //vstack
             
             .navigationBarTitle("")
             .navigationBarHidden(true)
+            .onDisappear{
+                self.userProfileOn = false
+                 self.shareData.searchedUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+        }
         
     } //body
     
