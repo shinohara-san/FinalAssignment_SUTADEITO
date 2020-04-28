@@ -10,7 +10,7 @@ import SwiftUI
 
 struct SettingView: View {
     
-    var datas: FirebaseData //firebaseの処理とか
+    var datas: FirebaseData
     @EnvironmentObject var shareData: ShareData
     
     

@@ -77,6 +77,7 @@ struct SearchView: View {
                                     .onTapGesture {
                                         self.userInfo = user
                                         self.userProfileOn = true
+                                        
                                     }
                                 
                                 
@@ -98,9 +99,7 @@ struct SearchView: View {
                     }
                 }
             } //group
-//                .onDisappear{
-//                    self.shareData.searchedUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
-//            }
+
             
         } //vstack
             

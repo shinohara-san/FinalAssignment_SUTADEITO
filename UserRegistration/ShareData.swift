@@ -11,6 +11,8 @@ import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
 
+let shareData = ShareData()
+
 class ShareData:ObservableObject{
     
     let db = Firestore.firestore()
@@ -23,6 +25,8 @@ class ShareData:ObservableObject{
     @Published var allUsers : [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
     
     @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    
+//    @Published var matchUserInfo: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     //    @Published var favoriteUserIds = [String]()
     
@@ -82,7 +86,7 @@ class ShareData:ObservableObject{
                     
                     self.getAllUsers()
                     
-//                                        self.filterUsers() //ユーザー情報とれる
+                    //                                        self.filterUsers() //ユーザー情報とれる
                     //                                        self.getAllMatchUser()
                     //                                        print("getAllMatchUser: \(self.matchUserArray)")
                     
@@ -97,27 +101,27 @@ class ShareData:ObservableObject{
             for match in self.MatchUsers{
                 if user == match {
                     self.allUsers = self.allUsers.filter{ !self.MatchUsers.contains($0)}
-//                    print("フィルター後: \(self.allUsers)")
+                    //                    print("フィルター後: \(self.allUsers)")
                 }
             }
         }
     }
-
+    
     
     func getAllUsers(){
         self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
         //        self.filterUsers()
-//        self.filtering()
+        //        self.filtering()
         self.db.collection("Users").getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
                 return
             }
-//            self.filtering()
+            //            self.filtering()
             if let snap = querySnapshot {
                 for user in snap.documents {
                     //                    for matchId in self.matchUserId {
-//                    self.filtering()
+                    //                    self.filtering()
                     if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
                         //                    if self.matchUserId.count > 0 {
                         //                       if user.data()["id"] as? String != matchId
@@ -142,21 +146,21 @@ class ShareData:ObservableObject{
                         ))
                         //                        }
                         //                    }
-//                        self.filtering()
+                        //                        self.filtering()
                     }
                     
                     //matchtableLoopここまで
                     
                     
-//                    self.filtering()
+                    //                    self.filtering()
                 }
             }
             //            self.allUsers.remove(at: 0)
-//            self.filtering()
+            //            self.filtering()
         }
-//        self.filtering()
+        //        self.filtering()
         self.db.collection("MatchTable")
-        .document(self.currentUserData["id"] as! String)
+            .document(self.currentUserData["id"] as! String)
             .collection("MatchUser").getDocuments { (snap, err) in
                 if let snap = snap {
                     for id in snap.documents {
@@ -179,20 +183,20 @@ class ShareData:ObservableObject{
                                         purpose: user.data()["purpose"] as! String,
                                         photoURL: user.data()["photoURL"] as! String
                                     ))
-//                                    print(self.MatchUsers)
+                                    //                                    print(self.MatchUsers)
                                     self.filtering()
                                 }
-//                                self.filtering()
+                                //                                self.filtering()
                             }
-//                            self.filtering()
+                            //                            self.filtering()
                         }
-//                        self.filtering()
+                        //                        self.filtering()
                     }
-//                    self.filtering()
+                    //                    self.filtering()
                 }
-//                self.filtering()
+                //                self.filtering()
         }
-//        self.filtering()
+        //        self.filtering()
     } //getAllUsers()
     
     
@@ -395,51 +399,27 @@ class ShareData:ObservableObject{
     }
     
     
-    @Published var messages = [Message]()
     
-    func messageManager(userId: String, partnerId:String){
-        db.collection("Messages").whereField("fromUser", isEqualTo: self.currentUserData["id"] as! String).whereField("toUser", isEqualTo: partnerId)
-                .addSnapshotListener{ (querySnapshot, error) in
-                guard let snapshot = querySnapshot
-                    else{
-                        print("Error fetching snapshots: \(error!)")
-                        return
-                }
-                snapshot.documentChanges.forEach{ diff in
-                    if (diff.type == .added){
-                        let toUser = diff.document.get("toUser") as! String
-                        let fromUser = diff.document.get("fromUser") as! String
-                        let message = diff.document.get("message") as! String
-                        let id = diff.document.documentID
-                        let date = diff.document.get("date") as! Timestamp
-                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date))
-                    }
-//                    if (diff.type == .modified){
-//                        print("Modified Vegetables: \(diff.document.data())")
-//                    }
-//                    if (diff.type == .removed){
-//                        print("Removed Vegetables: \(diff.document.data())")
-//                    }
-                }
+    
+    func sendMsg(msg: String, toUser: String, fromUser: String, matchId: String){
+        let data = [
+            "message": msg,
+            "toUser": toUser,
+            "fromUser": fromUser,
+            "date": Timestamp(),
+            "matchId": matchId
+            ] as [String : Any]
+        print("sendMsg: \(matchId)")
+        
+        db.collection("Messages").addDocument(data: data){ error in
+            if let err = error {
+                print(err.localizedDescription)
+                return
             }
-    }
-    
-    func sendMsg(msg: String, toUser: String, fromUser: String){
-          let data1 = [
-              "message": msg,
-              "toUser": toUser,
-              "fromUser": fromUser,
-              "date": Timestamp()
-              ] as [String : Any]
-          
-        db.collection("Messages").addDocument(data: data1){ error in
-              if let err = error {
-                  print(err.localizedDescription)
-                  return
-              }
-              print("メッセージを送信しました")
-          }
-          
+            print("メッセージを送信しました")
+        }
+        
+        
     }
     
     @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
@@ -457,25 +437,41 @@ class ShareData:ObservableObject{
                 for user in snap.documents{
                     let ref = user.data()
                     if ref["gender"] as? String != self.currentUserData["gender"] as? String{
-                    self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String))
+                        self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String))
                         
                         for user in self.searchedUsers {
-                                   for matchUser in self.MatchUsers {
-                                       if user == matchUser{
-                                        self.searchedUsers = self.searchedUsers.filter{ !self.MatchUsers.contains($0)}
-                                       }
-                                   }
-                               } //マッチしてるユーザをフィルターにかける
+                            for matchUser in self.MatchUsers {
+                                if user == matchUser{
+                                    self.searchedUsers = self.searchedUsers.filter{ !self.MatchUsers.contains($0)}
+                                }
+                            }
+                        } //マッチしてるユーザをフィルターにかける
                     } //同性を外す条件分岐とじ
                 }
             }
         }
-
+        
     }
     
+    @Published var matchId = ""
     
-    
-    
+    func getMatchId(partner: User){
+        
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
+            if let snap = snap {
+                for id in snap.documents{
+                    self.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
+                    print("MatchId＠ゲットマッチID is \(self.matchId)")
+                    
+                }
+            }
+            
+        }
+     
+    }
+
+
+
 }//func
 
 

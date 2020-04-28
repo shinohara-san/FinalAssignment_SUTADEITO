@@ -16,25 +16,19 @@ struct MainView: View {
     
     @EnvironmentObject var shareData: ShareData
     
-    @State var selection = 0 //必要?
+    //@State var selection = 0 //必要?
     
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
-
-//    @State var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     @State var messageOn = false
     @State var userProfileOn = false
     @State var text = ""
     
-    @ObservedObject var msgVM = MessageViewModel(shareData: ShareData.init())
-    
     var body: some View {
         
         TabView {
             ////ユーザー一覧のページ
-            
-            //            ListView(datas: self.datas)
-            //                NavigationView{
+
             Group{
                 if !userProfileOn{
                     ScrollView{
@@ -54,6 +48,7 @@ struct MainView: View {
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
+//                                    self.shareData.test1()
                                     }
                                     
 //                                } //追加
@@ -66,31 +61,17 @@ struct MainView: View {
                             
                             
                             .onAppear{
-                                DispatchQueue.global().sync {
+                                DispatchQueue.global().async {
 //                                    ispatchQueue.global().sync {
                                     self.shareData.getCurrentUser()
-                                    //ログイン中のユーザー情報を取得し、そのあと全表示ユーザー情報取得
-//                                    print(self.shareData.allUsers)
-//                                    print(self.shareData.MatchUsers)
+
                                 }
-//                                DispatchQueue.global().sync {
-//                                    print("フィルター前: \(self.shareData.allUsers)")
-//                                    print(self.shareData.MatchUsers)
-//                                    for user in self.shareData.allUsers{
-//                                        for match in self.shareData.MatchUsers{
-//                                            if user == match {
-//                                                self.shareData.allUsers = self.shareData.allUsers.filter{ !self.shareData.MatchUsers.contains($0)}
-//                                                print("フィルター後: \(self.shareData.allUsers)")
-//                                            }
-//                                        }
-//                                    }
-//                                }
-                                
+
                                 
                         }
-                        .onDisappear(){
+//                        .onDisappear(){
 //                            self.shareData.matchUserId = [String]()
-                        }
+//                        }
                         
                     }//Scrollview
                 } else {
@@ -140,6 +121,7 @@ struct MainView: View {
                 VStack{
                     Text("マッチ一覧")
                     List(self.shareData.matchUserArray){ user in
+                        //写真タップでプロフィール表示
                         NavigationLink(destination: MessageView(matchUserInfo: user)){
                             HStack{
                                 Text(user.name)
@@ -147,7 +129,7 @@ struct MainView: View {
                             }
 
                         }
-                        
+
                     }
                 }
                 
@@ -164,9 +146,6 @@ struct MainView: View {
                     Image(systemName: "suit.heart")
                 }
             }.tag(4)
-            
-            
-            
             
             ////                    自分のプロフィールページ
             SettingView(datas: self.datas)

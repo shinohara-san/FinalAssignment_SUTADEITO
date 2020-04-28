@@ -16,8 +16,10 @@ struct UserProfileView: View {
     let db = Firestore.firestore()
     @EnvironmentObject var shareData: ShareData
     
+    @State var roomId = ""
+    
     func giveUserLike(){
-
+        
         db.collection("LikeTable").whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
             if err != nil{
                 return
@@ -29,17 +31,17 @@ struct UserProfileView: View {
             self.db.collection("LikeTable").addDocument(data: [
                 "LikeUserId": self.user.id,
                 "MyUserId": self.shareData.currentUserData["id"] as! String
-                    ])
+            ])
             self.gaveLike = true
             //addDocumentを使うことで自動生成idの下にデータ保存できる
-                    print("いいねに追加: \(self.user.name)")
-                    ///一覧から削除
-                 
-                    self.checkMatch()
-                }
+            print("いいねに追加: \(self.user.name)")
+            ///一覧から削除
+            
+            self.checkMatch()
         }
-
-        
+    }
+    
+    
     func removeUserFromLike(){
         db.collection("LikeTable")
             .whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
@@ -56,91 +58,117 @@ struct UserProfileView: View {
         }
         
     }
-        
-       
     
     
-//    マッチチェック
+    
+    
+    //    マッチチェック
     func checkMatch(){
         db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).whereField("MyUserId", isEqualTo: user.id).getDocuments { (snap, err) in
-        if let err = err{
-            print(err.localizedDescription)
-            return
-        }
-
-        if let snap = snap{
-            for i in snap.documents{
-                print("マッチ！")
-                
-                ///マッチテーブル作成
-
-//                自分用マッチテーブル
-                self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
-                    "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
-                    "MyUserId": i.data()["MyUserId"] as? String ?? ""
-                ])
-//                相手用マッチテーブル
-                self.db.collection("MatchTable").document(i.data()["LikeUserId"] as? String ?? "").collection("MatchUser").document().setData([
-                    "MatchUserId": i.data()["MyUserId"] as? String ?? "",
-                    "MyUserId": i.data()["LikeUserId"] as? String ?? ""
-                ])
-                
-                ///マッチ後マッチユーザー同士をお気に入りから削除
-                self.db.collection("FavoriteTable").document(i.data()["MyUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
-                    if err != nil {
-                        return
-                    }
-                    if let snap = snap {
-                        for user in snap.documents{
-                            user.reference.delete()
-                            print("マッチしたのでお気に入りから削除しました。")
-                        }
-                    }
-                }
-                
-                self.db.collection("FavoriteTable").document(i.data()["LikeUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
-                    if err != nil {
-                        return
-                    }
-                    if let snap = snap {
-                        for user in snap.documents{
-                            user.reference.delete()
-                            print("マッチしたのでお気に入りから削除しました。")
-                        }
-                    }
-                }
-                
-                ///マッチ後お互いをいいねユーザーから削除
-                
-                self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
-                    if err != nil {
-                        return
-                    }
-                    if let snap = snap {
-                        for user in snap.documents{
-                            user.reference.delete()
-                            print("マッチしたのでいいねから削除しました。")
-                        }
-                    }
-                }
-                
-                self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
-                    if err != nil {
-                        return
-                    }
-                    if let snap = snap {
-                        for user in snap.documents{
-                            user.reference.delete()
-                            print("マッチしたのでいいねから削除しました。")
-                        }
-                    }
-                }
-            
+            if let err = err{
+                print(err.localizedDescription)
+                return
             }
+            
+            if let snap = snap{
+                for i in snap.documents{
+                    print("マッチ！")
+                    
+                    ///マッチテーブル作成
+                    
+                        //                ルーム作る
+                        var ref: DocumentReference? = nil
+                    DispatchQueue.global().sync {
+                        ref = self.db.collection("MatchRoom").addDocument(data: [
+                            "matchUser1": i.data()["MyUserId"] as? String ?? "",
+                            "matchUser2": i.data()["LikeUserId"] as? String ?? ""
+                        ]) { err in
+                            if let err = err {
+                                print("Error adding document: \(err)")
+                            } else {
+                                
+                                print("Document added with ID: \(ref!.documentID)")
+                                self.roomId = ref!.documentID
+                                
+                                //                自分用マッチテーブル
+                                self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
+                                    "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
+                                    "MyUserId": i.data()["MyUserId"] as? String ?? "",
+                                    "MatchRoomId": self.roomId
+                                ])
+                                //                相手用マッチテーブル
+                                self.db.collection("MatchTable").document(i.data()["LikeUserId"] as? String ?? "").collection("MatchUser").document().setData([
+                                    "MatchUserId": i.data()["MyUserId"] as? String ?? "",
+                                    "MyUserId": i.data()["LikeUserId"] as? String ?? "",
+                                    "MatchRoomId": self.roomId
+                                ])
+                            }
+                            }
+                       
+                    }
+//                    
+//                    }heima@aaa.com
+//                    kkm@aaa.com
+//                    sayaka@aaa.com
+                    //
+                    
+                    
+                    ///マッチ後マッチユーザー同士をお気に入りから削除
+                    self.db.collection("FavoriteTable").document(i.data()["MyUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                        if err != nil {
+                            return
+                        }
+                        if let snap = snap {
+                            for user in snap.documents{
+                                user.reference.delete()
+                                print("マッチしたのでお気に入りから削除しました。")
+                            }
+                        }
+                    }
+                    
+                    self.db.collection("FavoriteTable").document(i.data()["LikeUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                        if err != nil {
+                            return
+                        }
+                        if let snap = snap {
+                            for user in snap.documents{
+                                user.reference.delete()
+                                print("マッチしたのでお気に入りから削除しました。")
+                            }
+                        }
+                    }
+                    
+                    ///マッチ後お互いをいいねユーザーから削除
+                    
+                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                        if err != nil {
+                            return
+                        }
+                        if let snap = snap {
+                            for user in snap.documents{
+                                user.reference.delete()
+                                print("マッチしたのでいいねから削除しました。")
+                            }
+                        }
+                    }
+                    
+                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                        if err != nil {
+                            return
+                        }
+                        if let snap = snap {
+                            for user in snap.documents{
+                                user.reference.delete()
+                                print("マッチしたのでいいねから削除しました。")
+                            }
+                        }
+                    }
+                    
+                }
+            }
+            
         }
-
-        }
-
+        
     }
     
     func addUserToFavorite(){
@@ -197,15 +225,15 @@ struct UserProfileView: View {
                     self.gaveLike = false
                 }
             }
-//            if snap!.documents.count > 0 {
-//                self.gaveLike = true
-//                return
-//            } else {
-//                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
-//                print(snap!.documents.count)
-//                print("まだいいねしてない")
-//                self.gaveLike = false
-//            }
+            //            if snap!.documents.count > 0 {
+            //                self.gaveLike = true
+            //                return
+            //            } else {
+            //                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
+            //                print(snap!.documents.count)
+            //                print("まだいいねしてない")
+            //                self.gaveLike = false
+            //            }
         }
     }
     
@@ -216,7 +244,7 @@ struct UserProfileView: View {
             
             ProfileUserDetailView(name: user.name, age: user.age, gender: user.gender, hometown: user.hometown, subject: user.subject, introduction: user.introduction, studystyle: user.studystyle, hobby: user.hobby, personality: user.personality, work: user.work, purpose: user.purpose)
             
-
+            
             Button(action: {
                 self.checkFavoriteTable()
                 

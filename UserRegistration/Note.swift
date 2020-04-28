@@ -1214,3 +1214,114 @@
 ////            self.allUsers.remove(at: index ?? 1)
 ////        }
 //    }
+
+//
+//var ref: DocumentReference? = nil
+//ref = db.collection("cities").addDocument(data: [
+//    "name": "Tokyo",
+//    "country": "Japan"
+//]) { err in
+//    if let err = err {
+//        print("Error adding document: \(err)")
+//    } else {
+//        print("Document added with ID: \(ref!.documentID)")
+//    }
+//}
+
+
+//    func test (){
+//        var ref: DocumentReference? = nil
+//        ref = self.db.collection("MatchRoom").addDocument(data: [
+//            "name": "Tokyo",
+//            "country": "Japan"
+//        ]) { err in
+//            if let err = err {
+//                print("Error adding document: \(err)")
+//            } else {
+//                print("Document added with ID: \(ref!.documentID)")
+//            }
+//        }
+//    }
+
+
+//import SwiftUI
+//import FirebaseFirestore
+//
+//struct MatchView: View {
+//    @EnvironmentObject var shareData: ShareData
+//
+//    var body: some View {
+//        VStack{
+//            ForEach(self.shareData.matchUserArray){ user in
+//                Text(user.name)
+//            }
+//        }
+//
+//        .onAppear{
+//            self.shareData.getAllMatchUser()
+////            print(self.shareData.matchUserArray)
+//        }
+//    } //body
+//
+//} //struct
+//
+//struct MatchView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MatchView()
+//    }
+//}
+//
+
+//import SwiftUI
+//import FirebaseFirestore
+//
+//struct ContentView: View {
+//
+//    @State var data1 = [Profile]()
+//
+//    var body: some View {
+//
+//        return VStack {
+//            HStack {
+//                Text("Penya").font(.largeTitle)
+//            }
+//            Divider()
+//            List(data1) { i in
+//                cellView(name: i.name, phoneNumber: i.phoneNumber)
+//            }
+//        }.onAppear {
+//            self.getData()
+//        }
+//    }
+//
+//
+//    func getData() {
+//
+//        var data = [Profile]()
+//
+//        let db = Firestore.firestore()
+//        db.collection("patients").addSnapshotListener { (snap, err) in
+//
+//            if err != nil {
+//                print((err?.localizedDescription)!)
+//                return
+//            }
+//
+//            for doc in (snap?.documentChanges)! {
+//                let name = doc.document.data()["name"] as! String
+//                let phoneNumber = doc.document.data()["phoneNumber"] as! String
+//
+//                print (name)
+//                print (phoneNumber)
+//
+//                DispatchQueue.main.async {
+//                    data.append(Profile(id: 0,
+//                                        name: name,
+//                                        phoneNumber: phoneNumber))
+//                    self.data1 = data
+//                }
+//            }
+//        }
+//    }
+//
+//}
