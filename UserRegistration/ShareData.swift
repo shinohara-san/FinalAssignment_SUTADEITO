@@ -14,7 +14,7 @@ import FirebaseAuth
 let shareData = ShareData()
 
 class ShareData:ObservableObject{
-    
+    let msgVM = MessageViewModel(matchId: "")
     let db = Firestore.firestore()
     let datas = firebaseData
     
@@ -401,26 +401,7 @@ class ShareData:ObservableObject{
     
     
     
-    func sendMsg(msg: String, toUser: String, fromUser: String, matchId: String){
-        let data = [
-            "message": msg,
-            "toUser": toUser,
-            "fromUser": fromUser,
-            "date": Timestamp(),
-            "matchId": matchId
-            ] as [String : Any]
-        print("sendMsg: \(matchId)")
-        
-        db.collection("Messages").addDocument(data: data){ error in
-            if let err = error {
-                print(err.localizedDescription)
-                return
-            }
-            print("メッセージを送信しました")
-        }
-        
-        
-    }
+
     
     @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
@@ -453,16 +434,16 @@ class ShareData:ObservableObject{
         
     }
     
-    @Published var matchId = ""
     
     func getMatchId(partner: User){
         
-        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
+        db.collection("MatchTable").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
             if let snap = snap {
                 for id in snap.documents{
-                    self.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
-                    print("MatchId＠ゲットマッチID is \(self.matchId)")
-                    
+                    print("あああ")
+                    self.msgVM.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
+                    print("MatchId＠ゲットマッチID is \(self.msgVM.matchId)")
+                    _ = MessageViewModel(matchId: self.msgVM.matchId) //
                 }
             }
             

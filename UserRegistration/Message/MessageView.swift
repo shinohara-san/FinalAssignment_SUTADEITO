@@ -9,20 +9,21 @@
 import SwiftUI
 import FirebaseFirestore
 
+
 struct MessageView: View {
     var matchUserInfo: User
-    @State var messages = [Message]()
+//    @State var messages = [Message]()
 //    @State var matchId = ""
     //Ll73RINefGxEcYQJoWSE KrR6LQOwrbW9TJeffjYJ
     
-//    @ObservedObject var msgVM = MessageViewModel()
+    @ObservedObject var msgVM = MessageViewModel(matchId: "")
     
     @EnvironmentObject var shareData : ShareData
     @State var text = ""
-    var body: some View { //sayaka@aaa.com
+    var body: some View {
         VStack{
             
-            List(self.messages, id: \.id){ i in
+            List(self.msgVM.messages, id: \.id){ i in
                 if i.fromUser == self.shareData.currentUserData["id"] as? String ?? ""
 //                    && i.toUser == self.matchUserInfo.id
                 {
@@ -40,9 +41,8 @@ struct MessageView: View {
                 TextField("メッセージ", text: $text).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 Button(action: {
                     if self.text.count > 0 {
-                        print("送信時マッチID: \(self.shareData.matchId)")
-                        print("メッセージ送信 \(self.text)")
-                        self.shareData.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.shareData.matchId)
+//                        print("送信時マッチID: \(self.msgVM.matchId)") ok
+                          self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
                         
                         self.text = ""
                     }
@@ -52,76 +52,34 @@ struct MessageView: View {
                 }.padding(.trailing)
             }
             
-        }.navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
+        }
+        .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
             .onAppear{
-//                DispatchQueue.global().async{。
-                self.shareData.getMatchId(partner: self.matchUserInfo)
+//                self.msgVM.messages = [Message]()shino@aaa.com
+//                DispatchQueue.global().async{
+                self.getMatchId(partner: self.matchUserInfo)
+                print("MessageViewでのmessages: \(self.msgVM.messages)")//空っぽ
 //                }
-                //                }
-                //                    DispatchQueue.global().async {
-                //                DispatchQueue.global(qos: .utility).async {
-                print("マッチID onAppear: \(self.shareData.matchId)")
-                //                self.msgVM.matchId = self.matchId
-                //
-                self.messageManager() //documentChangesとかの
-                //                    }
         }
             
-            //            }
         
         .onDisappear{
             //            self.shareData.matchRoomId = ""sss@aaa.com
         }
     }
     
-
-    
-    func messageManager() {
-        print("ゲットデータ: \(self.shareData.matchId)")
-        let db = Firestore.firestore()
-        db.collection("Messages").whereField("matchId", isEqualTo: self.shareData.matchId).order(by: "date").addSnapshotListener { (snap, err) in
-            
-            if err != nil {
-                print((err?.localizedDescription)!)
-                return
-            }
-
+    func getMatchId(partner: User){
+        Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as? String ?? "").collection("MatchUser").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
             if let snap = snap {
-                for i in snap.documentChanges {
+                for id in snap.documents{
+                    self.msgVM.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
+                    print("MatchId＠ゲットマッチID is \(self.msgVM.matchId)")
+                    _ = MessageViewModel(matchId: self.msgVM.matchId) //
                     
-                    if i.type == .added{
-                        let toUser = i.document.get("toUser") as! String
-                        let fromUser = i.document.get("fromUser") as! String
-                        let message = i.document.get("message") as! String
-                        let id = i.document.documentID
-                        let date = i.document.get("date") as! Timestamp
-                        let matchId = i.document.get("matchId") as! String
-                       
-//                        DispatchQueue.main.async {
-                       
-                            self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
-                          
-                            
-//                        }
-                    }
                 }
             }
-            //            }
+            
         }
+     
     }
-    
-    
-    
-    
-    
 }
-
-struct Message: Identifiable {
-    var id: String
-    var msg: String
-    var fromUser: String
-    var toUser: String
-    var date: Timestamp
-    var matchId : String
-}
-

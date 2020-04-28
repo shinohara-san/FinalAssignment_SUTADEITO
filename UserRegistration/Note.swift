@@ -1325,3 +1325,55 @@
 //    }
 //
 //}
+
+
+
+//    func messageManager() {
+//        print("ゲットデータ: \(self.shareData.matchId)")
+//        let db = Firestore.firestore()
+//        db.collection("Messages").whereField("matchId", isEqualTo: self.shareData.matchId).order(by: "date").addSnapshotListener { (snap, err) in
+//
+//            if err != nil {
+//                print((err?.localizedDescription)!)
+//                return
+//            }
+//
+//            if let snap = snap {
+//                for i in snap.documentChanges {
+//
+//                    if i.type == .added{
+//                        let toUser = i.document.get("toUser") as! String
+//                        let fromUser = i.document.get("fromUser") as! String
+//                        let message = i.document.get("message") as! String
+//                        let id = i.document.documentID
+//                        let date = i.document.get("date") as! Timestamp
+//                        let matchId = i.document.get("matchId") as! String
+//
+////                        DispatchQueue.main.async {
+//
+//                            self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
+//
+//
+////                        }
+//                    }
+//                }
+//            }
+//            //            }
+//        }
+//    }
+    
+    
+    
+    
+    
+
+
+//struct Message: Identifiable {
+//    var id: String
+//    var msg: String
+//    var fromUser: String
+//    var toUser: String
+//    var date: Timestamp
+//    var matchId : String
+//}
+//
