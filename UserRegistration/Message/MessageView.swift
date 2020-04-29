@@ -11,21 +11,31 @@ import FirebaseFirestore
 
 
 struct MessageView: View {
-    var matchUserInfo: User
-    
-//    @State var messages = [Message]()
-//    @State var matchId = ""
-    //Ll73RINefGxEcYQJoWSE KrR6LQOwrbW9TJeffjYJ ""にIdをいれれば動く　
+//    var matchUserInfo: User
 //    @ObservedObject var msgVM = MessageViewModel(matchId: "KrR6LQOwrbW9TJeffjYJ")
-    @State var msgVM = MessageViewModel(matchId: "")
+    //Ll73RINefGxEcYQJoWSE KrR6LQOwrbW9TJeffjYJ
+    
+    let matchUserInfo: User
+
+    @ObservedObject private var msgVM: MessageViewModel
+
+    init(_ user: User) {
+        self.matchUserInfo = user
+        
+        self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: user.id))
+    }
     
     @EnvironmentObject var shareData : ShareData
     @State var text = ""
+    @State var matchId = ""
+    
     var body: some View {
         VStack{
-//            Button("チェック"){
-//                print(self.msgVM.messages)
-//            }
+            Button("チェック"){
+                print("マッチIDチェック　\(self.matchId)")
+                print("メッセ配列チェック　\(self.msgVM.messages)")
+            }
+//            DispatchQueue.global().async{
             List(self.msgVM.messages, id: \.id){ i in
                 if i.fromUser == self.shareData.currentUserData["id"] as? String ?? ""
 //                    && i.toUser == self.matchUserInfo.id
@@ -49,6 +59,7 @@ struct MessageView: View {
                           self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
                         
                         self.text = ""
+                        print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
                     }
                     
                 }) {
@@ -62,13 +73,16 @@ struct MessageView: View {
 //                self.msgVM.messages = [Message]()shino@aaa.com
 //                DispatchQueue.global().async{
                 self.getMatchId(partner: self.matchUserInfo)
+                
+//                _ = MessageViewModel(matchId: self.matchId)
+//                }
                 print("MessageViewでのmessages: \(self.msgVM.messages)")//空っぽ
                 
         }
             
         
         .onDisappear{
-          print(self.msgVM.messages)
+//          print(self.msgVM.messages)
         }
     }
     
@@ -79,12 +93,13 @@ struct MessageView: View {
                     self.msgVM.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
                     print("MatchId＠ゲットマッチID is \(self.msgVM.matchId)")
                     _ = MessageViewModel(matchId: self.msgVM.matchId) //ok
-                    self.msgVM = MessageViewModel(matchId: self.msgVM.matchId)
-                    
+                    print("メッセージビューも\(self.msgVM.messages)")
                 }
             }
             
         }
      
     }
+    
+    
 }

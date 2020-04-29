@@ -24,7 +24,7 @@ struct Message: Identifiable {
 class MessageViewModel: ObservableObject {
     var datas = FirebaseData()
     let db = Firestore.firestore()
-//    var shareData = ShareData()
+    var shareData = ShareData() //また別のshareDシンスタンス
     
     @Published var matchId:String
 //    var myself: User
@@ -34,22 +34,24 @@ class MessageViewModel: ObservableObject {
  
     init(matchId: String){
         self.matchId = matchId
-        self.messages = []
-        print("イニっと: \(self.matchId)")
+//        self.sharedData = shareData
+        self.messages = [Message]()
+//        イニシャライザ（initializer）とは、コンストラクタのようにインスタンス生成時に自動で呼び出されるメソッドのことです。
+        print("loop用マッチID: \(self.matchId)")
 //        DispatchQueue.main.async {
         
         self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date").addSnapshotListener { (snap, error) in
-            //Ll73RINefGxEcYQJoWSE  KrR6LQOwrbW9TJeffjYJ
-            //print("matchId isEqualto \(self.matchId)") //一覧でプリントされる
+           
 //            DispatchQueue.global().sync {
             if let error = error {
                 print(error.localizedDescription)
                 return
-                           }
+            }
             
             if let snap = snap {
+                
                 for i in snap.documentChanges {
-
+                    
                     if i.type == .added{
                         let toUser = i.document.get("toUser") as! String
                         let fromUser = i.document.get("fromUser") as! String
@@ -60,7 +62,8 @@ class MessageViewModel: ObservableObject {
 //                      DispatchQueue.global().async {
                         self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
 //                        }
-                      print("messagesの中身: \(self.messages)") //Ok
+//                        self.messages = []
+                        print("messagesの中身: \(self.messages)") //Ok
                         
                     }
                 }

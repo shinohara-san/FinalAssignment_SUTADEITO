@@ -62,7 +62,6 @@ struct MainView: View {
                             
                             .onAppear{
                                 DispatchQueue.global().async {
-//                                    ispatchQueue.global().sync {
                                     self.shareData.getCurrentUser()
 
                                 }
@@ -122,7 +121,7 @@ struct MainView: View {
                     Text("マッチ一覧")
                     List(self.shareData.matchUserArray){ user in
                         //写真タップでプロフィール表示
-                        NavigationLink(destination: MessageView(matchUserInfo: user)){
+                        NavigationLink(destination: MessageView(user)){
                             HStack{
                                 Text(user.name)
                                 Text(user.age)

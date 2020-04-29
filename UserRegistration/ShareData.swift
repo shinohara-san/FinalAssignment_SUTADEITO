@@ -11,10 +11,10 @@ import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
 
-let shareData = ShareData()
+//let shareData = ShareData()
 
 class ShareData:ObservableObject{
-    let msgVM = MessageViewModel(matchId: "")
+//    let msgVM = MessageViewModel(matchId: "")
     let db = Firestore.firestore()
     let datas = firebaseData
     
@@ -434,27 +434,10 @@ class ShareData:ObservableObject{
         
     }
     
-//    @Published var messages = [Message]()
+    @Published var messages = [Message]()
 //    @Published var matchId = ""
-    
-    func getMatchId(partner: User){
-        
-        db.collection("MatchTable").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
-            if let snap = snap {
-                for id in snap.documents{
-                    print("あああ")
-                    self.msgVM.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
-//                    self.matchId = self.msgVM.matchId
-                    print("MatchId＠ゲットマッチID is \(self.msgVM.matchId)")
-                    _ = MessageViewModel(matchId: self.msgVM.matchId) //
-                }
-            }
-            
-        }
-     
-    }
-
-
+ 
+   
 
 }//func
 

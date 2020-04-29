@@ -1377,3 +1377,21 @@
 //    var matchId : String
 //}
 //
+
+//    var msgVM: MessageViewModel {
+////        (matchId: "Ll73RINefGxEcYQJoWSE"
+//        let currentUserId = self.shareData.currentUserData["id"] as? String ?? ""
+//        let matchUserId = matchUserInfo.id
+//        Firestore.firestore().collection("MatchTable").document(currentUserId).collection("MatchUser").whereField("MatchUserId", isEqualTo: matchUserId).getDocuments { (snap, err) in
+//            if let snap = snap {
+//                for id in snap.documents{
+//                    self.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
+//                }
+//
+//            }
+//
+//        }
+//        print("computed property: \(self.matchId)")
+//        return MessageViewModel(matchId: matchId)
+//    }
+//    @State var msgVM = MessageViewModel(matchId: "")
