@@ -11,18 +11,18 @@ import FirebaseFirestore
 
 
 struct MessageView: View {
-//    var matchUserInfo: User
-//    @ObservedObject var msgVM = MessageViewModel(matchId: "KrR6LQOwrbW9TJeffjYJ")
-    //Ll73RINefGxEcYQJoWSE KrR6LQOwrbW9TJeffjYJ
+    
     
     let matchUserInfo: User
+    let matchRoomId: String
 
     @ObservedObject private var msgVM: MessageViewModel
 
-    init(_ user: User) {
+    init(_ user: User, _ id:String) {
         self.matchUserInfo = user
-        
-        self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: user.id))
+        self.matchRoomId = id
+        //_　アンダーバーつけるとtypeじゃなくなる
+        self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: id))
     }
     
     @EnvironmentObject var shareData : ShareData
@@ -31,10 +31,6 @@ struct MessageView: View {
     
     var body: some View {
         VStack{
-            Button("チェック"){
-                print("マッチIDチェック　\(self.matchId)")
-                print("メッセ配列チェック　\(self.msgVM.messages)")
-            }
 //            DispatchQueue.global().async{
             List(self.msgVM.messages, id: \.id){ i in
                 if i.fromUser == self.shareData.currentUserData["id"] as? String ?? ""

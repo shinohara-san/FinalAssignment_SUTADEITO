@@ -9,6 +9,7 @@
 //　1234shino
 
 import SwiftUI
+import FirebaseFirestore
 
 struct MainView: View {
     
@@ -23,6 +24,8 @@ struct MainView: View {
     @State var messageOn = false
     @State var userProfileOn = false
     @State var text = ""
+    
+    @State var matchid = ""
     
     var body: some View {
         
@@ -121,10 +124,20 @@ struct MainView: View {
                     Text("マッチ一覧")
                     List(self.shareData.matchUserArray){ user in
                         //写真タップでプロフィール表示
-                        NavigationLink(destination: MessageView(user)){
+                        NavigationLink(destination: MessageView(user, self.matchid)){
                             HStack{
                                 Text(user.name)
                                 Text(user.age)
+                            }.onTapGesture {
+//                                self.userInfo =user
+                                Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: user.id).getDocuments { (snap, err) in
+                                    if snap != nil {
+                                        for i in snap!.documents{
+                                            self.matchid = i.data()["MatchRoomId"] as! String
+                                        }
+                                    }
+                                }
+                                print(self.matchid)
                             }
 
                         }

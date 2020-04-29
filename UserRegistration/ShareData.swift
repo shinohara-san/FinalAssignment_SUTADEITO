@@ -82,13 +82,8 @@ class ShareData:ObservableObject{
             } else {
                 for document in querySnapshot!.documents {
                     self.currentUserData = document.data()
-                    //                    print(self.currentUserData)
                     
                     self.getAllUsers()
-                    
-                    //                                        self.filterUsers() //ユーザー情報とれる
-                    //                                        self.getAllMatchUser()
-                    //                                        print("getAllMatchUser: \(self.matchUserArray)")
                     
                 }
             }
