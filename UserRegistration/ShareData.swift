@@ -434,6 +434,8 @@ class ShareData:ObservableObject{
         
     }
     
+//    @Published var messages = [Message]()
+//    @Published var matchId = ""
     
     func getMatchId(partner: User){
         
@@ -442,6 +444,7 @@ class ShareData:ObservableObject{
                 for id in snap.documents{
                     print("あああ")
                     self.msgVM.matchId = id.data()["MatchRoomId"] as? String ?? "nilだよ"
+//                    self.matchId = self.msgVM.matchId
                     print("MatchId＠ゲットマッチID is \(self.msgVM.matchId)")
                     _ = MessageViewModel(matchId: self.msgVM.matchId) //
                 }

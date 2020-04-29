@@ -30,16 +30,18 @@ class MessageViewModel: ObservableObject {
 //    var myself: User
 //    var partner: User
     
-    @Published var messages = [Message]()
+    @Published var messages:[Message]
  
     init(matchId: String){
         self.matchId = matchId
+        self.messages = []
         print("イニっと: \(self.matchId)")
 //        DispatchQueue.main.async {
         
         self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date").addSnapshotListener { (snap, error) in
             //Ll73RINefGxEcYQJoWSE  KrR6LQOwrbW9TJeffjYJ
             //print("matchId isEqualto \(self.matchId)") //一覧でプリントされる
+//            DispatchQueue.global().sync {
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -64,6 +66,7 @@ class MessageViewModel: ObservableObject {
                 }
             }
         }
+//    }
     }// init閉じ
 //}
     
