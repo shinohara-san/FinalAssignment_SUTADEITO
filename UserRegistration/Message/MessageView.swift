@@ -21,8 +21,8 @@ struct MessageView: View {
     init(_ user: User, _ id:String) {
         self.matchUserInfo = user
         self.matchRoomId = id
-        //_　アンダーバーつけるとtypeじゃなくなる
-        self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: id))
+        //_　アンダーバーつけるとtypeじゃなくなりエラー消える 
+        self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: matchRoomId))
     }
     
     @EnvironmentObject var shareData : ShareData
@@ -37,8 +37,7 @@ struct MessageView: View {
 //                    && i.toUser == self.matchUserInfo.id
                 {
                     MessageRow(message: i.msg, isMyMessage: true)
-                } else if  i.toUser == self.shareData.currentUserData["id"] as? String ?? ""
-//                　i.fromUser == self.matchUserInfo.id &&
+                } else
                 {
                     MessageRow(message: i.msg, isMyMessage: false)
                 }
@@ -68,7 +67,7 @@ struct MessageView: View {
             .onAppear{
 //                self.msgVM.messages = [Message]()shino@aaa.com
 //                DispatchQueue.global().async{
-                self.getMatchId(partner: self.matchUserInfo)
+//                self.getMatchId(partner: self.matchUserInfo)
                 
 //                _ = MessageViewModel(matchId: self.matchId)
 //                }
@@ -78,7 +77,7 @@ struct MessageView: View {
             
         
         .onDisappear{
-//          print(self.msgVM.messages)
+            self.msgVM.messages = [Message]()
         }
     }
     

@@ -19,7 +19,7 @@ struct MainView: View {
     
     //@State var selection = 0 //必要?
     
-    @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
     @State var messageOn = false
     @State var userProfileOn = false
@@ -124,21 +124,21 @@ struct MainView: View {
                     Text("マッチ一覧")
                     List(self.shareData.matchUserArray){ user in
                         //写真タップでプロフィール表示
-                        NavigationLink(destination: MessageView(user, self.matchid)){
+                        NavigationLink(destination: MessageView(user, user.matchRoomId)){
                             HStack{
                                 Text(user.name)
                                 Text(user.age)
-                            }.onTapGesture {
-//                                self.userInfo =user
-                                Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: user.id).getDocuments { (snap, err) in
-                                    if snap != nil {
-                                        for i in snap!.documents{
-                                            self.matchid = i.data()["MatchRoomId"] as! String
-                                        }
-                                    }
-                                }
-                                print(self.matchid)
                             }
+//                            .onTapGesture {
+////                                self.userInfo =user
+//                                Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: user.id).getDocuments { (snap, err) in
+//                                    if snap != nil {
+//                                        for i in snap!.documents{
+//                                            self.matchid = i.data()["MatchRoomId"] as! String
+//                                        }sayaka@aaa.com//                                    }
+//                                }
+//                                print(self.matchid)
+//                            }
 
                         }
 
@@ -147,6 +147,8 @@ struct MainView: View {
                 
             }.onAppear{
                 self.shareData.getAllMatchUser()
+                print("マッチ一覧: \(self.shareData.matchUserArray)")
+                
                
             }.onDisappear{
                 self.shareData.matchUserArray = [User]()

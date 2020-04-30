@@ -24,6 +24,7 @@ struct User: Identifiable, Equatable, Hashable{
     let work: String
     let purpose: String
     let photoURL: String
+    let matchRoomId: String
 //    var uid: String
 }
 

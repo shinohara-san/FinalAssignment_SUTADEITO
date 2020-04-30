@@ -76,8 +76,8 @@ struct UserProfileView: View {
                     
                     ///マッチテーブル作成
                     
-                        //                ルーム作る
-                        var ref: DocumentReference? = nil
+                    //                ルーム作る
+                    var ref: DocumentReference? = nil
                     DispatchQueue.global().sync {
                         ref = self.db.collection("MatchRoom").addDocument(data: [
                             "matchUser1": i.data()["MyUserId"] as? String ?? "",
@@ -89,6 +89,87 @@ struct UserProfileView: View {
                                 
                                 print("Document added with ID: \(ref!.documentID)")
                                 self.roomId = ref!.documentID
+                                
+                                
+                                //       iにはliketableのinfo                         MatchIdの入った相手のUserData
+                                self.db.collection("Users").whereField("id", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                                    if let snap = snap {
+                                        for i in snap.documents{
+                                            let user = i.data()
+
+                                            self.db.collection("MatchUsers").document(self.shareData.currentUserData["id"] as! String).collection("MatchUserData").document().setData([
+                                                "MatchRoomId" : self.roomId,
+                                                "email": user["email"] as! String,
+                                                "name": user["name"] as! String,
+                                                "age":  user["age"] as! String,
+                                                "gender":  user["gender"] as! String,
+                                                "hometown":  user["hometown"] as! String,
+                                                "subject":  user["subject"] as! String,
+                                                "introduction":  user["introduction"] as! String,
+                                                "studystyle":  user["studystyle"] as! String,
+                                                "hobby":  user["hobby"] as! String,
+                                                "personality":  user["personality"] as! String,
+                                                "work":  user["work"] as! String,
+                                                "purpose":  user["purpose"] as! String,
+                                                "photoURL":  user["photoURL"] as! String,
+                                                "id": self.shareData.currentUserData["id"] as? String ?? ""
+
+                                            ]){ err in
+                                                if let err = err {
+                                                    print("Error writing document: \(err)")
+                                                } else {
+                                                    print("Document successfully written!")
+                                                }
+                                            }
+
+
+                                        }
+                                    }
+                                }
+                                
+//                                mnd@aaa.com heima@aaa.com sayaka@aaa.com shino@aaa.com
+                                
+//                                     sayaka@aaa.com
+                                
+                                self.db.collection("Users").whereField("id", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                                    if let snap = snap {
+                                        for j in snap.documents{
+                                            let user = j.data()
+                                            
+                                            self.db.collection("MatchUsers").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUserData").document().setData([
+                                                "MatchRoomId" : self.roomId,
+                                                "email": user["email"] as! String,
+                                                "name": user["name"] as! String,
+                                                "age":  user["age"] as! String,
+                                                "gender":  user["gender"] as! String,
+                                                "hometown":  user["hometown"] as! String,
+                                                "subject":  user["subject"] as! String,
+                                                "introduction":  user["introduction"] as! String,
+                                                "studystyle":  user["studystyle"] as! String,
+                                                "hobby":  user["hobby"] as! String,
+                                                "personality":  user["personality"] as! String,
+                                                "work":  user["work"] as! String,
+                                                "purpose":  user["purpose"] as! String,
+                                                "photoURL":  user["photoURL"] as! String,
+                                                "id": i.data()["LikeUserId"] as? String ?? ""
+                                                
+                                            ]){ err in
+                                                if let err = err {
+                                                    print("Error writing document: \(err)")
+                                                } else {
+                                                    print("Document successfully written!")
+                                                }
+                                            }
+                                        
+                                            
+                                        }
+                                    }
+                                }
+
+                                
+                                
+//                                shino@aaa.com
+                                
                                 
                                 //                自分用マッチテーブル
                                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
@@ -103,13 +184,13 @@ struct UserProfileView: View {
                                     "MatchRoomId": self.roomId
                                 ])
                             }
-                            }
-                       
+                        }
+                        
                     }
-//                    
-//                    }heima@aaa.com
-//                    kkm@aaa.com
-//                    sayaka@aaa.com
+                    //
+                    //                    }heima@aaa.com
+                    //                    kkm@aaa.com
+                    //                    sayaka@aaa.com
                     //
                     
                     
@@ -199,11 +280,10 @@ struct UserProfileView: View {
     
     func checkFavoriteTable() {
         db.collection("FavoriteTable").document(self.shareData.currentUserData["id"] as! String).collection("FavoriteUser").document(user.id).getDocument { (document, err) in
-            //            print(document?.data()?.count)
-            //            print(document?.data())
+            
             if document?.data()?.count != nil {
                 //                print(document?.data())
-                self.isFavorite = true
+                self.isFavorite = true 
             } else {
                 //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
                 self.isFavorite = false

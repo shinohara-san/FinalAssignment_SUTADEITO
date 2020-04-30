@@ -14,7 +14,7 @@ import FirebaseAuth
 //let shareData = ShareData()
 
 class ShareData:ObservableObject{
-//    let msgVM = MessageViewModel(matchId: "")
+    //    let msgVM = MessageViewModel(matchId: "")
     let db = Firestore.firestore()
     let datas = firebaseData
     
@@ -22,25 +22,25 @@ class ShareData:ObservableObject{
     
     //ScrollViewには最初に配列に初期値を設定する必要あり
     
-    @Published var allUsers : [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    @Published var allUsers : [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
     
-    @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
-//    @Published var matchUserInfo: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    //    @Published var matchUserInfo: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
     
     //    @Published var favoriteUserIds = [String]()
     
-    @Published var favoriteUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    @Published var favoriteUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
     
-    @Published var likeUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    @Published var likeUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
     
-    @Published var searchedUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+    @Published var searchedUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
     
     @Published var MatchUsers: [User] = [User]()
     
     @Published var imageURL = ""
     
-    var matchUserData: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    var matchUserData: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     //    var index = 0
     var matchUserId = [String]()
     
@@ -137,7 +137,7 @@ class ShareData:ObservableObject{
                             personality: user.data()["personality"] as! String,
                             work: user.data()["work"] as! String,
                             purpose: user.data()["purpose"] as! String,
-                            photoURL: user.data()["photoURL"] as! String
+                            photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                         ))
                         //                        }
                         //                    }
@@ -176,7 +176,7 @@ class ShareData:ObservableObject{
                                         personality: user.data()["personality"] as! String,
                                         work: user.data()["work"] as! String,
                                         purpose: user.data()["purpose"] as! String,
-                                        photoURL: user.data()["photoURL"] as! String
+                                        photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                                     ))
                                     //                                    print(self.MatchUsers)
                                     self.filtering()
@@ -219,7 +219,7 @@ class ShareData:ObservableObject{
                                         //                                    if let snap = snap {
                                         //                                       for user in snap.documents{
                                         //                                            print(user.data()["name"] as! String)
-                                        self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
+                                        self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? "", matchRoomId: "none"))
                                         
                                         //                                            }
                                         //                                       }
@@ -256,7 +256,7 @@ class ShareData:ObservableObject{
                                 if let snap = snap {
                                     for user in snap.documents {
                                         
-                                        self.likeUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? ""))
+                                        self.likeUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? "", matchRoomId: "N/A"))
                                         
                                     }
                                 } else {
@@ -271,30 +271,20 @@ class ShareData:ObservableObject{
     }
     
     func getAllMatchUser(){
-        db.collection("MatchTable")
+        db.collection("MatchUsers")
             .document(self.currentUserData["id"] as? String ?? "")
-            .collection("MatchUser")
+            .collection("MatchUserData")
             .getDocuments { (snap, err) in
                 if let err = err{
                     print(err.localizedDescription)
                     return
                 }
                 if let snap = snap{
-                    for matchData in snap.documents{
-                        //                    print(matchData.data()["MatchUserId"] as? String ?? "")
-                        self.db.collection("Users")
-                            .whereField("id", isEqualTo: matchData.data()["MatchUserId"] as? String ?? "")
-                            .getDocuments { (snap, err) in
-                                if err != nil{
-                                    return
-                                }
-                                if let snap = snap{
-                                    for user in snap.documents{
-                                        //                                print(user.data()["name"] as! String)
-                                        self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String))
-                                    }
-                                }
-                        }
+                    for user in snap.documents{
+                        
+                        
+                        self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String, matchRoomId: user.data()["MatchRoomId"] as! String))
+                        
                         
                     }
                 }
@@ -396,9 +386,9 @@ class ShareData:ObservableObject{
     
     
     
-
     
-    @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    
+    @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
     func searchUser(key: String, value: String){
         
@@ -413,7 +403,7 @@ class ShareData:ObservableObject{
                 for user in snap.documents{
                     let ref = user.data()
                     if ref["gender"] as? String != self.currentUserData["gender"] as? String{
-                        self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String))
+                        self.searchedUsers.append(User(id: ref["id"] as! String, email: ref["email"] as! String, name: ref["name"] as! String, gender: ref["gender"] as! String, age: ref["age"] as! String, hometown: ref["hometown"] as! String, subject: ref["subject"] as! String, introduction: ref["introduction"] as! String, studystyle: ref["studystyle"] as! String, hobby: ref["hobby"] as! String, personality: ref["personality"] as! String, work: ref["work"] as! String, purpose: ref["purpose"] as! String, photoURL: ref["photoURL"] as! String, matchRoomId: ""))
                         
                         for user in self.searchedUsers {
                             for matchUser in self.MatchUsers {
@@ -430,10 +420,10 @@ class ShareData:ObservableObject{
     }
     
     @Published var messages = [Message]()
-//    @Published var matchId = ""
- 
-   
-
+    //    @Published var matchId = ""
+    
+    
+    
 }//func
 
 

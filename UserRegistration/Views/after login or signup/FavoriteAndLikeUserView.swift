@@ -16,9 +16,9 @@ struct FavoriteAndLikeUserView: View {
     @State var likeListOn = false
     @State var likeProfileOn = false
     
-    @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
-    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
     var body: some View {
         Group{
@@ -52,7 +52,7 @@ struct FavoriteAndLikeUserView: View {
                             //                }
                         }
                         .onDisappear{
-                            self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+                            self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
                             self.userProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
                         }
                         
@@ -114,7 +114,7 @@ struct FavoriteAndLikeUserView: View {
                         //                }
                     }
                     .onDisappear{
-                        self.shareData.likeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")]
+                        self.shareData.likeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
                         self.likeProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
                     }
                     
