@@ -24,11 +24,8 @@ struct Message: Identifiable {
 class MessageViewModel: ObservableObject {
     var datas = FirebaseData()
     let db = Firestore.firestore()
-    var shareData = ShareData() //また別のshareDシンスタンス
     
     @Published var matchId:String
-//    var myself: User
-//    var partner: User
     
     @Published var messages:[Message]
  

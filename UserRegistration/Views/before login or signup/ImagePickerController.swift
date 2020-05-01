@@ -94,26 +94,5 @@ class Coordinator : NSObject, UIImagePickerControllerDelegate, UINavigationContr
             // self.listOfImageFile()
         }
     }
-    
-    //        func listOfImageFile() {
-    //            let storageReference = Storage.storage().reference().child("images/")
-    //            storageReference.listAll { (result, error) in
-    //              if error != nil {
-    //                  // Handle any errors
-    //                  print((error?.localizedDescription)!)
-    //                  return
-    //              }
-    //              for prefix in result.prefixes {
-    //                // The prefixes under storageReference.
-    //                // You may call listAll(completion:) recursively on them.
-    //                print("prefix is \(prefix)")
-    //              }
-    //              for item in result.items {
-    //                // The items under storageReference.
-    //                print("items is \(item)")
-    //              }
-    //            }
-    //        }
-    
     }
 }

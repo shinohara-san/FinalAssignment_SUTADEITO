@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "man-and-woman-sitting-on-chair-in-front-of-table-with-laptop-3978233.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

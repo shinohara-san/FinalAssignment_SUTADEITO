@@ -34,7 +34,7 @@ struct FirebaseImageView: View {
 class DataLoader: ObservableObject {
 //    PassthroughSubject<Data, Never> ?
 //    didchange?
-//    send ?
+//    send ? 要勉強
 
     @Published var didChange = PassthroughSubject<Data, Never>()
     @Published var data = Data() {

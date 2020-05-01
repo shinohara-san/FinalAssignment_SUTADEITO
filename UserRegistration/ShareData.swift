@@ -10,6 +10,7 @@ import Foundation
 import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
+import SwiftUI
 
 //let shareData = ShareData()
 
@@ -17,6 +18,10 @@ class ShareData:ObservableObject{
     //    let msgVM = MessageViewModel(matchId: "")
     let db = Firestore.firestore()
     let datas = firebaseData
+    
+    let pink = Color(red: 238 / 255, green: 143 / 255, blue: 143 / 255)
+    let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
+    let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
     
     @Published var currentUserData = [String : Any]()
     
@@ -43,6 +48,15 @@ class ShareData:ObservableObject{
     var matchUserData: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     //    var index = 0
     var matchUserId = [String]()
+    
+    var ages:[String]
+    init(){
+        var array = [String]()
+        for i in 18 ... 50{
+            array.append("\(i)歳")
+        }
+        self.ages = array
+    }
     
     
     let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
@@ -105,24 +119,16 @@ class ShareData:ObservableObject{
     
     func getAllUsers(){
         self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
-        //        self.filterUsers()
-        //        self.filtering()
+        
         self.db.collection("Users").getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting documents: \(err)")
                 return
             }
-            //            self.filtering()
             if let snap = querySnapshot {
                 for user in snap.documents {
-                    //                    for matchId in self.matchUserId {
-                    //                    self.filtering()
-                    if user.data()["gender"] as? String != self.currentUserData["gender"] as? String
-                        //                    if self.matchUserId.count > 0 {
-                        //                       if user.data()["id"] as? String != matchId
-                        //                    }
-                        
-                    {
+                    
+                    if user.data()["gender"] as? String != self.currentUserData["gender"] as? String {
                         self.allUsers.append(User(
                             id: user.data()["id"] as! String,
                             email: user.data()["email"] as! String,
@@ -139,21 +145,11 @@ class ShareData:ObservableObject{
                             purpose: user.data()["purpose"] as! String,
                             photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                         ))
-                        //                        }
-                        //                    }
-                        //                        self.filtering()
                     }
-                    
-                    //matchtableLoopここまで
-                    
-                    
-                    //                    self.filtering()
                 }
             }
-            //            self.allUsers.remove(at: 0)
-            //            self.filtering()
         }
-        //        self.filtering()
+        
         self.db.collection("MatchTable")
             .document(self.currentUserData["id"] as! String)
             .collection("MatchUser").getDocuments { (snap, err) in
@@ -178,7 +174,6 @@ class ShareData:ObservableObject{
                                         purpose: user.data()["purpose"] as! String,
                                         photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                                     ))
-                                    //                                    print(self.MatchUsers)
                                     self.filtering()
                                 }
                                 //                                self.filtering()
@@ -213,21 +208,10 @@ class ShareData:ObservableObject{
                             .getDocuments { (snap, err) in
                                 if let snap = snap {
                                     for user in snap.documents {
-                                        //                                if user.data()["id"] as! String がMatchUserIdになかったら
-                                        //                                if
-                                        //                                self.db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isLessThan: user.data()["id"] as! String).whereField("MatchUserId", isGreaterThan: user.data()["id"] as! String).getDocuments { (snap, err) in
-                                        //                                    if let snap = snap {
-                                        //                                       for user in snap.documents{
-                                        //                                            print(user.data()["name"] as! String)
+                                        
                                         self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? "", matchRoomId: "none"))
-                                        
-                                        //                                            }
-                                        //                                       }
-                                        //                                    }
-                                        
-                                        
+
                                     }
-                                    
                                     
                                 } //snap = snap
                                 
@@ -249,7 +233,6 @@ class ShareData:ObservableObject{
                 
                 if let snap = snap {
                     for user1 in snap.documents {
-                        //                    print(user.data()["FavoriteUserId"] as? String ?? "")
                         self.db.collection("Users")
                             .whereField("id", isEqualTo: user1.data()["LikeUserId"] as? String ?? "")
                             .getDocuments { (snap, err) in
@@ -322,7 +305,6 @@ class ShareData:ObservableObject{
                 }
                 if let snap = snap {
                     for user in snap.documents {
-                        //                        print(user.data()["name"] ?? "")
                         user.reference.delete()
                         print("firestore削除！")
                     }
@@ -331,7 +313,6 @@ class ShareData:ObservableObject{
     }
     //storage
     func deleteUserPicture(){
-        //        print(self.currentUserData["email"] ?? "")
         let storageRef = Storage.storage().reference()
         
         // Delete the file
@@ -418,11 +399,6 @@ class ShareData:ObservableObject{
         }
         
     }
-    
-    @Published var messages = [Message]()
-    //    @Published var matchId = ""
-    
-    
     
 }//func
 

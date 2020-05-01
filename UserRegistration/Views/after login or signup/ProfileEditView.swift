@@ -13,6 +13,7 @@ struct ProfileEditView: View {
     
     
     @State var name:String = ""
+    @State var age: String = ""
     @State var subject:String = ""
     @State var hometown:String = ""
     @State var hobby:String = ""
@@ -22,20 +23,25 @@ struct ProfileEditView: View {
     @State var work:String = ""
     @State var purpose = ""
     
+    @State var selectedAge = 10
     @State var selectedHometown = 12
     @State var selectedWork = 0
     @State var selectedPersonality = 0
     @State var selectedPurpose = 0
     var datas: FirebaseData
-//    func getUser() {
-//        datas.listen()
-//    }
     
     var body: some View {
         
-            VStack{
-                ScrollView{
+        VStack{
+            ScrollView{
                 TextField("名前", text: $name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                Picker(selection: $age, label: Text("年齢")
+                    .font(.title)
+                    .padding(.leading)) {
+                        ForEach(0..<self.shareData.ages.count){ index in
+                            Text(self.shareData.ages[index]).tag(index)
+                        }
+                }
                 TextField("勉強中のもの", text: $subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 Picker(selection: $selectedHometown, label: Text("居住地")
                     .font(.title)
@@ -44,7 +50,7 @@ struct ProfileEditView: View {
                             Text(self.shareData.hometowns[index]).tag(index)
                         }
                 }
-               
+                
                 TextField("趣味", text: $hobby).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 TextField("自己紹介", text: $introduction).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                 Picker(selection: $selectedPersonality, label: Text("性格")
@@ -54,21 +60,25 @@ struct ProfileEditView: View {
                             Text(self.shareData.personalities[index]).tag(index)
                         }
                 }
-                TextField("勉強方法", text: $studystyle).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: $selectedWork, label: Text("職業")
-                    .font(.title)
-                    .padding(.leading)) {
-                        ForEach(0..<self.shareData.jobs.count){ index in
-                            Text(self.shareData.jobs[index]).tag(index)
-                        }
+                Section{
+                    TextField("勉強方法", text: $studystyle).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                    Picker(selection: $selectedWork, label: Text("職業")
+                        .font(.title)
+                        .padding(.leading)) {
+                            ForEach(0..<self.shareData.jobs.count){ index in
+                                Text(self.shareData.jobs[index]).tag(index)
+                            }
+                    }
+                    Picker(selection: $selectedPurpose, label: Text("目的")
+                        .font(.title)
+                        .padding(.leading)) {
+                            ForEach(0..<self.shareData.purposes.count){ index in
+                                Text(self.shareData.purposes[index]).tag(index)
+                            }
+                    }
+                    
                 }
-                Picker(selection: $selectedPurpose, label: Text("目的")
-                    .font(.title)
-                    .padding(.leading)) {
-                        ForEach(0..<self.shareData.purposes.count){ index in
-                            Text(self.shareData.purposes[index]).tag(index)
-                        }
-                }
+                
                 
                 Section{
                     Button("戻る"){
@@ -83,12 +93,11 @@ struct ProfileEditView: View {
                     
                     Button(action: {
                         //アラート出したいなー
-                        self.shareData.deleteAccount() //Auth削除 内部でstorage/firestoreも
-
+                        self.shareData.deleteAccount()
                         self.shareData.currentUserData = [String : Any]()
                         self.datas.session = nil
                         
-//                        firestoreのliketableやfavoritetableも空っぽに？
+                        //                        firestoreのliketableやfavoritetableも空っぽに？
                         
                     }){
                         Text("退会する")
@@ -96,38 +105,41 @@ struct ProfileEditView: View {
                 }
                 
             }//scroll view
-
+            
         } //vstack
             .onAppear {
-            // ここで初期値を代入
-            self.name = self.shareData.currentUserData["name"] as! String
-            self.subject = self.shareData.currentUserData["subject"] as! String
-            self.hometown = self.shareData.currentUserData["hometown"] as! String
-            self.hobby = self.shareData.currentUserData["hobby"] as! String
-            self.introduction = self.shareData.currentUserData["introduction"] as! String
-            self.personality = self.shareData.currentUserData["personality"] as! String
-            self.studystyle = self.shareData.currentUserData["studystyle"] as! String
-            self.work = self.shareData.currentUserData["work"] as! String
-            self.purpose = self.shareData.currentUserData["purpose"] as! String
-            self.getIndex()
-//            self.shareData.deleteUserPicture() //テスト 消えた！
+                // ここで初期値を代入
+                self.name = self.shareData.currentUserData["name"] as! String
+                self.age = self.shareData.currentUserData["age"] as! String
+                self.subject = self.shareData.currentUserData["subject"] as! String
+                self.hometown = self.shareData.currentUserData["hometown"] as! String
+                self.hobby = self.shareData.currentUserData["hobby"] as! String
+                self.introduction = self.shareData.currentUserData["introduction"] as! String
+                self.personality = self.shareData.currentUserData["personality"] as! String
+                self.studystyle = self.shareData.currentUserData["studystyle"] as! String
+                self.work = self.shareData.currentUserData["work"] as! String
+                self.purpose = self.shareData.currentUserData["purpose"] as! String
+                self.getIndex()
+                
         }
         .onDisappear{
             self.shareData.editOn = false
         }
     }
     func getIndex() {
+        let ageIndex = shareData.ages.firstIndex(of: self.age)
         let hometownIndex = shareData.hometowns.firstIndex(of: self.hometown)
         let personalityIndex = shareData.personalities.firstIndex(of: self.personality)
         let workIndex = shareData.jobs.firstIndex(of: self.work)
         let purposeIndex = shareData.purposes.firstIndex(of: self.purpose)
         
-        if let hometownIndex = hometownIndex, let personalityIndex = personalityIndex, let workIndex = workIndex, let purposeIndex = purposeIndex{
+        if let hometownIndex = hometownIndex, let personalityIndex = personalityIndex, let workIndex = workIndex, let purposeIndex = purposeIndex, let ageIndex = ageIndex{
+            selectedAge = ageIndex
             selectedHometown = hometownIndex
             selectedPurpose = purposeIndex
             selectedWork = workIndex
             selectedPersonality = personalityIndex
-//            print(selectedHometown)
+            //            print(selectedHometown)
         }
     }
     

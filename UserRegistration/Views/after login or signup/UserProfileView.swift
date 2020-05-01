@@ -127,10 +127,6 @@ struct UserProfileView: View {
                                     }
                                 }
                                 
-//                                mnd@aaa.com heima@aaa.com sayaka@aaa.com shino@aaa.com
-                                
-//                                     sayaka@aaa.com
-                                
                                 self.db.collection("Users").whereField("id", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
                                     if let snap = snap {
                                         for j in snap.documents{
@@ -166,11 +162,6 @@ struct UserProfileView: View {
                                     }
                                 }
 
-                                
-                                
-//                                shino@aaa.com
-                                
-                                
                                 //                自分用マッチテーブル
                                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
                                     "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
@@ -187,12 +178,7 @@ struct UserProfileView: View {
                         }
                         
                     }
-                    //
-                    //                    }heima@aaa.com
-                    //                    kkm@aaa.com
-                    //                    sayaka@aaa.com
-                    //
-                    
+
                     
                     ///マッチ後マッチユーザー同士をお気に入りから削除
                     self.db.collection("FavoriteTable").document(i.data()["MyUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
@@ -305,15 +291,6 @@ struct UserProfileView: View {
                     self.gaveLike = false
                 }
             }
-            //            if snap!.documents.count > 0 {
-            //                self.gaveLike = true
-            //                return
-            //            } else {
-            //                //反応なし -> つまりdata()のnilはない.でもcountだとnilになる
-            //                print(snap!.documents.count)
-            //                print("まだいいねしてない")
-            //                self.gaveLike = false
-            //            }
         }
     }
     

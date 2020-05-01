@@ -64,21 +64,21 @@ struct SearchView: View {
                         VStack{
                             ForEach(self.shareData.searchedUsers){ user in
                                 
-                                    VStack{
-                                        FirebaseImageView(imageURL: user.photoURL)
-                                        HStack{
-                                            Text("\(user.gender)") //テスト
-                                            Text(user.age)
-                                            Text(user.hometown)
-                                        }
-                                        Text(user.introduction)
-                                        //
+                                VStack{
+                                    FirebaseImageView(imageURL: user.photoURL)
+                                    HStack{
+                                        Text("\(user.gender)") //テスト
+                                        Text(user.age)
+                                        Text(user.hometown)
                                     }
-                                    .onTapGesture {
-                                        self.userInfo = user
-                                        self.userProfileOn = true
-                                        
-                                    }
+                                    Text(user.introduction)
+                                    //
+                                }
+                                .onTapGesture {
+                                    self.userInfo = user
+                                    self.userProfileOn = true
+                                    
+                                }
                                 
                                 
                                 
@@ -99,7 +99,7 @@ struct SearchView: View {
                     }
                 }
             } //group
-
+            
             
         } //vstack
             

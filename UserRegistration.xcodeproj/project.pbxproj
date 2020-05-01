@@ -152,6 +152,7 @@
 				95CDFABA2446B4020054FADF /* User.swift */,
 				959B9204244995BC00A16952 /* ShareData.swift */,
 				95CDFABC2446BDC30054FADF /* Firebase.swift */,
+				951FDBDD244FF5550094C9BC /* ProfileUserDetailView.swift */,
 				95CDFAAA2446B2BA0054FADF /* Assets.xcassets */,
 				95CDFAAF2446B2BA0054FADF /* LaunchScreen.storyboard */,
 				958721CD245856110001ED81 /* GoogleService-Info.plist */,
@@ -175,7 +176,6 @@
 			children = (
 				953B24E524491988007BD077 /* after login or signup */,
 				953B24E224491925007BD077 /* before login or signup */,
-				951FDBDD244FF5550094C9BC /* ProfileUserDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

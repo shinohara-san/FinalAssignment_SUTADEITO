@@ -1395,3 +1395,94 @@
 //        return MessageViewModel(matchId: matchId)
 //    }
 //    @State var msgVM = MessageViewModel(matchId: "")
+
+
+///コメントアウト削除
+//                            .onTapGesture {
+////                                self.userInfo =user
+//                                Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: user.id).getDocuments { (snap, err) in
+//                                    if snap != nil {
+//                                        for i in snap!.documents{
+//                                            self.matchid = i.data()["MatchRoomId"] as! String
+//                                        }sayaka@aaa.com//                                    }
+//                                }
+//                                print(self.matchid)
+//                            }
+
+
+
+        // Reference link : https://firebase.google.com/docs/firestore/query-data/listen
+//        func readData() {
+//            dbCollection.addSnapshotListener { (documentSnapshot, err) in
+//                if err != nil {
+//                    print((err?.localizedDescription)!)
+//                    return
+//                }else {
+//                    print("read data success")
+//                }
+//
+//                documentSnapshot!.documentChanges.forEach { diff in
+//                    if (diff.type == .added) {
+//    //                    データ新規追加だったら、ThreadDataType型のデータを生成(idはdbから、msgはtestTextという名前のデータを取得)し、それをdata配列に追加　→                        表示更新
+//                        let userData = User(id: diff.document.documentID,
+//                                            name: diff.document.get("name") as! String,
+//                                            age: diff.document.get("age") as! Int,
+//                                            hometown: diff.document.get("hometown") as! String,
+//                                            subject: diff.document.get("subject") as! String,
+//                                            introduction: diff.document.get("introduction") as! String,
+//                                            studystyle: diff.document.get("studystyle") as! String,
+//                                            hobby: diff.document.get("hobby") as! String,
+//                                            personality: diff.document.get("personality") as! String,
+//                                            work: diff.document.get("work") as! String,
+//                                            purpose: diff.document.get("purpose") as! String)
+//                        self.data.append(userData)
+//                    }
+//    //                既存データ更新だったら、それぞれのデータをThredDataTypeでリターン
+//    //                表示されているデータのidとdb上のデータのidが一緒なら
+//    //                表示されているデータのmsgを同じidを持ったデータのtestTextに書き換え
+//    //                同じidじゃないやつはそのまま返す
+//
+//                    if (diff.type == .modified) {
+//                        self.data = self.data.map { (eachData) -> User in
+//                            var data = eachData
+//                            if data.id == diff.document.documentID {
+//                                data.name = diff.document.get("name") as! String
+//                                return data
+//                            }else {
+//                                return eachData
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+
+//        //Reference link: https://firebase.google.com/docs/firestore/manage-data/delete-data
+//        func deleteData(datas: FirebaseData ,index: IndexSet) {
+//    //        dbから削除
+//            let id = datas.data[index.first!].id
+//            dbCollection.document(id).delete { (err) in
+//
+//                if err != nil {
+//                    print((err?.localizedDescription)!)
+//                    return
+//                }else {
+//                    print("delete data success")
+//                }
+//    //            表示されてる
+//    //            datas.data.remove(atOffsets:index)
+//                self.data.remove(atOffsets:index)
+//            }
+//        }
+//
+//        // Reference link: https://firebase.google.com/docs/firestore/manage-data/add-data
+//        func updateData(id: String, txt: String) {
+//            dbCollection.document(id).updateData(["testText":txt]) { (err) in
+//                if err != nil {
+//                    print((err?.localizedDescription)!)
+//                    return
+//                }else {
+//                    print("update data success")
+//                }
+//            }
+//        }

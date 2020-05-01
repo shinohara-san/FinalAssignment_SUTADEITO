@@ -28,54 +28,96 @@ struct PictureUploadView: View {
     @ObservedObject private var datas = firebaseData
     @EnvironmentObject var shareData: ShareData
     
-    var body: some View {
-        
-        Group {
-                    if datas.session != nil {
-                        MainView(datas: self.datas)
-                        .navigationBarBackButtonHidden(true)
-//                        .navigationBarTitle("")
-//                        .navigationBarHidden(true)
-        //                , userData: self.datas.session
-                        
-                    } else {
-        
-        VStack{
-            if self.imageURL != "" {
-                FirebaseImageView(imageURL: self.imageURL)
-            }
-            Button(action: {
-                self.shown.toggle()
-            }) {
-                Text("upload")
-            }
-            Button(action: {
-                self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL)
-                
-                //                    Authの処理
-                self.datas.signUp(self.email, self.password) { (res, err) in
-                    if err != nil{
-                        print("Signup失敗...")
-                    } else {
-                        self.datas.listen()
-                        print("Signup成功！")
-                    }
-                    
-                }
-            }) {
-                Text("登録")
-            }
-        }
-            .sheet(isPresented: $shown) {
-                imagePicker(shown: self.$shown, imageURL: self.$imageURL, email:self.$email)
-            }
-
-        .animation(.spring())
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
+    @Environment(\.presentationMode) var presentation
+    
+//    @State var showingAlert = false
+    @State var showingCompletion = false
+    
+    var allSectionsFilled: Bool {
+        return !imageURL.isEmpty
     }
-}
-}
+    
+    var buttonColor: Color {
+        return allSectionsFilled ? shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255)
+    }
+    
+    var body: some View {
+        //        Group {
+        //            if self.datas.session != nil {
+        //                MainView(datas: self.datas)
+        //                    .navigationBarBackButtonHidden(true)
+        //
+        //            } else {
+        GeometryReader{ geometry in
+            ZStack{
+                self.shareData.white.edgesIgnoringSafeArea(.all)
+                
+                VStack{
+                    if self.imageURL != "" {
+                        FirebaseImageView(imageURL: self.imageURL).cornerRadius(10).animation(.spring())
+                    }
+                    Button(action: {
+                        self.shown.toggle()
+                    }) {
+                        Text("写真を追加する").padding()
+                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10)
+                    }.padding(.bottom)
+                    
+                    Button(action: {
+                        
+//                        if self.imageURL == ""  {
+//                            self.showingAlert = true
+//                        } else {
+                            self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL)
+                            
+                            //                    Authの処理
+                            self.datas.signUp(self.email, self.password) { (res, err) in
+                                if err != nil{
+                                    print("Signup失敗...")
+                                } else {
+                                    self.datas.listen()
+                                    print("Signup成功！")
+                                    self.showingCompletion = true
+                                }
+                                
+                            }
+//                        }
+                        
+                        
+                    }) {
+                        Text("登録").padding()
+                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                            .foregroundColor(self.shareData.white)
+                            .background(self.buttonColor).cornerRadius(10)
+                    }.disabled(!self.allSectionsFilled)
+                    
+                    Button("戻る"){
+                        self.presentation.wrappedValue.dismiss()
+                    }.foregroundColor(self.shareData.white)
+                    
+                    
+                } //vstack
+                    .alert(isPresented: self.$showingCompletion) {
+                        Alert(title: Text("登録が完了しました。"),
+                              message: Text("トップページよりログインしてください。"))
+                }
+                    
+                .sheet(isPresented: self.$shown) {
+                    imagePicker(shown: self.$shown, imageURL: self.$imageURL, email:self.$email)
+                }
+                    
+                    
+                .animation(.spring())
+                .navigationBarTitle("プロフィール作成", displayMode: .inline)
+                .navigationBarItems(leading: Button("戻る"){
+                    self.presentation.wrappedValue.dismiss()
+                }.foregroundColor(self.shareData.white))
+                    .navigationBarBackButtonHidden(true)
+            }
+        } //geometry
+    }
+    //        }//group
+    //    }
 }
 
 

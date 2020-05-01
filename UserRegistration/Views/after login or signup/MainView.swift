@@ -31,32 +31,30 @@ struct MainView: View {
         
         TabView {
             ////ユーザー一覧のページ
-
+            
             Group{
                 if !userProfileOn{
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
-
+                                
                                 VStack{
                                     FirebaseImageView(imageURL: user.photoURL)
                                     HStack{
-                                        Text("\(user.gender)") //テスト
+                                        Text("\(user.gender)") //テスト本番では消す
                                         Text(user.age)
                                         Text(user.hometown)
                                     }
                                     Text(user.introduction)
-                                    //
                                 }
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
-//                                    self.shareData.test1()
-                                    }
-                                    
-//                                } //追加
+                                }
                                 
-
+                                
+                                
+                                
                             } //foreach
                                 .buttonStyle(PlainButtonStyle())
                             
@@ -66,14 +64,12 @@ struct MainView: View {
                             .onAppear{
                                 DispatchQueue.global().async {
                                     self.shareData.getCurrentUser()
-
+                                    
                                 }
-
+                                
                                 
                         }
-//                        .onDisappear(){
-//                            self.shareData.matchUserId = [String]()
-//                        }
+                        
                         
                     }//Scrollview
                 } else {
@@ -87,7 +83,7 @@ struct MainView: View {
                 }
                 
             }//Profile
-               
+                
                 .navigationBarTitle("")
                 .navigationBarHidden(false)
                 .tabItem {
@@ -129,19 +125,9 @@ struct MainView: View {
                                 Text(user.name)
                                 Text(user.age)
                             }
-//                            .onTapGesture {
-////                                self.userInfo =user
-//                                Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as! String).collection("MatchUser").whereField("MatchUserId", isEqualTo: user.id).getDocuments { (snap, err) in
-//                                    if snap != nil {
-//                                        for i in snap!.documents{
-//                                            self.matchid = i.data()["MatchRoomId"] as! String
-//                                        }sayaka@aaa.com//                                    }
-//                                }
-//                                print(self.matchid)
-//                            }
-
+                            
                         }
-
+                        
                     }
                 }
                 
@@ -149,7 +135,7 @@ struct MainView: View {
                 self.shareData.getAllMatchUser()
                 print("マッチ一覧: \(self.shareData.matchUserArray)")
                 
-               
+                
             }.onDisappear{
                 self.shareData.matchUserArray = [User]()
             }

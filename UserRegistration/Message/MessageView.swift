@@ -31,17 +31,13 @@ struct MessageView: View {
     
     var body: some View {
         VStack{
-//            DispatchQueue.global().async{
             List(self.msgVM.messages, id: \.id){ i in
-                if i.fromUser == self.shareData.currentUserData["id"] as? String ?? ""
-//                    && i.toUser == self.matchUserInfo.id
-                {
+                if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
                     MessageRow(message: i.msg, isMyMessage: true)
-                } else
-                {
+                } else {
                     MessageRow(message: i.msg, isMyMessage: false)
                 }
-                }
+             }
             .onAppear { UITableView.appearance().separatorStyle = .none }
             .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
             
@@ -65,12 +61,7 @@ struct MessageView: View {
         }
         .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
             .onAppear{
-//                self.msgVM.messages = [Message]()shino@aaa.com
-//                DispatchQueue.global().async{
-//                self.getMatchId(partner: self.matchUserInfo)
-                
-//                _ = MessageViewModel(matchId: self.matchId)
-//                }
+
                 print("MessageViewでのmessages: \(self.msgVM.messages)")//空っぽ
                 
         }
@@ -97,4 +88,10 @@ struct MessageView: View {
     }
     
     
+}
+
+struct MessageView_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
 }
