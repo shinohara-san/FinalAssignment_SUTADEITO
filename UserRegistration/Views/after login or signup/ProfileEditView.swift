@@ -31,19 +31,21 @@ struct ProfileEditView: View {
     var datas: FirebaseData
     
     var body: some View {
-        
+        GeometryReader{ geo in
+            ZStack{
+                self.shareData.white.edgesIgnoringSafeArea(.all)
         VStack{
             ScrollView{
-                TextField("名前", text: $name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: $age, label: Text("年齢")
+                TextField("名前", text: self.$name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                Picker(selection: self.$age, label: Text("年齢")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.ages.count){ index in
                             Text(self.shareData.ages[index]).tag(index)
                         }
                 }
-                TextField("勉強中のもの", text: $subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: $selectedHometown, label: Text("居住地")
+                TextField("勉強中のもの", text: self.$subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                Picker(selection: self.$selectedHometown, label: Text("居住地")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.hometowns.count){ index in
@@ -51,9 +53,9 @@ struct ProfileEditView: View {
                         }
                 }
                 
-                TextField("趣味", text: $hobby).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                TextField("自己紹介", text: $introduction).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: $selectedPersonality, label: Text("性格")
+                TextField("趣味", text: self.$hobby).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                TextField("自己紹介", text: self.$introduction).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                Picker(selection: self.$selectedPersonality, label: Text("性格")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.personalities.count){ index in
@@ -61,15 +63,15 @@ struct ProfileEditView: View {
                         }
                 }
                 Section{
-                    TextField("勉強方法", text: $studystyle).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                    Picker(selection: $selectedWork, label: Text("職業")
+                    TextField("勉強方法", text: self.$studystyle).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                    Picker(selection: self.$selectedWork, label: Text("職業")
                         .font(.title)
                         .padding(.leading)) {
                             ForEach(0..<self.shareData.jobs.count){ index in
                                 Text(self.shareData.jobs[index]).tag(index)
                             }
                     }
-                    Picker(selection: $selectedPurpose, label: Text("目的")
+                    Picker(selection: self.$selectedPurpose, label: Text("目的")
                         .font(.title)
                         .padding(.leading)) {
                             ForEach(0..<self.shareData.purposes.count){ index in
@@ -103,9 +105,9 @@ struct ProfileEditView: View {
                         Text("退会する")
                     }
                 }
-                
+            }
             }//scroll view
-            
+            }
         } //vstack
             .onAppear {
                 // ここで初期値を代入

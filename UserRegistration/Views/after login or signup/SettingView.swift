@@ -19,10 +19,16 @@ struct SettingView: View {
         
         Group {
         if datas.session != nil {
-        VStack {
+            GeometryReader{ geo in
+            VStack {
             Group{
                 if !self.shareData.editOn{
-                    FirebaseImageView(imageURL: self.shareData.imageURL)
+                    
+                    ZStack{
+                        self.shareData.white.edgesIgnoringSafeArea(.all)
+                        
+                        VStack{
+                    FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(7)
                     ProfileUserDetailView(
                         name: String(describing: self.shareData.currentUserData["name"] ?? ""),
                         age: String(describing: self.shareData.currentUserData["age"] ?? ""),
@@ -34,7 +40,7 @@ struct SettingView: View {
                         hobby: String(describing: self.shareData.currentUserData["hobby"] ?? ""),
                         personality: String(describing: self.shareData.currentUserData["personality"] ?? ""),
                         work: String(describing: self.shareData.currentUserData["work"] ?? ""),
-                        purpose: String(describing: self.shareData.currentUserData["purpose"] ?? ""))
+                        purpose: String(describing: self.shareData.currentUserData["purpose"] ?? "")).frame(width: geo.size.width * 0.9)
                     
                         Button(action: {
                             self.shareData.editOn = true
@@ -48,8 +54,8 @@ struct SettingView: View {
                             self.shareData.currentUserData = [String : Any]()
                             print("ログアウトしました")
                         } //ProfileUserDetailView
-                    
-                    
+                    }
+                    }
                 } else {
                     ProfileEditView(datas: self.datas)
                 }
@@ -59,7 +65,7 @@ struct SettingView: View {
             
             
             
-            
+            }
         }//VStack
             .onAppear{
              self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")

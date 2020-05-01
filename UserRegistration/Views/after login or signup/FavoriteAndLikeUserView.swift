@@ -25,6 +25,10 @@ struct FavoriteAndLikeUserView: View {
             
             if !self.likeListOn{
                 if !favoriteProfileOn{
+                    
+                    ZStack{
+                        self.shareData.white.edgesIgnoringSafeArea(.all)
+                        
                     ScrollView{
                         VStack{
                             Button("いいね一覧へ"){
@@ -57,7 +61,7 @@ struct FavoriteAndLikeUserView: View {
                         }
                         
                     } //scroll
-                    
+                    }
                 } else {
                     
                     VStack{
@@ -73,7 +77,8 @@ struct FavoriteAndLikeUserView: View {
             } //if !self.likeListOn　いいね一覧表示off閉じ
             else
             { ///いいね一覧スタート
-                
+                ZStack{
+                    self.shareData.white.edgesIgnoringSafeArea(.all)
                 ScrollView{
                     VStack{
                         Button("お気に入り一覧へ"){
@@ -104,7 +109,7 @@ struct FavoriteAndLikeUserView: View {
                                 self.likeProfileOn = false
                             }
                         }
-                        
+                    }
                     }
                     .navigationBarTitle("いいねしたユーザー")
                     .navigationBarHidden(true)

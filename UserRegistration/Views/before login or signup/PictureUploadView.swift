@@ -29,6 +29,7 @@ struct PictureUploadView: View {
     @EnvironmentObject var shareData: ShareData
     
     @Environment(\.presentationMode) var presentation
+    @Binding var pre: PresentationMode
     
 //    @State var showingAlert = false
     @State var showingCompletion = false
@@ -98,8 +99,10 @@ struct PictureUploadView: View {
                     
                 } //vstack
                     .alert(isPresented: self.$showingCompletion) {
-                        Alert(title: Text("登録が完了しました。"),
-                              message: Text("トップページよりログインしてください。"))
+                        Alert(title: Text("登録が完了しました"),
+                              message: Text("トップページよりログインしてください"),
+                              dismissButton: .default(Text("OK"),
+                                                      action: {self.pre.dismiss()}))
                 }
                     
                 .sheet(isPresented: self.$shown) {

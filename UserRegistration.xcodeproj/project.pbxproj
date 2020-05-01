@@ -33,6 +33,7 @@
 		95DA4B63244A83B4009921D4 /* FirebaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B62244A83B4009921D4 /* FirebaseImageView.swift */; };
 		95DA4B65244AA2F6009921D4 /* PictureUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B64244AA2F6009921D4 /* PictureUploadView.swift */; };
 		95DA4B67244AE869009921D4 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B66244AE869009921D4 /* Note.swift */; };
+		95E9C5EA245C0CBB009E11DF /* MultilineTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E9C5E9245C0CBB009E11DF /* MultilineTextView.swift */; };
 		95F5045E2452B69900CB0A0F /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5045D2452B69900CB0A0F /* MessageViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		95DA4B62244A83B4009921D4 /* FirebaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageView.swift; sourceTree = "<group>"; };
 		95DA4B64244AA2F6009921D4 /* PictureUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureUploadView.swift; sourceTree = "<group>"; };
 		95DA4B66244AE869009921D4 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		95E9C5E9245C0CBB009E11DF /* MultilineTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultilineTextView.swift; sourceTree = "<group>"; };
 		95F5045D2452B69900CB0A0F /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		AB33BADC0A6F2EF159C54F5F /* Pods-UserRegistration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserRegistration.debug.xcconfig"; path = "Target Support Files/Pods-UserRegistration/Pods-UserRegistration.debug.xcconfig"; sourceTree = "<group>"; };
 		C469270F76DD005C72AA02D1 /* Pods-UserRegistration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserRegistration.release.xcconfig"; path = "Target Support Files/Pods-UserRegistration/Pods-UserRegistration.release.xcconfig"; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				95CDFAB22446B2BA0054FADF /* Info.plist */,
 				95CDFAAC2446B2BA0054FADF /* Preview Content */,
 				95DA4B66244AE869009921D4 /* Note.swift */,
+				95E9C5E9245C0CBB009E11DF /* MultilineTextView.swift */,
 			);
 			path = UserRegistration;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			files = (
 				95CDFABD2446BDC30054FADF /* Firebase.swift in Sources */,
 				95DA4B63244A83B4009921D4 /* FirebaseImageView.swift in Sources */,
+				95E9C5EA245C0CBB009E11DF /* MultilineTextView.swift in Sources */,
 				951FDBDC244FA7750094C9BC /* ProfileEditView.swift in Sources */,
 				953B24E124484C66007BD077 /* MainView.swift in Sources */,
 				952138E9244D0D600090F943 /* UserProfileView.swift in Sources */,

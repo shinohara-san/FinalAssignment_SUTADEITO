@@ -12,6 +12,8 @@ struct TopPageView: View {
     init() {
         // タイトルバーのフォントサイズを変更
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.systemFont(ofSize: 16)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)]
+        
         // タイトルバーの背景色を変更
         UINavigationBar.appearance().barTintColor = UIColor(red: 238 / 255, green: 143 / 255, blue: 143 / 255, alpha: 0.9)
         // タイトルバーの裏の背景色を変更
@@ -32,6 +34,8 @@ struct TopPageView: View {
     @State var count: CGFloat = 0
     @State var screen = UIScreen.main.bounds.width
     
+    @State var isModal = false
+    
     func getMid()->Int{
         return pictures.count/2
     }
@@ -41,8 +45,8 @@ struct TopPageView: View {
         
         NavigationView {
             GeometryReader{ geometry in
-            ZStack{
-                
+                ZStack{
+                    
                     ScrollView(.horizontal, showsIndicators: true){
                         HStack(spacing: 0) {
                             ForEach(0 ..< self.pictures.count) { index in
@@ -82,36 +86,42 @@ struct TopPageView: View {
                             }
                         }
                     }
-                
-                
-                //
-                VStack{
-                    Spacer()
                     
-                    NavigationLink(destination: LoginView().environmentObject(self.shareData)) {
-                        Text("ログイン")
-                            .foregroundColor(self.shareData.white)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
-                            .background(self.shareData.pink).cornerRadius(10)
-                    }
-                    .padding(.bottom)
                     
-                    NavigationLink(destination: RegisterView().environmentObject(self.shareData)) {
-                        Text("新規登録")
-                            .foregroundColor(self.shareData.pink)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
-                            .background(self.shareData.white)
-                            .cornerRadius(10)
+                    //
+                    VStack{
+                        Spacer()
+                        
+                        NavigationLink(destination: LoginView().environmentObject(self.shareData)) {
+                            Text("ログイン")
+                                .foregroundColor(self.shareData.white)
+                                .padding()
+                                .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                                .background(self.shareData.pink).cornerRadius(10)
+                        }
+                        .padding(.bottom)
+                        
+                        
+                        //                    NavigationLink(destination: RegisterView().environmentObject(self.shareData)) {
+                        Button("新規登録"){
+                            self.isModal = true
+                        }
+                        .foregroundColor(self.shareData.pink)
+                        .padding()
+                        .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                        .background(self.shareData.white)
+                        .cornerRadius(10)
+                        .padding(.bottom, 200)
                     }
-                    .padding(.bottom, 200)
-                }
+                    
+                } //zstack
+                    .navigationBarTitle("")
+                    .navigationBarHidden(true)
+                    .animation(.spring())
                 
-            } //zstack
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-                .animation(.spring())
+            }
+            .sheet(isPresented: $isModal) {
+                RegisterView().environmentObject(self.shareData)
             }
         } //navigationview
         

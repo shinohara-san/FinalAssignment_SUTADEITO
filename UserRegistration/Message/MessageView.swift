@@ -30,6 +30,7 @@ struct MessageView: View {
     @State var matchId = ""
     
     var body: some View {
+        
         VStack{
             List(self.msgVM.messages, id: \.id){ i in
                 if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {

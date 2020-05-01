@@ -24,6 +24,9 @@ struct SearchView: View {
     }
     
     var body: some View {
+        GeometryReader{ geo in
+        ZStack{
+            self.shareData.white.edgesIgnoringSafeArea(.all)
         VStack{
             
             Group{
@@ -31,7 +34,7 @@ struct SearchView: View {
                     Text("条件を入れてください")
                     VStack{
                         HStack{
-                            TextField("居住地", text: $hometown).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                            TextField("居住地", text: self.$hometown).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                             
                             Button("検索"){
                                 self.shareData.searchUser(key: "hometown", value: self.hometown)
@@ -40,7 +43,7 @@ struct SearchView: View {
                             }.padding(.trailing)
                         }
                         HStack{
-                            TextField("目的", text: $purpose).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                            TextField("目的", text: self.$purpose).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                             Button("検索"){
                                 self.shareData.searchUser(key: "purpose", value: self.purpose)
                                 self.emptifyTextField()
@@ -48,7 +51,7 @@ struct SearchView: View {
                             }.padding(.trailing)
                         }
                         HStack{
-                            TextField("科目", text: $subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                            TextField("科目", text: self.$subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                             Button("検索"){
                                 self.shareData.searchUser(key: "subject", value: self.subject)
                                 self.emptifyTextField()
@@ -92,15 +95,15 @@ struct SearchView: View {
                 } // if
                 else {
                     VStack{
-                        UserProfileView(user: userInfo)
+                        UserProfileView(user: self.userInfo)
                         Button("戻る"){
                             self.userProfileOn = false
                         }
                     }
                 }
             } //group
-            
-            
+            }
+        }
         } //vstack
             
             .navigationBarTitle("")

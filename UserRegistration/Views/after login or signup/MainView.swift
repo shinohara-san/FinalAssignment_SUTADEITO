@@ -34,14 +34,17 @@ struct MainView: View {
             
             Group{
                 if !userProfileOn{
+                    GeometryReader{ geometry in
+                        ZStack{
+                            self.shareData.white.edgesIgnoringSafeArea(.all)
                     ScrollView{
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
                                 
                                 VStack{
-                                    FirebaseImageView(imageURL: user.photoURL)
+                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5)
+                                        .clipShape(Circle())
                                     HStack{
-                                        Text("\(user.gender)") //テスト本番では消す
                                         Text(user.age)
                                         Text(user.hometown)
                                     }
@@ -70,22 +73,24 @@ struct MainView: View {
                                 
                         }
                         
-                        
+                            }
                     }//Scrollview
+                    }
                 } else {
                     VStack{
                         UserProfileView(user: userInfo)
                         Button("戻る"){
                             self.userProfileOn = false
                         }
-                    }
+                    }.navigationBarTitle("")
+                    .navigationBarHidden(false)
                     
                 }
                 
             }//Profile
                 
                 .navigationBarTitle("")
-                .navigationBarHidden(false)
+                .navigationBarHidden(true)
                 .tabItem {
                     VStack {
                         Image(systemName: "book")
@@ -115,9 +120,10 @@ struct MainView: View {
             
             ////                   マッチングページ
             Group{
-                
+                ZStack{
+                    self.shareData.pink.edgesIgnoringSafeArea(.all)
                 VStack{
-                    Text("マッチ一覧")
+                    Text("マッチ一覧").font(.headline).foregroundColor(self.shareData.white)
                     List(self.shareData.matchUserArray){ user in
                         //写真タップでプロフィール表示
                         NavigationLink(destination: MessageView(user, user.matchRoomId)){
@@ -130,7 +136,7 @@ struct MainView: View {
                         
                     }
                 }
-                
+            }
             }.onAppear{
                 self.shareData.getAllMatchUser()
                 print("マッチ一覧: \(self.shareData.matchUserArray)")

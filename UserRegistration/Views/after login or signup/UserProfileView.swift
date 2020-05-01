@@ -96,7 +96,7 @@ struct UserProfileView: View {
                                     if let snap = snap {
                                         for i in snap.documents{
                                             let user = i.data()
-
+                                            
                                             self.db.collection("MatchUsers").document(self.shareData.currentUserData["id"] as! String).collection("MatchUserData").document().setData([
                                                 "MatchRoomId" : self.roomId,
                                                 "email": user["email"] as! String,
@@ -113,7 +113,7 @@ struct UserProfileView: View {
                                                 "purpose":  user["purpose"] as! String,
                                                 "photoURL":  user["photoURL"] as! String,
                                                 "id": self.shareData.currentUserData["id"] as? String ?? ""
-
+                                                
                                             ]){ err in
                                                 if let err = err {
                                                     print("Error writing document: \(err)")
@@ -121,8 +121,8 @@ struct UserProfileView: View {
                                                     print("Document successfully written!")
                                                 }
                                             }
-
-
+                                            
+                                            
                                         }
                                     }
                                 }
@@ -156,12 +156,12 @@ struct UserProfileView: View {
                                                     print("Document successfully written!")
                                                 }
                                             }
-                                        
+                                            
                                             
                                         }
                                     }
                                 }
-
+                                
                                 //                自分用マッチテーブル
                                 self.db.collection("MatchTable").document(i.data()["MyUserId"] as? String ?? "").collection("MatchUser").document().setData([
                                     "MatchUserId": i.data()["LikeUserId"] as? String ?? "",
@@ -178,7 +178,7 @@ struct UserProfileView: View {
                         }
                         
                     }
-
+                    
                     
                     ///マッチ後マッチユーザー同士をお気に入りから削除
                     self.db.collection("FavoriteTable").document(i.data()["MyUserId"] as? String ?? "").collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
@@ -294,38 +294,47 @@ struct UserProfileView: View {
         }
     }
     
+//    @Binding var userProfileOn: Bool
     
     var body: some View {
-        VStack{
-            FirebaseImageView(imageURL: user.photoURL)
-            
-            ProfileUserDetailView(name: user.name, age: user.age, gender: user.gender, hometown: user.hometown, subject: user.subject, introduction: user.introduction, studystyle: user.studystyle, hobby: user.hobby, personality: user.personality, work: user.work, purpose: user.purpose)
-            
-            
-            Button(action: {
-                self.checkFavoriteTable()
+        GeometryReader{ geo in
+            ZStack{
                 
-                if self.isFavorite == false {
-                    self.addUserToFavorite()
-                } else {
-                    self.removeUserFromFavorite()
+                self.shareData.white.edgesIgnoringSafeArea(.all)
+                VStack{
+                    
+                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(7)
+                    
+                    ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose).frame(width: geo.size.width * 0.9)
+                    
+                    
+                    Button(action: {
+                        self.checkFavoriteTable()
+                        
+                        if self.isFavorite == false {
+                            self.addUserToFavorite()
+                        } else {
+                            self.removeUserFromFavorite()
+                        }
+                    }) {
+                        Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
+                    }
+                    
+                    Button(action: {
+                        self.checkLikeTable()
+                        
+                        if self.gaveLike == false {
+                            self.giveUserLike()
+                        } else {
+                            self.removeUserFromLike()
+                        }
+                    }) {
+                        Text(self.gaveLike ? "いいねを取り消す" : "いいね")
+                    }
+                    
+                    
                 }
-            }) {
-                Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
             }
-            
-            Button(action: {
-                self.checkLikeTable()
-                
-                if self.gaveLike == false {
-                    self.giveUserLike()
-                } else {
-                    self.removeUserFromLike()
-                }
-            }) {
-                Text(self.gaveLike ? "いいねを取り消す" : "いいね")
-            }
-            
         }
         .onAppear{
             self.checkFavoriteTable()
