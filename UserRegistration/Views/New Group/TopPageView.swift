@@ -46,6 +46,7 @@ struct TopPageView: View {
         NavigationView {
             GeometryReader{ geometry in
                 ZStack{
+                    Color.gray.edgesIgnoringSafeArea(.all)
                     
                     ScrollView(.horizontal, showsIndicators: true){
                         HStack(spacing: 0) {

@@ -303,7 +303,7 @@ struct UserProfileView: View {
                 self.shareData.white.edgesIgnoringSafeArea(.all)
                 VStack{
                     
-                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(7)
+                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(10)
                     
                     ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose).frame(width: geo.size.width * 0.9)
                     

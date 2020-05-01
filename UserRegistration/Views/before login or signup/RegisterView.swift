@@ -129,7 +129,7 @@ struct RegisterView: View {
                             
                             VStack{
                                 Text("あなたの居住地").foregroundColor(self.shareData.brown)
-                                Picker(selection: self.$selectedHometown, label: Text("地")
+                                Picker(selection: self.$selectedHometown, label: Text("current city")
                                     .font(.title)
                                     .padding(.leading)) {
                                         ForEach(0..<self.shareData.hometowns.count){ index in

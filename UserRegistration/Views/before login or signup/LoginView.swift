@@ -46,6 +46,7 @@ struct LoginView: View {
                 NavigationView {
                     GeometryReader{ geometry in
                     ZStack{
+                        Color.gray.edgesIgnoringSafeArea(.all)
                         
                             ScrollView(.horizontal, showsIndicators: true){
                                 HStack(spacing: 0) {
@@ -135,7 +136,7 @@ struct LoginView: View {
                             .padding(.top, 80)
                         
                         
-                        ///スライドの数字、上エリアの幅、横からニョキメニュー
+                        ///上エリアの幅、横からニョキメニュー
                         }
                     }
                     }

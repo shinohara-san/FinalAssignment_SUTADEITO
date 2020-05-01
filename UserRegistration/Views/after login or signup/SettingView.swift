@@ -12,7 +12,7 @@ struct SettingView: View {
     
     var datas: FirebaseData
     @EnvironmentObject var shareData: ShareData
-    
+    @State var isModal = false
     
     
     var body: some View {
@@ -28,7 +28,7 @@ struct SettingView: View {
                         self.shareData.white.edgesIgnoringSafeArea(.all)
                         
                         VStack{
-                    FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(7)
+                    FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4)
                     ProfileUserDetailView(
                         name: String(describing: self.shareData.currentUserData["name"] ?? ""),
                         age: String(describing: self.shareData.currentUserData["age"] ?? ""),
@@ -43,10 +43,15 @@ struct SettingView: View {
                         purpose: String(describing: self.shareData.currentUserData["purpose"] ?? "")).frame(width: geo.size.width * 0.9)
                     
                         Button(action: {
-                            self.shareData.editOn = true
+                            self.isModal = true
                         }) {
                             Text("編集する")
                         }
+                        .padding()
+                        .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                        .foregroundColor(self.shareData.white)
+                        .background(self.shareData.pink).cornerRadius(10)
+                        .padding()
                     
                         Button("ログアウト"){
                             
@@ -54,15 +59,17 @@ struct SettingView: View {
                             self.shareData.currentUserData = [String : Any]()
                             print("ログアウトしました")
                         } //ProfileUserDetailView
+                            .foregroundColor(Color.gray)
                     }
                     }
-                } else {
+                }
+                else {
                     ProfileEditView(datas: self.datas)
                 }
             }//Group
-            
-            
-            
+                .sheet(isPresented: self.$isModal) {
+                    ProfileEditView(datas: self.datas).environmentObject(self.shareData)
+            }
             
             
             }

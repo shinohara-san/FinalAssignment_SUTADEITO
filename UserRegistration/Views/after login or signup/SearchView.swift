@@ -31,32 +31,40 @@ struct SearchView: View {
             
             Group{
                 if !self.userProfileOn{
-                    Text("条件を入れてください")
+                    Text("条件をひとつ入れてください")
                     VStack{
                         HStack{
-                            TextField("居住地", text: self.$hometown).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                            TextField("current city", text: self.$hometown).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                             
-                            Button("検索"){
+                            Button(action: {
                                 self.shareData.searchUser(key: "hometown", value: self.hometown)
                                 self.emptifyTextField()
-                                
-                            }.padding(.trailing)
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                            }
+                            .padding(.trailing)
                         }
                         HStack{
-                            TextField("目的", text: self.$purpose).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                            Button("検索"){
+                            TextField("purpose", text: self.$purpose).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                            
+                            Button(action: {
                                 self.shareData.searchUser(key: "purpose", value: self.purpose)
                                 self.emptifyTextField()
-                                
-                            }.padding(.trailing)
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                            }
+                            .padding(.trailing)
                         }
                         HStack{
-                            TextField("科目", text: self.$subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                            Button("検索"){
+                            TextField("subject", text: self.$subject).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                            
+                            Button(action: {
                                 self.shareData.searchUser(key: "subject", value: self.subject)
                                 self.emptifyTextField()
-                                
-                            }.padding(.trailing)
+                            }) {
+                                Image(systemName: "magnifyingglass")
+                            }
+                            .padding(.trailing)
                         }
                     }// vstack
                     Divider()

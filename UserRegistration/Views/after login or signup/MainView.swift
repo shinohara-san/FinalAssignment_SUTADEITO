@@ -37,7 +37,7 @@ struct MainView: View {
                     GeometryReader{ geometry in
                         ZStack{
                             self.shareData.white.edgesIgnoringSafeArea(.all)
-                    ScrollView{
+                            ScrollView(showsIndicators: false){
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
                                 
@@ -128,6 +128,8 @@ struct MainView: View {
                         //写真タップでプロフィール表示
                         NavigationLink(destination: MessageView(user, user.matchRoomId)){
                             HStack{
+//                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5)
+//                                .clipShape(Circle())
                                 Text(user.name)
                                 Text(user.age)
                             }

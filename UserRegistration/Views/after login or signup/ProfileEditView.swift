@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfileEditView: View {
     @EnvironmentObject var shareData: ShareData
-    
+    @Environment(\.presentationMode) var presentation
     
     @State var name:String = ""
     @State var age: String = ""
@@ -30,81 +30,134 @@ struct ProfileEditView: View {
     @State var selectedPurpose = 0
     var datas: FirebaseData
     
+    @State var confirmDelete = false
+    
     var body: some View {
         GeometryReader{ geo in
             ZStack{
                 self.shareData.white.edgesIgnoringSafeArea(.all)
         VStack{
-            ScrollView{
-                TextField("名前", text: self.$name).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: self.$age, label: Text("年齢")
+            ScrollView(showsIndicators: false){
+                VStack{
+                Text("あなたのニックネーム").foregroundColor(self.shareData.brown)
+                TextField("name", text: self.$name).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                }
+                VStack{
+                Text("あなたの年齢").foregroundColor(self.shareData.brown)
+                Picker(selection: self.$selectedAge, label: Text("age")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.ages.count){ index in
                             Text(self.shareData.ages[index]).tag(index)
                         }
+                }.labelsHidden()
                 }
-                TextField("勉強中のもの", text: self.$subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Picker(selection: self.$selectedHometown, label: Text("居住地")
+                VStack{
+                Text("あなたが今勉強していること").foregroundColor(self.shareData.brown)
+                TextField("subject", text: self.$subject).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                }
+                
+                VStack{
+                Text("あなたの居住地").foregroundColor(self.shareData.brown)
+                Picker(selection: self.$selectedHometown, label: Text("current city")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.hometowns.count){ index in
                             Text(self.shareData.hometowns[index]).tag(index)
                         }
+                }.labelsHidden()
                 }
                 
-                TextField("趣味", text: self.$hobby).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                TextField("自己紹介", text: self.$introduction).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                VStack{
+                Text("あなたの趣味").foregroundColor(self.shareData.brown)
+                TextField("hobby", text: self.$hobby).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                }
+                
+                VStack{
+                Text("あなたから一言").foregroundColor(self.shareData.brown)
+                TextField("comment", text: self.$introduction).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                }
+                
+                VStack{
+                Text("あなたの性格").foregroundColor(self.shareData.brown)
                 Picker(selection: self.$selectedPersonality, label: Text("性格")
                     .font(.title)
                     .padding(.leading)) {
                         ForEach(0..<self.shareData.personalities.count){ index in
                             Text(self.shareData.personalities[index]).tag(index)
                         }
+                }.labelsHidden()
                 }
+                
                 Section{
-                    TextField("勉強方法", text: self.$studystyle).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+                    VStack{
+                    Text("希望するデート").foregroundColor(self.shareData.brown)
+                    TextField("dating style", text: self.$studystyle).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                    }
+                    
+                    VStack{
+                    Text("あなたの職業").foregroundColor(self.shareData.brown)
                     Picker(selection: self.$selectedWork, label: Text("職業")
                         .font(.title)
                         .padding(.leading)) {
                             ForEach(0..<self.shareData.jobs.count){ index in
                                 Text(self.shareData.jobs[index]).tag(index)
                             }
+                    }.labelsHidden()
                     }
+                    
+                    VStack{
+                    Text("このアプリを使う目的").foregroundColor(self.shareData.brown)
                     Picker(selection: self.$selectedPurpose, label: Text("目的")
                         .font(.title)
                         .padding(.leading)) {
                             ForEach(0..<self.shareData.purposes.count){ index in
                                 Text(self.shareData.purposes[index]).tag(index)
                             }
+                    }.labelsHidden()
                     }
-                    
                 }
                 
                 
                 Section{
                     Button("戻る"){
-                        self.shareData.editOn = false
+//                        self.shareData.editOn = false
+                        self.presentation.wrappedValue.dismiss()
                     }
+                    .foregroundColor(self.shareData.white)
+                    .padding()
+                    .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                    .background(self.shareData.brown)
+                    .cornerRadius(10)
+                    .padding(.bottom)
                     
                     Button("保存する"){
                         self.shareData.saveEditInfo(name: self.name, subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.work, purpose: self.shareData.purposes[self.selectedPurpose])
                         self.shareData.getCurrentUser() //編集後のログインしているユーザーのデータを入れ直す
-                        self.shareData.editOn = false
-                    }
+//                        self.shareData.editOn = false
+                        self.presentation.wrappedValue.dismiss()
+                        }
+                        .padding()
+                        .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                        .foregroundColor(self.shareData.white)
+                        .background(self.shareData.pink).cornerRadius(10)
+                        .padding(.bottom)
                     
                     Button(action: {
-                        //アラート出したいなー
-                        self.shareData.deleteAccount()
-                        self.shareData.currentUserData = [String : Any]()
-                        self.datas.session = nil
-                        
-                        //                        firestoreのliketableやfavoritetableも空っぽに？
-                        
+                        self.confirmDelete = true
                     }){
-                        Text("退会する")
-                    }
+                        Text("退会する").foregroundColor(Color.gray)
+                    }.padding(.bottom)
                 }
+            }.actionSheet(isPresented: self.$confirmDelete) {
+                ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
+                    self.shareData.deleteAccount()
+                    self.shareData.currentUserData = [String : Any]()
+                    self.datas.session = nil
+                    self.presentation.wrappedValue.dismiss()
+                })
+                    ]
+                )
             }
             }//scroll view
             }
@@ -121,11 +174,12 @@ struct ProfileEditView: View {
                 self.studystyle = self.shareData.currentUserData["studystyle"] as! String
                 self.work = self.shareData.currentUserData["work"] as! String
                 self.purpose = self.shareData.currentUserData["purpose"] as! String
+                
                 self.getIndex()
                 
         }
         .onDisappear{
-            self.shareData.editOn = false
+//            self.shareData.editOn = false
         }
     }
     func getIndex() {
