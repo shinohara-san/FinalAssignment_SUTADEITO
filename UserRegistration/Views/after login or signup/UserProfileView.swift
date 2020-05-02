@@ -11,12 +11,18 @@ import FirebaseFirestore
 
 struct UserProfileView: View {
     var user: User //mainviewから来た
+    var matchUserProfile:Bool
+    
+    init(user: User, matchUserProfile: Bool){
+        self.user = user
+        self.matchUserProfile = matchUserProfile
+    }
     @State var isFavorite = false
     @State var gaveLike = false
     let db = Firestore.firestore()
     @EnvironmentObject var shareData: ShareData
-    
     @State var roomId = ""
+    @Environment(\.presentationMode) var presentation
     
     func giveUserLike(){
         
@@ -41,7 +47,6 @@ struct UserProfileView: View {
         }
     }
     
-    
     func removeUserFromLike(){
         db.collection("LikeTable")
             .whereField("LikeUserId", isEqualTo: user.id).whereField("MyUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).getDocuments { (snap, err) in
@@ -59,10 +64,6 @@ struct UserProfileView: View {
         
     }
     
-    
-    
-    
-    //    マッチチェック
     func checkMatch(){
         db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.shareData.currentUserData["id"] as! String).whereField("MyUserId", isEqualTo: user.id).getDocuments { (snap, err) in
             if let err = err{
@@ -262,8 +263,6 @@ struct UserProfileView: View {
         
     }
     
-    
-    
     func checkFavoriteTable() {
         db.collection("FavoriteTable").document(self.shareData.currentUserData["id"] as! String).collection("FavoriteUser").document(user.id).getDocument { (document, err) in
             
@@ -294,48 +293,77 @@ struct UserProfileView: View {
         }
     }
     
-//    @Binding var userProfileOn: Bool
+    
     
     var body: some View {
         GeometryReader{ geo in
+            NavigationView{
             ZStack{
                 
                 self.shareData.white.edgesIgnoringSafeArea(.all)
+                ScrollView(showsIndicators: false){
                 VStack{
                     
-                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4).cornerRadius(10)
+                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.8, height: geo.size.height * 0.4).cornerRadius(10)
                     
                     ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose).frame(width: geo.size.width * 0.9)
                     
-                    
-                    Button(action: {
-                        self.checkFavoriteTable()
-                        
-                        if self.isFavorite == false {
-                            self.addUserToFavorite()
+                    Group{
+                        if !self.matchUserProfile{
+                            Button(action: {
+                                self.checkFavoriteTable()
+                                
+                                if self.isFavorite == false {
+                                    self.addUserToFavorite()
+                                } else {
+                                    self.removeUserFromFavorite()
+                                }
+                            }) {
+                                Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
+                            }.foregroundColor(self.shareData.white)
+                            .padding()
+                            .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                            .background(self.shareData.brown)
+                            .cornerRadius(10)
+                            .padding(.vertical)
+                            
+                            
+                            Button(action: {
+                                self.checkLikeTable()
+                                
+                                if self.gaveLike == false {
+                                    self.giveUserLike()
+                                } else {
+                                    self.removeUserFromLike()
+                                }
+                            }) {
+                                Text(self.gaveLike ? "いいねを取り消す" : "いいね").lineLimit(nil)
+                                }.foregroundColor(self.shareData.white)
+                                .padding()
+                                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                .background(self.shareData.pink)
+                                .cornerRadius(10)
+                                .padding(.bottom)
                         } else {
-                            self.removeUserFromFavorite()
+                            
                         }
-                    }) {
-                        Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
                     }
                     
-                    Button(action: {
-                        self.checkLikeTable()
-                        
-                        if self.gaveLike == false {
-                            self.giveUserLike()
-                        } else {
-                            self.removeUserFromLike()
-                        }
-                    }) {
-                        Text(self.gaveLike ? "いいねを取り消す" : "いいね")
-                    }
                     
+                
                     
                 }
-            }
-        }
+            } .navigationBarTitle(Text("\(self.user.name) のプロフィール"), displayMode: .inline)
+                .navigationBarItems(leading:
+                    Button(action: {
+                        self.presentation.wrappedValue.dismiss()
+                    }, label: {
+                        Image(systemName: "multiply").foregroundColor(self.shareData.white)
+                    })
+                )
+                }
+        } //navi
+        }//geo
         .onAppear{
             self.checkFavoriteTable()
             self.checkLikeTable()

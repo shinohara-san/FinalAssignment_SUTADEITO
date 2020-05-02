@@ -37,7 +37,7 @@ struct LoginView: View {
         Group {
             if datas.session != nil {
                 
-                MainView(datas: self.datas)
+                MainView(self.datas)
                     .navigationBarBackButtonHidden(true)
                     .onAppear(perform: getUser)
                 
@@ -118,7 +118,7 @@ struct LoginView: View {
                             }) {
                                 Text("ログイン").foregroundColor(self.shareData.white)
                                     .padding()
-                                    .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                                 .background(self.shareData.pink).cornerRadius(10)
                             }.padding(.bottom, 50)
                             
@@ -157,7 +157,7 @@ struct LoginView: View {
         public func _body(configuration: TextField<Self._Label>) -> some View {
             configuration
                 .padding(10)
-                .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05, alignment: .center)
+                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05, alignment: .center)
                 .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
             .cornerRadius(10)
             

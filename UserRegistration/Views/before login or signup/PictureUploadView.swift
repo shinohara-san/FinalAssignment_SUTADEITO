@@ -61,7 +61,7 @@ struct PictureUploadView: View {
                         self.shown.toggle()
                     }) {
                         Text("写真を追加する").padding()
-                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10)
+                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10)
                     }.padding(.bottom)
                     
                     Button(action: {
@@ -86,8 +86,8 @@ struct PictureUploadView: View {
                         
                         
                     }) {
-                        Text("登録").padding()
-                            .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                        Text("登録する").padding()
+                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                             .foregroundColor(self.shareData.white)
                             .background(self.buttonColor).cornerRadius(10)
                     }.disabled(!self.allSectionsFilled)

@@ -18,73 +18,78 @@ struct SettingView: View {
     var body: some View {
         
         Group {
-        if datas.session != nil {
-            GeometryReader{ geo in
-            VStack {
-            Group{
-                if !self.shareData.editOn{
-                    
-                    ZStack{
-                        self.shareData.white.edgesIgnoringSafeArea(.all)
-                        
-                        VStack{
-                    FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.9, height: geo.size.height * 0.4)
-                    ProfileUserDetailView(
-                        name: String(describing: self.shareData.currentUserData["name"] ?? ""),
-                        age: String(describing: self.shareData.currentUserData["age"] ?? ""),
-                        gender: String(describing: self.shareData.currentUserData["gender"] ?? ""),
-                        hometown: String(describing: self.shareData.currentUserData["hometown"] ?? ""),
-                        subject: String(describing: self.shareData.currentUserData["subject"] ?? ""),
-                        introduction: String(describing: self.shareData.currentUserData["introduction"] ?? ""),
-                        studystyle: String(describing: self.shareData.currentUserData["studystyle"] ?? ""),
-                        hobby: String(describing: self.shareData.currentUserData["hobby"] ?? ""),
-                        personality: String(describing: self.shareData.currentUserData["personality"] ?? ""),
-                        work: String(describing: self.shareData.currentUserData["work"] ?? ""),
-                        purpose: String(describing: self.shareData.currentUserData["purpose"] ?? "")).frame(width: geo.size.width * 0.9)
-                    
-                        Button(action: {
-                            self.isModal = true
-                        }) {
-                            Text("編集する")
+            if datas.session != nil {
+                GeometryReader{ geo in
+                    VStack {
+                        Group{
+//                            if !self.shareData.editOn{
+                                NavigationView{
+                                ZStack{
+                                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                                    ScrollView(showsIndicators: false){
+                                    VStack{
+                                        FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.8, height: geo.size.height * 0.4).padding(.vertical, 10)
+                                        ProfileUserDetailView(
+                                            name: String(describing: self.shareData.currentUserData["name"] ?? ""),
+                                            age: String(describing: self.shareData.currentUserData["age"] ?? ""),
+                                            gender: String(describing: self.shareData.currentUserData["gender"] ?? ""),
+                                            hometown: String(describing: self.shareData.currentUserData["hometown"] ?? ""),
+                                            subject: String(describing: self.shareData.currentUserData["subject"] ?? ""),
+                                            introduction: String(describing: self.shareData.currentUserData["introduction"] ?? ""),
+                                            studystyle: String(describing: self.shareData.currentUserData["studystyle"] ?? ""),
+                                            hobby: String(describing: self.shareData.currentUserData["hobby"] ?? ""),
+                                            personality: String(describing: self.shareData.currentUserData["personality"] ?? ""),
+                                            work: String(describing: self.shareData.currentUserData["work"] ?? ""),
+                                            purpose: String(describing: self.shareData.currentUserData["purpose"] ?? "")).frame(width: geo.size.width * 0.9)
+                                        
+                                        Button(action: {
+                                            self.isModal = true
+                                        }) {
+                                            Text("編集する")
+                                        }
+                                        .padding()
+                                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                        .foregroundColor(self.shareData.white)
+                                        .background(self.shareData.pink).cornerRadius(10)
+                                        .padding()
+                                        
+                                        Button("ログアウト"){
+                                            
+                                            self.datas.logOut()
+                                            self.shareData.currentUserData = [String : Any]()
+                                            print("ログアウトしました")
+                                        } //ProfileUserDetailView
+                                            .foregroundColor(Color.gray)
+                                    }
+                                    }
+                                }//zs
+                                    .navigationBarTitle(Text("あなたのプロフィール"), displayMode: .inline)
+                            }//navi
+//                            }
+//                            else {
+//                                //                    ProfileEditView(datas: self.datas)
+//                            }
+                        }//Group
+                            .sheet(isPresented: self.$isModal) {
+                                ProfileEditView(datas: self.datas).environmentObject(self.shareData)
+                                
                         }
-                        .padding()
-                        .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
-                        .foregroundColor(self.shareData.white)
-                        .background(self.shareData.pink).cornerRadius(10)
-                        .padding()
+                        
+                        
+                    }
+                }//geo
                     
-                        Button("ログアウト"){
-                            
-                            self.datas.logOut()
-                            self.shareData.currentUserData = [String : Any]()
-                            print("ログアウトしました")
-                        } //ProfileUserDetailView
-                            .foregroundColor(Color.gray)
-                    }
-                    }
+                    .onAppear{
+                        self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")
                 }
-                else {
-                    ProfileEditView(datas: self.datas)
-                }
-            }//Group
-                .sheet(isPresented: self.$isModal) {
-                    ProfileEditView(datas: self.datas).environmentObject(self.shareData)
+                //            .navigationBarTitle("あなたのプロフィール", displayMode: .inline)
+                //        .navigationBarHidden(true)
+            } else {
+                TopPageView().environmentObject(self.shareData)
             }
             
-            
-            }
-        }//VStack
-            .onAppear{
-             self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")
         }
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        } else {
-            TopPageView()
-        }
-            
-        }
-           
+        
     }
 }
 

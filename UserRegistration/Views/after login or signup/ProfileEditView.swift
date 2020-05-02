@@ -34,6 +34,7 @@ struct ProfileEditView: View {
     
     var body: some View {
         GeometryReader{ geo in
+            NavigationView{
             ZStack{
                 self.shareData.white.edgesIgnoringSafeArea(.all)
         VStack{
@@ -41,7 +42,7 @@ struct ProfileEditView: View {
                 VStack{
                 Text("あなたのニックネーム").foregroundColor(self.shareData.brown)
                 TextField("name", text: self.$name).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
-                }
+                }.padding(.top)
                 VStack{
                 Text("あなたの年齢").foregroundColor(self.shareData.brown)
                 Picker(selection: self.$selectedAge, label: Text("age")
@@ -152,16 +153,19 @@ struct ProfileEditView: View {
             }.actionSheet(isPresented: self.$confirmDelete) {
                 ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
                     self.shareData.deleteAccount()
+                    self.presentation.wrappedValue.dismiss()
                     self.shareData.currentUserData = [String : Any]()
                     self.datas.session = nil
-                    self.presentation.wrappedValue.dismiss()
+                    
                 })
                     ]
                 )
             }
             }//scroll view
             }
-        } //vstack
+            .navigationBarTitle(Text("プロフィール編集"), displayMode: .inline)
+        }//navi
+        } //geo
             .onAppear {
                 // ここで初期値を代入
                 self.name = self.shareData.currentUserData["name"] as! String

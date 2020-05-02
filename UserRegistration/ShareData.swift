@@ -19,11 +19,13 @@ class ShareData:ObservableObject{
     let db = Firestore.firestore()
     let datas = firebaseData
     
-    let pink = Color(red: 238 / 255, green: 143 / 255, blue: 143 / 255)
+    let pink = Color(red: 250 / 255, green: 138 / 255, blue: 148 / 255)
     let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
     
     @Published var currentUserData = [String : Any]()
+    
+    @Published var switchFavAndLike = false
     
     //ScrollViewには最初に配列に初期値を設定する必要あり
     
@@ -191,6 +193,7 @@ class ShareData:ObservableObject{
     
     
     func getAllFavoriteUsers(){
+        self.favoriteUsers = [User]()
         db.collection("FavoriteTable")
             .document(self.currentUserData["id"] as? String ?? "")
             .collection("FavoriteUser")
@@ -218,7 +221,7 @@ class ShareData:ObservableObject{
                         } // getDocuments
                     }
                 }
-                self.favoriteUsers.remove(at: 0)
+//                self.favoriteUsers.remove(at: 0) //最初のから配列を消してる？
         }
     }
     

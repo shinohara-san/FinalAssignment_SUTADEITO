@@ -27,150 +27,71 @@ struct MainView: View {
     
     @State var matchid = ""
     
+    init(_ datas: FirebaseData) {
+        self.datas = datas
+        UITabBar.appearance().barTintColor = UIColor(red: 135/255, green: 206/255, blue: 250/255, alpha: 1)
+    }
+    
+    
     var body: some View {
         
-        TabView {
-            ////ユーザー一覧のページ
-            
-            Group{
-                if !userProfileOn{
-                    GeometryReader{ geometry in
-                        ZStack{
-                            self.shareData.white.edgesIgnoringSafeArea(.all)
-                            ScrollView(showsIndicators: false){
-                        VStack{
-                            ForEach(self.shareData.allUsers){ user in
-                                
-                                VStack{
-                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5)
-                                        .clipShape(Circle())
-                                    HStack{
-                                        Text(user.age)
-                                        Text(user.hometown)
-                                    }
-                                    Text(user.introduction)
-                                }
-                                .onTapGesture {
-                                    self.userInfo = user
-                                    self.userProfileOn = true
-                                }
-                                
-                                
-                                
-                                
-                            } //foreach
-                                .buttonStyle(PlainButtonStyle())
-                            
-                        }//Vstack
-                            
-                            
-                            .onAppear{
-                                DispatchQueue.global().async {
-                                    self.shareData.getCurrentUser()
-                                    
-                                }
-                                
-                                
+//        GeometryReader{ geometry in
+            TabView {
+                
+                ////ユーザー一覧のページ
+                UserListView().environmentObject(self.shareData)
+                
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "book.fill")
                         }
-                        
-                            }
-                    }//Scrollview
+                }.tag(1)
+                
+                ////                    検索ページ
+                SearchView()
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "magnifyingglass")
+                        }
+                }.tag(2)
+                
+                ///お気に入りいいね一覧ページ
+                Group{
+                    if self.shareData.switchFavAndLike{
+                        LikeUserView().environmentObject(self.shareData)
+                    } else {
+                        FavoriteUserView().environmentObject(self.shareData)
                     }
-                } else {
-                    VStack{
-                        UserProfileView(user: userInfo)
-                        Button("戻る"){
-                            self.userProfileOn = false
+                }
+                .tabItem {
+                    VStack {
+                        Image(systemName: "star.fill")
+                    }
+                }
+                .tag(3)
+                
+                
+                
+                ////                   マッチングページ
+                MatchingListView().environmentObject(self.shareData)
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "suit.heart.fill")
                         }
-                    }.navigationBarTitle("")
-                    .navigationBarHidden(false)
+                }.tag(4)
+                
+                ////                    自分のプロフィールページ
+                SettingView(datas: self.datas)
                     
-                }
-                
-            }//Profile
-                
-                .navigationBarTitle("")
-                .navigationBarHidden(true)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "book")
-                    }
-            }.tag(1)
-            
-            ////                    検索ページ
-            SearchView()
-                .tabItem {
-                    VStack {
-                        Image(systemName: "magnifyingglass")
-                    }
-            }.tag(2)
-            
-            ///お気に入りいいね一覧ページ
-            
-            FavoriteAndLikeUserView(userProfileOn: $userProfileOn)
-                
-                .tabItem {
-                    VStack {
-                        Image(systemName: "star")
-                    }
-            }
-            .tag(3)
-            
-            
-            
-            ////                   マッチングページ
-            Group{
-                ZStack{
-                    self.shareData.pink.edgesIgnoringSafeArea(.all)
-                VStack{
-                    Text("マッチ一覧").font(.headline).foregroundColor(self.shareData.white)
-                    List(self.shareData.matchUserArray){ user in
-                        //写真タップでプロフィール表示
-                        NavigationLink(destination: MessageView(user, user.matchRoomId)){
-                            HStack{
-//                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5)
-//                                .clipShape(Circle())
-                                Text(user.name)
-                                Text(user.age)
-                            }
-                            
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "ellipsis")
                         }
-                        
-                    }
-                }
-            }
-            }.onAppear{
-                self.shareData.getAllMatchUser()
-                print("マッチ一覧: \(self.shareData.matchUserArray)")
+                }.tag(5)
                 
-                
-            }.onDisappear{
-                self.shareData.matchUserArray = [User]()
-            }
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
-            .tabItem {
-                VStack {
-                    Image(systemName: "suit.heart")
-                }
-            }.tag(4)
-            
-            ////                    自分のプロフィールページ
-            SettingView(datas: self.datas)
-                .tabItem {
-                    VStack {
-                        Image(systemName: "ellipsis")
-                    }
-            }.tag(5)
-            
-        } //tabView
-            .onAppear{
-                print("メインビュー")
-        }
-            
-        .navigationBarTitle("")
-        .navigationBarHidden(true)
-        
+            } //tabView
+                .accentColor(self.shareData.pink)
+
     }
 }
 

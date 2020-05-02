@@ -28,49 +28,50 @@ struct ProfileUserDetailView: View {
                 Text("名前")
                 Spacer()
                 Text(self.name)
-            }
+            }.padding(.bottom, 20)
+            
             HStack{
                 Text("年齢")
                 Spacer()
                 //                Text(String(describing: self.currentUser["age"] ?? ""))
                 Text(self.age)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("勉強中")
                 Spacer()
                 Text(self.subject)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("現住所")
                 Spacer()
                 Text(self.hometown)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("趣味")
                 Spacer()
                 Text(self.hobby)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("自己紹介")
                 Spacer()
                 Text(self.introduction)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("性格")
                 Spacer()
                 Text(self.personality)
-            }
+            }.padding(.bottom, 20)
             HStack{
                 Text("目的")
                 Spacer()
                 Text(self.purpose)
-            }
+            }.padding(.bottom, 20)
             Section{
                 HStack{
                     Text("希望する勉強スタイル")
                     Spacer()
                     Text(self.studystyle)
-                }
+                }.padding(.bottom, 20)
                 HStack{
                     Text("職業")
                     Spacer()

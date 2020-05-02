@@ -15,62 +15,80 @@ struct MessageView: View {
     
     let matchUserInfo: User
     let matchRoomId: String
-
+    
     @ObservedObject private var msgVM: MessageViewModel
-
+    
     init(_ user: User, _ id:String) {
         self.matchUserInfo = user
         self.matchRoomId = id
         //_　アンダーバーつけるとtypeじゃなくなりエラー消える 
         self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: matchRoomId))
     }
-    
+    @Environment(\.presentationMode) var presentation
     @EnvironmentObject var shareData : ShareData
     @State var text = ""
     @State var matchId = ""
-    
+    @State var isModal = false
     var body: some View {
-        
-        VStack{
-            List(self.msgVM.messages, id: \.id){ i in
-                if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
-                    MessageRow(message: i.msg, isMyMessage: true)
-                } else {
-                    MessageRow(message: i.msg, isMyMessage: false)
-                }
-             }
-            .onAppear { UITableView.appearance().separatorStyle = .none }
-            .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-            
-//            }
-            HStack{
-                TextField("メッセージ", text: $text).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
-                Button(action: {
-                    if self.text.count > 0 {
-                        print("送信時マッチID: \(self.msgVM.matchId)")
-                          self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
-                        
-                        self.text = ""
-                        print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
+        GeometryReader{ geometry in
+            ZStack{
+                self.shareData.white.edgesIgnoringSafeArea(.all)
+                VStack{
+                    List(self.msgVM.messages, id: \.id){ i in
+                        if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
+                            MessageRow(message: i.msg, isMyMessage: true)
+                        } else {
+                            MessageRow(message: i.msg, isMyMessage: false)
+                        }
                     }
+                    .onAppear { UITableView.appearance().separatorStyle = .none }
+                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     
-                }) {
-                    Image(systemName: "paperplane")
-                }.padding(.trailing)
+                    //            }
+                    HStack{
+                        TextField("メッセージ", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                        Button(action: {
+                            if self.text.count > 0 {
+                                print("送信時マッチID: \(self.msgVM.matchId)")
+                                self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
+                                
+                                self.text = ""
+                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
+                            }
+                            
+                        }) {
+                            Image(systemName: "paperplane.fill").foregroundColor(self.shareData.pink)
+                        }.padding(.horizontal)
+                    }
+                    .sheet(isPresented: self.$isModal) {
+                        UserProfileView(user: self.matchUserInfo, matchUserProfile: true).environmentObject(self.shareData)
+                    }        }
             }
+            .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
+            .navigationBarItems(leading:
+                Button(action: {
+                    self.presentation.wrappedValue.dismiss()
+                }, label: {
+                    Image(systemName: "arrow.turn.up.left").foregroundColor(self.shareData.white)
+                }),
+                                trailing: Button(action: {
+                                    self.isModal = true
+                                }, label: {
+                                    Image(systemName: "person.fill").foregroundColor(self.shareData.white)
+                                })
+            )
+                .navigationBarBackButtonHidden(true)
+            //            .onAppear{
+            //                print("MessageViewでのmessages: \(self.msgVM.messages)")
+            //        }
             
-        }
-        .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
-            .onAppear{
-
-                print("MessageViewでのmessages: \(self.msgVM.messages)")//空っぽ
-                
-        }
             
-        
-        .onDisappear{
-            self.msgVM.messages = [Message]()
-        }
+            //        .onDisappear{
+            //            self.msgVM.messages = [Message]()
+            //        }
+            
+            
+        }// geo
     }
     
     func getMatchId(partner: User){
@@ -83,12 +101,8 @@ struct MessageView: View {
                     print("メッセージビューも\(self.msgVM.messages)")
                 }
             }
-            
         }
-     
     }
-    
-    
 }
 
 struct MessageView_Previews: PreviewProvider {

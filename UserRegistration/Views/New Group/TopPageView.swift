@@ -97,7 +97,7 @@ struct TopPageView: View {
                             Text("ログイン")
                                 .foregroundColor(self.shareData.white)
                                 .padding()
-                                .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                                 .background(self.shareData.pink).cornerRadius(10)
                         }
                         .padding(.bottom)
@@ -109,7 +109,7 @@ struct TopPageView: View {
                         }
                         .foregroundColor(self.shareData.pink)
                         .padding()
-                        .frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.05)
+                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                         .background(self.shareData.white)
                         .cornerRadius(10)
                         .padding(.bottom, 200)
