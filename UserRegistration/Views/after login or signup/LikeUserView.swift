@@ -23,11 +23,18 @@ struct LikeUserView: View {
                    
                         ForEach(self.shareData.likeUsers){ user in
                             VStack{
-                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.7).padding(.top)
-                                Text(user.name)
-                                Text(user.gender)
-                                Text(user.age)
+                            HStack{
+                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
+                                .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                    .padding(.top, 8).padding(.leading)
+                            VStack(alignment: .leading,spacing: 5){
+                                
+                                Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
                             }
+                        } //hs
+                                Divider().frame(width: geometry.size.width * 0.8)
+                } //vs
                             .onTapGesture {
                                 self.likeUserInfo = user
                                 self.likeProfileOn = true
@@ -45,7 +52,7 @@ struct LikeUserView: View {
                 Button(action: {
                     self.shareData.switchFavAndLike = false
                 }, label: {
-                    Image(systemName: "arrow.counterclockwise").foregroundColor(self.shareData.white)
+                    Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
                 })
             )
 //            .navigationBarHidden(true)

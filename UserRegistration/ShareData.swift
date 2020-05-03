@@ -22,7 +22,9 @@ class ShareData:ObservableObject{
     let pink = Color(red: 250 / 255, green: 138 / 255, blue: 148 / 255)
     let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
-    
+    let yellow = Color(red: 250/255, green: 236/255, blue: 135/255)
+    let green = Color(red: 135/255, green: 250/255, blue: 179/255)
+//    R:135 G:250 B:179
     @Published var currentUserData = [String : Any]()
     
     @Published var switchFavAndLike = false
@@ -226,6 +228,7 @@ class ShareData:ObservableObject{
     }
     
     func getAllLikeUsers(){
+        self.likeUsers = [User]()
         db.collection("LikeTable")
             .whereField("MyUserId", isEqualTo: self.currentUserData["id"] as? String ?? "")
             .getDocuments { (snap, err) in
@@ -252,7 +255,7 @@ class ShareData:ObservableObject{
                         }
                     }
                 } else { return }
-                self.likeUsers.remove(at: 0)
+//                self.likeUsers.remove(at: 0)
         }
     }
     

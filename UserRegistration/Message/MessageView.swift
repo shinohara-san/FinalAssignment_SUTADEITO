@@ -38,11 +38,14 @@ struct MessageView: View {
                     ForEach(self.msgVM.messages){ i in
                         if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
                             MessageRow(message: i.msg, isMyMessage: true)
+//                                .frame(width: geometry.size.width * 0.5)
                         } else {
                             MessageRow(message: i.msg, isMyMessage: false)
+//                                .frame(width: geometry.size.width * 0.5)
                         }
                     }
                     }//list
+                        
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     
@@ -110,5 +113,22 @@ struct MessageView: View {
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
+
+struct PartlyRoundedCornerView: UIViewRepresentable {
+    let cornerRadius: CGFloat
+    let maskedCorners: CACornerMask
+
+    func makeUIView(context: UIViewRepresentableContext<PartlyRoundedCornerView>) -> UIView {
+        // 引数で受け取った値を利用して、一部の角のみを丸くしたViewを作成する
+        let uiView = UIView()
+        uiView.layer.cornerRadius = cornerRadius
+        uiView.layer.maskedCorners = maskedCorners
+        uiView.backgroundColor = .white
+        return uiView
+    }
+
+    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PartlyRoundedCornerView>) {
     }
 }

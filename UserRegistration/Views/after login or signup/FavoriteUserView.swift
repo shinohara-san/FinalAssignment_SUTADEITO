@@ -21,15 +21,14 @@ struct FavoriteUserView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     ScrollView(showsIndicators: false){
-                        
+                        VStack{
                         ForEach(self.shareData.favoriteUsers){ user in
                             VStack{
                                 HStack{
-                                    
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                     .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
                                         .padding(.top, 8).padding(.leading)
-                                    VStack(alignment: .leading){
+                                    VStack(alignment: .leading,spacing: 5){
                                         
                                         Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                         Text(user.age)
@@ -43,9 +42,16 @@ struct FavoriteUserView: View {
                                 self.isModal = true
                             }
                         }
-                        .sheet(isPresented: self.$isModal) {
-                            UserProfileView(user: self.favoriteUserInfo, matchUserProfile: false).environmentObject(self.shareData)
-                        }
+                    }
+                            .navigationBarTitle(Text("お気に入りユーザー"), displayMode: .inline)
+                                                   .navigationBarItems(trailing:
+                                                       Button(action: {
+                                                           self.shareData.switchFavAndLike = true
+                                                       }, label: {
+                                                           Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+                                                       })
+                                               )
+                        
                         .onAppear{
                             //                DispatchQueue.global().sync {
                             self.shareData.getAllFavoriteUsers()
@@ -59,15 +65,9 @@ struct FavoriteUserView: View {
                         }
                         
                     } //scroll
-                        .navigationBarTitle(Text("お気に入りユーザー"), displayMode: .inline)
-                        .navigationBarItems(trailing:
-                            Button(action: {
-                                self.shareData.switchFavAndLike = true
-                                print(self.shareData.switchFavAndLike)
-                            }, label: {
-                                Image(systemName: "arrow.counterclockwise").foregroundColor(self.shareData.white)
-                            })
-                    )
+                       .sheet(isPresented: self.$isModal) {
+                           UserProfileView(user: self.favoriteUserInfo, matchUserProfile: false).environmentObject(self.shareData)
+                       }
                 } //navi
             }
         }

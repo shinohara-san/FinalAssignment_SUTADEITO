@@ -110,6 +110,7 @@ struct LoginView: View {
                                 self.datas.logIn(email: self.email, password: self.password) { (res, err) in
                                     if err != nil {
                                         print("Error: ログイン")
+                                        
                                     } else {
                                         self.email = ""
                                         self.password = ""

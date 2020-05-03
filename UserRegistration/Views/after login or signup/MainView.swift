@@ -17,7 +17,7 @@ struct MainView: View {
     
     @EnvironmentObject var shareData: ShareData
     
-    //@State var selection = 0 //必要?
+    @State var selection = 0 //ないと表示が崩れる?
     
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
@@ -36,7 +36,7 @@ struct MainView: View {
     var body: some View {
         
 //        GeometryReader{ geometry in
-            TabView {
+        TabView(selection: $selection) {
                 
                 ////ユーザー一覧のページ
                 UserListView().environmentObject(self.shareData)
@@ -56,13 +56,13 @@ struct MainView: View {
                 }.tag(1)
                 
                 ///お気に入りいいね一覧ページ
-//                Group{
-//                    if self.shareData.switchFavAndLike{
-//                        LikeUserView().environmentObject(self.shareData)
-//                    } else {
+                Group{
+                    if self.shareData.switchFavAndLike{
+                        LikeUserView().environmentObject(self.shareData)
+                    } else {
                         FavoriteUserView().environmentObject(self.shareData)
-//                    }
-//                }
+                    }
+                }
                 .tabItem {
                     VStack {
                         Image(systemName: "star.fill")
@@ -90,8 +90,8 @@ struct MainView: View {
                 }.tag(5)
                 
             } //tabView
-                .accentColor(self.shareData.pink)
-
+            .accentColor(self.shareData.yellow)
+//250 G:236 B:135
     }
 }
 
