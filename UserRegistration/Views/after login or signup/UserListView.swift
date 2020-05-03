@@ -21,29 +21,34 @@ struct UserListView: View {
                     ScrollView(showsIndicators: false){
                         VStack{
                             ForEach(self.shareData.allUsers){ user in
-                                
                                 VStack{
-                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
-                                        .clipShape(Circle())
-                                        .padding(.top, 8)
                                     HStack{
-                                        Text(user.age)
-                                        Text(user.hometown)
-                                    }
-                                    Text(user.introduction)
-                                }
+                                        VStack{
+                                            FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
+                                                .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                                .padding(.top, 8)
+                                            HStack{
+                                                Text(user.age).frame(width: geometry.size.width * 0.2, alignment: .trailing)
+                                                Spacer()
+                                                Text(user.hometown).frame(width: geometry.size.width * 0.3, alignment: .leading)
+                                            }.frame(width: geometry.size.width * 0.5)
+                                        }
+                                        Text(user.subject).padding().frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                                        
+                                        
+                                    }.frame(width: geometry.size.width * 1) //hstack below foreach
+                                    Divider().frame(width: geometry.size.width * 0.8)
+                                } //vstack
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
                                 }
-                                
                             } //foreach
                             
                         }//Vstack
                             
-                            
                             .onAppear{
-                                DispatchQueue.global().sync {
+                                DispatchQueue.global().async {
                                     self.shareData.getCurrentUser()
                                     
                                 }

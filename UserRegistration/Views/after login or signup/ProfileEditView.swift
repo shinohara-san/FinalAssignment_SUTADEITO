@@ -130,6 +130,8 @@ struct ProfileEditView: View {
                     .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
                     .background(self.shareData.brown)
                     .cornerRadius(10)
+                    .shadow(radius: 2, y: 2)
+                    .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
                     .padding(.bottom)
                     
                     Button("保存する"){
@@ -141,8 +143,10 @@ struct ProfileEditView: View {
                         .padding()
                         .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
                         .foregroundColor(self.shareData.white)
-                        .background(self.shareData.pink).cornerRadius(10)
-                        .padding(.bottom)
+                    .background(self.shareData.pink).cornerRadius(10)
+                    .shadow(radius: 2, y: 2)
+                    .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
+                    .padding(.bottom)
                     
                     Button(action: {
                         self.confirmDelete = true
@@ -151,7 +155,7 @@ struct ProfileEditView: View {
                     }.padding(.bottom)
                 }
             }.actionSheet(isPresented: self.$confirmDelete) {
-                ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
+                ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。\n※退会できない場合は再度ログインしてからお試しください。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
                     self.shareData.deleteAccount()
                     self.presentation.wrappedValue.dismiss()
                     self.shareData.currentUserData = [String : Any]()
@@ -164,6 +168,13 @@ struct ProfileEditView: View {
             }//scroll view
             }
             .navigationBarTitle(Text("プロフィール編集"), displayMode: .inline)
+            .navigationBarItems(leading:
+                Button(action: {
+                    self.presentation.wrappedValue.dismiss()
+                }, label: {
+                    Image(systemName: "multiply").foregroundColor(self.shareData.white)
+                })
+                )
         }//navi
         } //geo
             .onAppear {

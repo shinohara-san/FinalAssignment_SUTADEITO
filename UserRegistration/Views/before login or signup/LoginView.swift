@@ -120,6 +120,7 @@ struct LoginView: View {
                                     .padding()
                                     .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                                 .background(self.shareData.pink).cornerRadius(10)
+                                .shadow(radius: 2, y:2)
                             }.padding(.bottom, 50)
                             
                             Button(action: {

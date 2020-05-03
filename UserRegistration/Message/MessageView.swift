@@ -34,13 +34,15 @@ struct MessageView: View {
             ZStack{
                 self.shareData.white.edgesIgnoringSafeArea(.all)
                 VStack{
-                    List(self.msgVM.messages, id: \.id){ i in
+                    List{
+                    ForEach(self.msgVM.messages){ i in
                         if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
                             MessageRow(message: i.msg, isMyMessage: true)
                         } else {
                             MessageRow(message: i.msg, isMyMessage: false)
                         }
                     }
+                    }//list
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     
@@ -59,7 +61,7 @@ struct MessageView: View {
                         }) {
                             Image(systemName: "paperplane.fill").foregroundColor(self.shareData.pink)
                         }.padding(.horizontal)
-                    }
+                    }.padding(.bottom)
                     .sheet(isPresented: self.$isModal) {
                         UserProfileView(user: self.matchUserInfo, matchUserProfile: true).environmentObject(self.shareData)
                     }        }

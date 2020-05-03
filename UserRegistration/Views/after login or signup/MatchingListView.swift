@@ -21,15 +21,16 @@ struct MatchingListView: View {
                         List(self.shareData.matchUserArray){ user in
                             //写真タップでプロフィール表示
                             NavigationLink(destination: MessageView(user, user.matchRoomId)){
+                                Section{
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15)
                                         .clipShape(Circle())
                                     Text(user.name)
                                     Text(user.age)
                                 }
-                                
+                                }
                             }
-                            
+
                         }
                     }
                     .navigationBarTitle(Text("マッチ一覧"), displayMode: .inline)

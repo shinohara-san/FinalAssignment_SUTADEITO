@@ -45,7 +45,7 @@ struct MainView: View {
                         VStack {
                             Image(systemName: "book.fill")
                         }
-                }.tag(1)
+                }.tag(2)
                 
                 ////                    検索ページ
                 SearchView()
@@ -53,16 +53,16 @@ struct MainView: View {
                         VStack {
                             Image(systemName: "magnifyingglass")
                         }
-                }.tag(2)
+                }.tag(1)
                 
                 ///お気に入りいいね一覧ページ
-                Group{
-                    if self.shareData.switchFavAndLike{
-                        LikeUserView().environmentObject(self.shareData)
-                    } else {
+//                Group{
+//                    if self.shareData.switchFavAndLike{
+//                        LikeUserView().environmentObject(self.shareData)
+//                    } else {
                         FavoriteUserView().environmentObject(self.shareData)
-                    }
-                }
+//                    }
+//                }
                 .tabItem {
                     VStack {
                         Image(systemName: "star.fill")

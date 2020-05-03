@@ -55,13 +55,13 @@ struct PictureUploadView: View {
                 
                 VStack{
                     if self.imageURL != "" {
-                        FirebaseImageView(imageURL: self.imageURL).cornerRadius(10).animation(.spring())
+                        FirebaseImageView(imageURL: self.imageURL).frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4).shadow(radius: 2, x: 2, y: 2).padding(.vertical).cornerRadius(10).animation(.spring())
                     }
                     Button(action: {
                         self.shown.toggle()
                     }) {
                         Text("写真を追加する").padding()
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10)
+                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10).shadow(radius: 2, y:2)
                     }.padding(.bottom)
                     
                     Button(action: {
@@ -90,11 +90,13 @@ struct PictureUploadView: View {
                             .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                             .foregroundColor(self.shareData.white)
                             .background(self.buttonColor).cornerRadius(10)
+                        .shadow(radius: 2, y:2)
                     }.disabled(!self.allSectionsFilled)
                     
                     Button("戻る"){
                         self.presentation.wrappedValue.dismiss()
                     }.foregroundColor(self.shareData.white)
+                    .shadow(radius: 2, y:2)
                     
                     
                 } //vstack

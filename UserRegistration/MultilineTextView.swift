@@ -35,7 +35,6 @@ struct MultilineTextView: UIViewRepresentable {
         textView.delegate = context.coordinator
         textView.isScrollEnabled = true
         textView.isEditable = true
-        
         textView.isUserInteractionEnabled = true
         return textView
     }

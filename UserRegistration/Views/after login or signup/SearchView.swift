@@ -42,7 +42,7 @@ struct SearchView: View {
                                         self.purpose = ""
                                         self.subject = ""
                                     }) {
-                                        Image(systemName: "magnifyingglass")
+                                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.05).accentColor(.yellow)
                                     }
                                     .padding(.trailing)
                                 }
@@ -54,7 +54,7 @@ struct SearchView: View {
                                         self.hometown = ""
                                         self.subject = ""
                                     }) {
-                                        Image(systemName: "magnifyingglass")
+                                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.05).accentColor(.green)
                                     }
                                     .padding(.trailing)
                                 }
@@ -66,14 +66,14 @@ struct SearchView: View {
                                         self.hometown = ""
                                         self.purpose = ""
                                     }) {
-                                        Image(systemName: "magnifyingglass")
+                                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.05).accentColor(.purple)
                                     }
                                     .padding(.trailing)
                                 }
                                 
                                 
                                 
-                                Divider()
+                                Divider().frame(width: geo.size.width * 0.8)
                                 
                                 //ユーザーリスト
                                 
