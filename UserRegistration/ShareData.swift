@@ -24,6 +24,7 @@ class ShareData:ObservableObject{
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
     let yellow = Color(red: 250/255, green: 236/255, blue: 135/255)
     let green = Color(red: 135/255, green: 250/255, blue: 179/255)
+//    let listBackground = Color(red: 255 / 255, green: 250 / 255, blue: 205 / 255)
 //    R:135 G:250 B:179
     @Published var currentUserData = [String : Any]()
     

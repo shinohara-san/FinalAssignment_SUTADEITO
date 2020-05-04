@@ -17,35 +17,39 @@ struct MessageRow: View {
         HStack {
             if self.isMyMessage {
                 Spacer()
+//                VStack{
                 HStack(spacing : 0){
                     Text(self.message)
-                    .lineLimit(nil)
-                    .padding(8)
+//                        .frame(height: 100)
+//                        .fixedSize(horizontal: false, vertical: true)//
+                    .padding(10)
                         .background(self.shareData.green)
                     .cornerRadius(6)
                         .foregroundColor(Color.black)
                     .shadow(radius: 1, x: 2, y: 2)
-                    self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.3, isIncoming: false)
-                }
+                    .layoutPriority(1)
+                    self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.2, isIncoming: false)
+                    }
+//                }
                 
             } else {
-                VStack(alignment: .leading) {
-                    HStack(spacing: 0){
-                        self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.3, isIncoming: true)
+//                VStack{
+                    HStack(spacing : 0){
+                        self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.2, isIncoming: true)
                         Text(self.message)
-                            .lineLimit(nil)
-//                        .frame(maxWidth: geometry.size.width * 0.4)
-                    .padding(8)
-                        .background(self.shareData.yellow)
+//                            .fixedSize(horizontal: false, vertical: true)
+                    .padding(10)
+                    .background(self.shareData.yellow)
                     .cornerRadius(6)
                     .foregroundColor(Color.black)
                     .shadow(radius: 1, x: 2, y: 2)
                     }
-                }
+//                }
 
                 Spacer()
             }
         } //hstack
+            
         } //geo
     }
     
@@ -56,7 +60,7 @@ struct MessageRow: View {
         
         Path { path in
             path.move(to: CGPoint(x: isIncoming ? 0 : width, y: height * 0.5))
-            path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: height))
+            path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: height * 0.7))
             path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: 0))
             path.closeSubpath()
         }

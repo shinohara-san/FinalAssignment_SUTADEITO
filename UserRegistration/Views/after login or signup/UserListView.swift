@@ -40,55 +40,53 @@ struct UserListView: View {
             NavigationView{
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
-                    ScrollView(showsIndicators: false){
-                        VStack{
-                            ForEach(self.shareData.allUsers){ user in
+                    //                    ScrollView(showsIndicators: false){
+                    List{
+                        ForEach(self.shareData.allUsers){ user in
+                            //                            VStack{
+                            HStack(spacing: 0){
+                                //                                        Spacer()
                                 VStack{
-                                    HStack(spacing: 0){
-//                                        Spacer()
-                                        VStack{
-                                            FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
-                                                .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                                                .padding(.top, 8)
-                                            HStack(spacing: 5){
-                                                Text(user.age).frame(width: geometry.size.width * 0.2, alignment: .trailing)
-                                                Text(user.hometown).frame(width: geometry.size.width * 0.3, alignment: .leading)
-                                            }.frame(width: geometry.size.width * 0.5)
-                                        }
-                                        HStack(spacing: 0){
-                                            self.chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                                            Text(user.subject).padding().frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
-                                        }
-                                        Spacer()
+                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                        .padding(.top, 8)
+                                    HStack(spacing: 5){
                                         
-//                                        aaa@aaa.com
-                                    }.frame(width: geometry.size.width * 1).padding(.trailing) //hstack below foreach
-                                    Divider().frame(width: geometry.size.width * 0.8)
-                                } //vstack
+                                        Text(user.age).frame(width: geometry.size.width * 0.2, alignment: .trailing)
+                                        Text(user.hometown).frame(width: geometry.size.width * 0.3, alignment: .leading)
+                                    }.frame(width: geometry.size.width * 0.5)
+                                }
+                                HStack(spacing: 0){
+                                    self.chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
+                                    Text(user.subject).padding().frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                                }
+                                Spacer()
+                                
+                            }
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
-                                                                 }
-                            } //foreach
-                            
-                        }//Vstack
-                            
-                            .onAppear{
-                                DispatchQueue.global().async {
-                                    self.shareData.getCurrentUser()
                             }
-                        }
-                        
-                    }//scroll
-                }.navigationBarTitle("ユーザー", displayMode: .inline)
+                        } //foreach
+                            .listRowBackground(self.shareData.white).id(UUID())
+                    }
+//                        .id(UUID())
+                    .onAppear { UITableView.appearance().separatorStyle = .none }
+                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                        .onAppear{
+                            //                                 DispatchQueue.global().sync {
+                            self.shareData.getCurrentUser()//                            print("ログインユーザー: \(self.shareData.currentUserData["name"] ?? "ログインユーザ情報なし")")
+//                            print("ユーザー一覧: \(self.shareData.allUsers)")
+                    }
+                }
+                    //                    .id(UUID())
+                    .navigationBarTitle("ユーザー", displayMode: .inline)
                     .sheet(isPresented: self.$userProfileOn) {
                         UserProfileView(user: self.userInfo, matchUserProfile: false).environmentObject(self.shareData)
-                }
-                
-            }
-        }//Profile
-        
-    }
+                } //z
+            }//navi
+        }//geo
+    }//body
 }
 
 struct UserListView_Previews: PreviewProvider {

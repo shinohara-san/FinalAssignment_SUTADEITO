@@ -32,42 +32,53 @@ struct MessageView: View {
     var body: some View {
         GeometryReader{ geometry in
             ZStack{
-                self.shareData.white.edgesIgnoringSafeArea(.all)
+                self.shareData.pink.edgesIgnoringSafeArea(.all)
+
                 VStack{
+//                    ScrollView{
+//                    VStack{
                     List{
-                    ForEach(self.msgVM.messages){ i in
-                        if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
-                            MessageRow(message: i.msg, isMyMessage: true)
-//                                .frame(width: geometry.size.width * 0.5)
-                        } else {
-                            MessageRow(message: i.msg, isMyMessage: false)
-//                                .frame(width: geometry.size.width * 0.5)
-                        }
+                        ForEach(self.msgVM.messages){ i in
+                            if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
+                                MessageRow(message: i.msg, isMyMessage: true).frame(height: 63)//rowの高さが足りないと前文表示されない
+//                                    .rotationEffect(.radians(.pi))
+//                                .scaleEffect(x: -1, y: 1, anchor: .center)
+                               
+                            } else {
+                                MessageRow(message: i.msg, isMyMessage: false).frame(height: 63)
+//                                    .rotationEffect(.radians(.pi))
+//                                .scaleEffect(x: -1, y: 1, anchor: .center)
+                            }
+                            
+                        }.listRowBackground(self.shareData.white)
                     }
-                    }//list
-                        
+                    .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-                    
+//                    }
+//                    }
                     //            }
                     HStack{
-                        TextField("メッセージ", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                        TextField("メッセージ(44文字まで)", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                         Button(action: {
-                            if self.text.count > 0 {
+                            if self.text.count > 0 && self.text.count < 44{
                                 print("送信時マッチID: \(self.msgVM.matchId)")
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
                                 
                                 self.text = ""
-                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
+//                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
                             }
                             
                         }) {
-                            Image(systemName: "paperplane.fill").foregroundColor(self.shareData.pink)
+                            Image(systemName: "paperplane.fill").foregroundColor(self.shareData.white)
                         }.padding(.horizontal)
                     }.padding(.bottom)
-                    .sheet(isPresented: self.$isModal) {
-                        UserProfileView(user: self.matchUserInfo, matchUserProfile: true).environmentObject(self.shareData)
-                    }        }
+                        .sheet(isPresented: self.$isModal) {
+                            UserProfileView(user: self.matchUserInfo, matchUserProfile: true).environmentObject(self.shareData)
+                    }
+                    
+                }//vstack
+     
             }
             .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
             .navigationBarItems(leading:
@@ -115,20 +126,12 @@ struct MessageView_Previews: PreviewProvider {
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }
-
-struct PartlyRoundedCornerView: UIViewRepresentable {
-    let cornerRadius: CGFloat
-    let maskedCorners: CACornerMask
-
-    func makeUIView(context: UIViewRepresentableContext<PartlyRoundedCornerView>) -> UIView {
-        // 引数で受け取った値を利用して、一部の角のみを丸くしたViewを作成する
-        let uiView = UIView()
-        uiView.layer.cornerRadius = cornerRadius
-        uiView.layer.maskedCorners = maskedCorners
-        uiView.backgroundColor = .white
-        return uiView
-    }
-
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PartlyRoundedCornerView>) {
-    }
-}
+//
+//extension View {
+//    public func flip() -> some View {
+//        return self
+//            .rotationEffect(.radians(.pi))
+//            .scaleEffect(x: -1, y: 1, anchor: .center)
+//    }
+//}
+//

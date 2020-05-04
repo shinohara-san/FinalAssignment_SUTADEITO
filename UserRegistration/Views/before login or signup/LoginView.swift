@@ -114,6 +114,7 @@ struct LoginView: View {
                                     } else {
                                         self.email = ""
                                         self.password = ""
+                     
                                     }
                                 }
                             }) {
@@ -137,8 +138,7 @@ struct LoginView: View {
                             .navigationBarHidden(true)
                             .padding(.top, 80)
                         
-                        
-                        ///上エリアの幅、横からニョキメニュー
+                       ///横からニョキメニュー
                         }
                     }
                     }
@@ -160,7 +160,7 @@ struct LoginView: View {
             configuration
                 .padding(10)
                 .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05, alignment: .center)
-                .background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255))
+                .background(Color(red: 248 / 255, green: 248 / 255, blue: 248 / 255))
             .cornerRadius(10)
             
                 //Give it some style

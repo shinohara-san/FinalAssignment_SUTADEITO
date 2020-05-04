@@ -18,8 +18,8 @@ struct LikeUserView: View {
         NavigationView{
         ZStack{
             self.shareData.white.edgesIgnoringSafeArea(.all)
-            ScrollView(showsIndicators: false){
-                VStack{
+            List{
+//                VStack{
                    
                         ForEach(self.shareData.likeUsers){ user in
                             VStack{
@@ -33,16 +33,17 @@ struct LikeUserView: View {
                                 Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
                             }
                         } //hs
-                                Divider().frame(width: geometry.size.width * 0.8)
-                } //vs
+//                                Divider().frame(width: geometry.size.width * 0.8)
+                }.listRowBackground(self.shareData.white)
                             .onTapGesture {
                                 self.likeUserInfo = user
                                 self.likeProfileOn = true
                             }
                         }
-                }
 
                 }//vs
+            .onAppear { UITableView.appearance().separatorStyle = .none }
+            .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
             } //sc
             .sheet(isPresented: self.$likeProfileOn) {
                 UserProfileView(user: self.likeUserInfo, matchUserProfile: false).environmentObject(self.shareData)

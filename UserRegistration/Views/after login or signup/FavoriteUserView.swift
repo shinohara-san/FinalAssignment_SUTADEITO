@@ -20,56 +20,56 @@ struct FavoriteUserView: View {
             NavigationView{
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
-                    ScrollView(showsIndicators: false){
-                        VStack{
+                    List{
                         ForEach(self.shareData.favoriteUsers){ user in
                             VStack{
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
-                                    .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
                                         .padding(.top, 8).padding(.leading)
                                     VStack(alignment: .leading,spacing: 5){
                                         
                                         Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                         Text(user.age)
-                                        .frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                    }.frame(width: geometry.size.width * 0.6)
+                                            .frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    }
+                                    
                                 }
-                                Divider().frame(width: geometry.size.width * 0.8)
-                            }
-                            .onTapGesture {
-                                self.favoriteUserInfo = user
-                                self.isModal = true
+                            }.listRowBackground(self.shareData.white)
+                                .onTapGesture {
+                                    self.favoriteUserInfo = user
+                                    self.isModal = true
                             }
                         }
-                    }
-                            .navigationBarTitle(Text("お気に入りユーザー"), displayMode: .inline)
-                                                   .navigationBarItems(trailing:
-                                                       Button(action: {
-                                                           self.shareData.switchFavAndLike = true
-                                                       }, label: {
-                                                           Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
-                                                       })
-                                               )
                         
+                    } //list
+                        
+                        .onAppear { UITableView.appearance().separatorStyle = .none }
+                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                        .sheet(isPresented: self.$isModal) {
+                            UserProfileView(user: self.favoriteUserInfo, matchUserProfile: false).environmentObject(self.shareData)
+                    }
+                    .navigationBarTitle(Text("お気に入りユーザー"), displayMode: .inline)
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            self.shareData.switchFavAndLike = true
+                        }, label: {
+                            Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+                        })
+                    )
                         .onAppear{
                             //                DispatchQueue.global().sync {
                             self.shareData.getAllFavoriteUsers()
                             //                }
-                        }
-                        .onDisappear{
-                            self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-                            //
-                            //                    ZStack{
-                            //                        self.shareData.white.edgesIgnoringSafeArea(.all)                      self.userProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
-                        }
+                            
+                    }
+                    .onDisappear{
+                        self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
                         
-                    } //scroll
-                       .sheet(isPresented: self.$isModal) {
-                           UserProfileView(user: self.favoriteUserInfo, matchUserProfile: false).environmentObject(self.shareData)
-                       }
+                    }
                 } //navi
             }
+            
         }
     } //body
 } //view

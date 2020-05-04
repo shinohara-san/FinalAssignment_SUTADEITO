@@ -60,7 +60,7 @@ class MessageViewModel: ObservableObject {
                         self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
 //                        }
 //                        self.messages = []
-                        print("messagesの中身: \(self.messages)") //Ok
+//                        print("messagesの中身: \(self.messages)") //Ok
                         
                     }
                 }

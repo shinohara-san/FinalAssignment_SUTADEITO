@@ -371,13 +371,16 @@ struct UserProfileView: View {
         .onAppear{
             self.checkFavoriteTable()
             self.checkLikeTable()
-            //            print("プロフィールに来た")
         }
         .onDisappear{
-            //            print("プロフィールを去った")
+            self.shareData.getAllUsers()
+         
+            self.shareData.getAllFavoriteUsers()
+
+            self.shareData.getAllLikeUsers()
         }
-        .navigationBarTitle("")
-        .navigationBarHidden(false)
+//        .navigationBarTitle("")
+//        .navigationBarHidden(false)
     }
 }
 

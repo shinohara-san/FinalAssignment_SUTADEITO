@@ -17,22 +17,25 @@ struct MatchingListView: View {
             ZStack{
                 self.shareData.pink.edgesIgnoringSafeArea(.all)
                 NavigationView{
-                    VStack{
-                        List(self.shareData.matchUserArray){ user in
+                    
+                    List{
+                        ForEach(self.shareData.matchUserArray){ user in
                             //写真タップでプロフィール表示
                             NavigationLink(destination: MessageView(user, user.matchRoomId)){
-                                Section{
+                                VStack{
                                 HStack{
-                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15)
-                                        .clipShape(Circle())
+                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15, height: geometry.size.height * 0.1)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
                                     Text(user.name)
                                     Text(user.age)
                                 }
+//                                    Divider() pathで線引く
                                 }
                             }
-
-                        }
+                        }.listRowBackground(self.shareData.white) //foreachに
                     }
+                    .onAppear { UITableView.appearance().separatorStyle = .none }
+                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     .navigationBarTitle(Text("マッチ一覧"), displayMode: .inline)
                 }
             }
@@ -53,3 +56,6 @@ struct MatchingListView_Previews: PreviewProvider {
         MatchingListView()
     }
 }
+
+//ai@aaa.com
+//1234ai

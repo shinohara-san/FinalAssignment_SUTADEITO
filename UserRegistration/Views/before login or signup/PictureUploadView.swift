@@ -55,7 +55,7 @@ struct PictureUploadView: View {
                 
                 VStack{
                     if self.imageURL != "" {
-                        FirebaseImageView(imageURL: self.imageURL).frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4).shadow(radius: 2, x: 2, y: 2).padding(.vertical).cornerRadius(10).animation(.spring())
+                        FirebaseImageView(imageURL: self.imageURL).frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 2).padding(.vertical).animation(.spring())
                     }
                     Button(action: {
                         self.shown.toggle()
@@ -91,12 +91,13 @@ struct PictureUploadView: View {
                             .foregroundColor(self.shareData.white)
                             .background(self.buttonColor).cornerRadius(10)
                         .shadow(radius: 2, y:2)
-                    }.disabled(!self.allSectionsFilled)
+                        }.disabled(!self.allSectionsFilled)
+                        .padding(.bottom)
                     
-                    Button("戻る"){
-                        self.presentation.wrappedValue.dismiss()
-                    }.foregroundColor(self.shareData.white)
-                    .shadow(radius: 2, y:2)
+//                    Button("戻る"){
+//                        self.presentation.wrappedValue.dismiss()
+//                    }.foregroundColor(Color.gray)
+//
                     
                     
                 } //vstack
