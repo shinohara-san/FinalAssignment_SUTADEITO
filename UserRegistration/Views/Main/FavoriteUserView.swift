@@ -22,7 +22,7 @@ struct FavoriteUserView: View {
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     List{
                         ForEach(self.shareData.favoriteUsers){ user in
-                            VStack{
+                            
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                         .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
@@ -35,7 +35,7 @@ struct FavoriteUserView: View {
                                     }
                                     
                                 }
-                            }.listRowBackground(self.shareData.white)
+                            .listRowBackground(self.shareData.white)
                                 .onTapGesture {
                                     self.favoriteUserInfo = user
                                     self.isModal = true

@@ -14,7 +14,6 @@ struct LoginView: View {
     @ObservedObject private var datas = firebaseData
     @EnvironmentObject var shareData: ShareData
     
-    let pictures = ["tables" ,"people" ,"coffee" ,"couple"]
     let messages = ["このアプリでは、\n「日中」に「カフェ」で\n「一緒に勉強する」\nという最初のデートを推奨しています。", "時間のかかるやり取りはなるべく短くし、会って、相手の空気感を感じてみてください。" , "お互いに勉強していれば会話が苦手でも大丈夫。「勉強」ですべての出会いが有意義なものになる。", "そんな真面目で安心な出会いを応援します。"]
     @State var index = 0
     
@@ -25,7 +24,7 @@ struct LoginView: View {
     @Environment(\.presentationMode) var presentation
     
     func getMid()->Int{
-        return pictures.count/2
+        return shareData.pictures.count/2
     }
     
     func getUser() {
@@ -50,8 +49,8 @@ struct LoginView: View {
                         
                             ScrollView(.horizontal, showsIndicators: true){
                                 HStack(spacing: 0) {
-                                    ForEach(0 ..< self.pictures.count) { index in
-                                        cardView(img: self.pictures[index], width: geometry.size.width, height: geometry.size.height)
+                                    ForEach(0 ..< self.shareData.pictures.count) { index in
+                                        cardView(img: self.shareData.pictures[index], width: geometry.size.width, height: geometry.size.height)
                                             .environmentObject(self.shareData)
                                             .offset(x: self.x)
                                             .highPriorityGesture(DragGesture()

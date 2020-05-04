@@ -33,21 +33,16 @@ struct MessageView: View {
         GeometryReader{ geometry in
             ZStack{
                 self.shareData.pink.edgesIgnoringSafeArea(.all)
-
                 VStack{
-//                    ScrollView{
-//                    VStack{
                     List{
                         ForEach(self.msgVM.messages){ i in
                             if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
-                                MessageRow(message: i.msg, isMyMessage: true).frame(height: 63)//rowの高さが足りないと前文表示されない
-//                                    .rotationEffect(.radians(.pi))
-//                                .scaleEffect(x: -1, y: 1, anchor: .center)
+                                MessageRow(message: i.msg, isMyMessage: true).frame(height: 63)//rowの高さが足りないと表示されない
+
                                
                             } else {
                                 MessageRow(message: i.msg, isMyMessage: false).frame(height: 63)
-//                                    .rotationEffect(.radians(.pi))
-//                                .scaleEffect(x: -1, y: 1, anchor: .center)
+
                             }
                             
                         }.listRowBackground(self.shareData.white)
@@ -55,14 +50,12 @@ struct MessageView: View {
                     .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-//                    }
-//                    }
-                    //            }
+
                     HStack{
                         TextField("メッセージ(44文字まで)", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                         Button(action: {
                             if self.text.count > 0 && self.text.count < 44{
-                                print("送信時マッチID: \(self.msgVM.matchId)")
+//                                print("送信時マッチID: \(self.msgVM.matchId)")
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
                                 
                                 self.text = ""

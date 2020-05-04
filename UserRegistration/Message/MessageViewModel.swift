@@ -22,7 +22,7 @@ struct Message: Identifiable {
 
 
 class MessageViewModel: ObservableObject {
-    var datas = FirebaseData()
+//    var datas = FirebaseData()
     let db = Firestore.firestore()
     
     @Published var matchId:String
@@ -34,7 +34,7 @@ class MessageViewModel: ObservableObject {
 //        self.sharedData = shareData
         self.messages = [Message]()
 //        イニシャライザ（initializer）とは、コンストラクタのようにインスタンス生成時に自動で呼び出されるメソッドのことです。
-        print("loop用マッチID: \(self.matchId)")
+//        print("loop用マッチID: \(self.matchId)")
 //        DispatchQueue.main.async {
         
         self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date").addSnapshotListener { (snap, error) in

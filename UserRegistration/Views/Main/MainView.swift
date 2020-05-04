@@ -39,7 +39,7 @@ struct MainView: View {
         TabView(selection: $selection) {
                 
                 ////ユーザー一覧のページ
-                UserListView().environmentObject(self.shareData)
+            UserListView().environmentObject(self.shareData)
                 
                     .tabItem {
                         VStack {
@@ -48,7 +48,7 @@ struct MainView: View {
                 }.tag(2)
                 
                 ////                    検索ページ
-                SearchView()
+                SearchView().environmentObject(self.shareData)
                     .tabItem {
                         VStack {
                             Image(systemName: "magnifyingglass")
@@ -81,7 +81,7 @@ struct MainView: View {
                 }.tag(4)
                 
                 ////                    自分のプロフィールページ
-                SettingView(datas: self.datas)
+                SettingView(datas: self.datas).environmentObject(self.shareData)
                     
                     .tabItem {
                         VStack {

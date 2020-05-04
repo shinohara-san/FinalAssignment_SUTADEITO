@@ -22,7 +22,7 @@ struct LikeUserView: View {
 //                VStack{
                    
                         ForEach(self.shareData.likeUsers){ user in
-                            VStack{
+//                            VStack{
                             HStack{
                                 FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                 .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
@@ -34,7 +34,7 @@ struct LikeUserView: View {
                             }
                         } //hs
 //                                Divider().frame(width: geometry.size.width * 0.8)
-                }.listRowBackground(self.shareData.white)
+                .listRowBackground(self.shareData.white)
                             .onTapGesture {
                                 self.likeUserInfo = user
                                 self.likeProfileOn = true

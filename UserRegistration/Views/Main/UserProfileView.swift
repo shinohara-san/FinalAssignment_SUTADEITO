@@ -74,7 +74,7 @@ struct UserProfileView: View {
             if let snap = snap{
                 for i in snap.documents{
                     print("マッチ！")
-                    
+                    self.shareData.matchNotification = true
                     ///マッチテーブル作成
                     
                     //                ルーム作る
@@ -357,6 +357,7 @@ struct UserProfileView: View {
                 
                     
                 }
+                    
             } .navigationBarTitle(Text("\(self.user.name) のプロフィール"), displayMode: .inline)
                 .navigationBarItems(leading:
                     Button(action: {
@@ -365,7 +366,23 @@ struct UserProfileView: View {
                         Image(systemName: "multiply").foregroundColor(self.shareData.white)
                     })
                 )
+                
+                Group{
+                    if !self.shareData.matchNotification{ //逆
+                        Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
+                        VStack(alignment: .center){
+                            
+                            Text("\(self.user.name)さんとマッチしました！").fontWeight(.bold).foregroundColor(self.shareData.brown).padding()
+                        
+                            Button("戻る"){
+                                self.shareData.matchNotification = false
+                            }.foregroundColor(.black)
+                        }.frame(width: geo.size.width * 0.7, height: geo.size.height * 0.4).background(Image("matchheart").resizable().aspectRatio(contentMode: .fill)).cornerRadius(10).animation(.spring())
+
+                    }
                 }
+                
+            }//zstack
         } //navi
         }//geo
         .onAppear{
@@ -379,8 +396,7 @@ struct UserProfileView: View {
 
             self.shareData.getAllLikeUsers()
         }
-//        .navigationBarTitle("")
-//        .navigationBarHidden(false)
+
     }
 }
 

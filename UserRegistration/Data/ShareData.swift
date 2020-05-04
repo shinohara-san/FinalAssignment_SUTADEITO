@@ -15,10 +15,10 @@ import SwiftUI
 //let shareData = ShareData()
 
 class ShareData:ObservableObject{
-    //    let msgVM = MessageViewModel(matchId: "")
+    
     let db = Firestore.firestore()
     let datas = firebaseData
-    
+    let pictures = ["coffeeheart" ,"manwoman" ,"holdpen" ,"couple"]
     let pink = Color(red: 250 / 255, green: 138 / 255, blue: 148 / 255)
     let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
@@ -406,7 +406,7 @@ class ShareData:ObservableObject{
         }
         
     }
-    
+    @Published var matchNotification = false
 }//func
 
 
