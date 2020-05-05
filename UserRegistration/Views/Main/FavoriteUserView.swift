@@ -50,13 +50,18 @@ struct FavoriteUserView: View {
                             UserProfileView(user: self.favoriteUserInfo, matchUserProfile: false).environmentObject(self.shareData)
                     }
                     .navigationBarTitle(Text("お気に入りユーザー"), displayMode: .inline)
-                    .navigationBarItems(trailing:
+                    .navigationBarItems(leading:
                         Button(action: {
                             self.shareData.switchFavAndLike = true
                         }, label: {
                             Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+                        }), trailing:
+                        Button(action: {
+                            self.shareData.myProfile = true
+                        }, label: {
+                            Image(systemName: "house.fill").foregroundColor(self.shareData.white)
                         })
-                    )
+                        )
                         .onAppear{
                             //                DispatchQueue.global().sync {
                             self.shareData.getAllFavoriteUsers()

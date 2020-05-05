@@ -37,6 +37,13 @@ struct MatchingListView: View {
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     .navigationBarTitle(Text("マッチ一覧"), displayMode: .inline)
+                    .navigationBarItems(trailing:
+                    Button(action: {
+                        self.shareData.myProfile = true
+                    }, label: {
+                        Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                    })
+                    )
                 }
             }
         }.onAppear{

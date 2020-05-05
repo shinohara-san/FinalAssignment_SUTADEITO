@@ -368,7 +368,7 @@ struct UserProfileView: View {
                 )
                 
                 Group{
-                    if !self.shareData.matchNotification{ //逆
+                    if self.shareData.matchNotification{
                         Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
                         VStack(alignment: .center){
                             

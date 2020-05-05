@@ -1486,3 +1486,83 @@
 //                }
 //            }
 //        }
+
+
+//ScrollView(.horizontal, showsIndicators: true){
+//    HStack(spacing: 0) {
+//        ForEach(0 ..< self.shareData.pictures.count) { index in
+//            cardView(img: self.shareData.pictures[index], msg: self.messages[index], width: geometry.size.width, height: geometry.size.height).environmentObject(self.shareData)
+//                .offset(x: self.x)
+//                .highPriorityGesture(DragGesture()
+//                    .onChanged({ (value) in
+//                        
+//                        if value.translation.width > 0 {
+//                            self.x = value.location.x
+//                        } else {
+//                            self.x = value.location.x - self.screen
+//                        }
+//                        
+//                    })
+//                    .onEnded({ (value) in
+//                        if value.translation.width > 0{
+//                            if value.translation.width > ((self.screen - 80)/2) && Int(self.count) != self.getMid(){
+//                                self.count += 1
+//                                self.x = (self.screen) * self.count
+//                            } else {
+//                                self.x = (self.screen) * self.count
+//                            }
+//                        }else{
+//                            if -value.translation.width > ((self.screen - 80)/2) && -Int(self.count) != self.getMid(){
+//                                self.count -= 1
+//                                self.x = (self.screen) * self.count
+//                            } else {
+//                                self.x = (self.screen) * self.count
+//                            }
+//                        }
+//                        
+//                    })
+//            )
+//            
+//            //
+//        }
+//    }
+//}
+
+
+///横スライドメニュー
+//
+// 最初に画面のオフセットの値をスライドメニュー分マイナスします。
+//    .onAppear(perform: {
+//        self.xOffset = geometry.size.width * -0.7
+//        self.defaultOffset = self.xOffset
+//    })
+//    .offset(x: self.xOffset)
+//    // 画面サイズを明示します
+//    .frame(width: geometry.size.width, alignment: .leading)
+//    // スライドのアニメーションを設定します
+//
+//    // ジェスチャーに関するイベントを検知します
+//    .gesture(
+//        // ドラッグ、すなわちスライドやスワイプに関するイベントに関して検知します
+//        DragGesture()
+//            // スワイプが検知されたときの動きを実装します
+//            .onChanged{ value in
+//                // スワイプの移動距離が5以上のときにオフセットの値を動的に変化させます
+//                // しきい値(ここでは5)を超えるとリアルタイムな動きを与えます
+//                if (self.xOffset != .zero && value.translation.width > 5) {
+//                    self.xOffset = self.defaultOffset + value.translation.width
+//                }
+//        }
+//            // スワイプが終了したときの動きを実装します
+//            .onEnded { value in
+//                // もし、右方向にスワイプした距離が5以上ならオフセットを0にします
+//                // すなわち、メニューを表示します
+//                // それ以外はオフセットをスライドメニュー分設定します
+//                // すなわちスライドメニューを隠します
+//                if (value.translation.width > 5) {
+//                    self.xOffset = .zero
+//                } else {
+//                    self.xOffset = self.defaultOffset
+//                }
+//        }
+//)

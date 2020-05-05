@@ -55,8 +55,17 @@ struct UserListView: View {
                         .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                         
                 }
-                    //                    .id(UUID())
+                    //
                     .navigationBarTitle("ユーザー", displayMode: .inline)
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        self.shareData.myProfile = true
+                    }, label: {
+                        Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                    })
+                    )
+//                    .animation(nil)
+//                    .id(UUID())
                     .sheet(isPresented: self.$userProfileOn) {
                         UserProfileView(user: self.userInfo, matchUserProfile: false).environmentObject(self.shareData)
                 } //sheet

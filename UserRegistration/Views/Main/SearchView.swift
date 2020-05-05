@@ -25,6 +25,7 @@ struct SearchView: View {
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     
                     VStack{
+                        
                         Text("条件をひとつ入れてください")
                             .foregroundColor(Color(red: 42/255, green: 34/255, blue: 56/255))
                             .padding(.top)
@@ -67,7 +68,7 @@ struct SearchView: View {
                             }
                             .padding(.trailing)
                             }
-                        
+                       
                         
                         
                         Divider().frame(width: geo.size.width * 0.8)
@@ -87,10 +88,18 @@ struct SearchView: View {
                         } //scroll
                             .onAppear { UITableView.appearance().separatorStyle = .none }
                             .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                        
                     }//vstac
                         
                 }//zstac
-                    .navigationBarTitle(Text("ユーザー検索"), displayMode: .inline)
+                 .navigationBarTitle(Text("ユーザー検索"), displayMode: .inline)
+                .navigationBarItems(trailing:
+                Button(action: {
+                    self.shareData.myProfile = true
+                }, label: {
+                    Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                })
+                )
                 .sheet(isPresented: self.$userProfileOn) {
                         UserProfileView(user: self.userInfo, matchUserProfile: false).environmentObject(self.shareData)
                 }
@@ -148,5 +157,7 @@ struct searchRow: View{
         }
         .padding(.trailing)
         }
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
     }
 }

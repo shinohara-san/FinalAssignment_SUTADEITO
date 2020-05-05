@@ -135,8 +135,8 @@ struct ProfileEditView: View {
                     .padding(.bottom)
                     
                     Button("保存する"){
-                        self.shareData.saveEditInfo(name: self.name, subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.work, purpose: self.shareData.purposes[self.selectedPurpose])
-                        self.shareData.getCurrentUser() //編集後のログインしているユーザーのデータを入れ直す
+                        self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.work, purpose: self.shareData.purposes[self.selectedPurpose])
+                         //編集後のログインしているユーザーのデータを入れ直す
 //                        self.shareData.editOn = false
                         self.presentation.wrappedValue.dismiss()
                         }
@@ -157,10 +157,11 @@ struct ProfileEditView: View {
             }.actionSheet(isPresented: self.$confirmDelete) {
                 ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。\n※退会できない場合は再度ログインしてからお試しください。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
                     self.shareData.deleteAccount()
+                    self.shareData.deleteUserData()
+                    self.shareData.deleteUserPicture()
                     self.presentation.wrappedValue.dismiss()
                     self.shareData.currentUserData = [String : Any]()
                     self.datas.session = nil
-                    
                 })
                     ]
                 )
@@ -195,6 +196,7 @@ struct ProfileEditView: View {
         }
         .onDisappear{
 //            self.shareData.editOn = false
+//            self.shareData.getCurrentUser()
         }
     }
     func getIndex() {

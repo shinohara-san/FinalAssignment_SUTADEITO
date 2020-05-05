@@ -49,12 +49,17 @@ struct LikeUserView: View {
                 UserProfileView(user: self.likeUserInfo, matchUserProfile: false).environmentObject(self.shareData)
             }
             .navigationBarTitle("いいねしたユーザー", displayMode: .inline)
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.shareData.switchFavAndLike = false
-                }, label: {
-                    Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
-                })
+            .navigationBarItems(leading:
+            Button(action: {
+                self.shareData.switchFavAndLike = false
+            }, label: {
+                Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+            }), trailing:
+            Button(action: {
+                self.shareData.myProfile = true
+            }, label: {
+                Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+            })
             )
 //            .navigationBarHidden(true)
             .onAppear{

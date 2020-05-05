@@ -58,6 +58,7 @@ struct SettingView: View {
                                         Button("ログアウト"){
                                             
                                             self.datas.logOut()
+                                            self.shareData.myProfile = false
                                             self.shareData.currentUserData = [String : Any]()
                                             print("ログアウトしました")
                                         } //ProfileUserDetailView
@@ -67,6 +68,14 @@ struct SettingView: View {
                                     }
                                 }//zs
                                     .navigationBarTitle(Text("あなたのプロフィール"), displayMode: .inline)
+                                    .navigationBarItems(trailing:
+                                        Button(action: {
+                                            self.shareData.myProfile = false
+                                        }, label: {
+                                            Image(systemName: "return").foregroundColor(self.shareData.white)
+                                        })
+                                    
+                                    )
                             }//navi
 //                            }
 //                            else {
@@ -75,18 +84,14 @@ struct SettingView: View {
                         }//Group
                             .sheet(isPresented: self.$isModal) {
                                 ProfileEditView(datas: self.datas).environmentObject(self.shareData)
-                                
                         }
-                        
-                        
                     }
                 }//geo
                     
                     .onAppear{
                         self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")
                 }
-                //            .navigationBarTitle("あなたのプロフィール", displayMode: .inline)
-                //        .navigationBarHidden(true)
+               
             } else {
                 TopPageView().environmentObject(self.shareData)
             }

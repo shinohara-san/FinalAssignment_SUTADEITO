@@ -27,20 +27,25 @@ struct MainView: View {
     
     @State var matchid = ""
     
+    @State private var xOffset = CGFloat.zero
+    @State private var defaultOffset = CGFloat.zero
+    
     init(_ datas: FirebaseData) {
         self.datas = datas
-        UITabBar.appearance().barTintColor = UIColor(red: 135/255, green: 206/255, blue: 250/255, alpha: 1)
+        UITabBar.appearance().barTintColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
     }
     
     
     var body: some View {
         
-//        GeometryReader{ geometry in
-        TabView(selection: $selection) {
-                
-                ////ユーザー一覧のページ
-            UserListView().environmentObject(self.shareData)
-                
+        GeometryReader{ geometry in
+            ZStack{
+            TabView(selection: self.$selection) {
+//                HStack{
+//                    MenuView().frame(width: geometry.size.width * 0.68)
+                    ////ユーザー一覧のページ
+                    UserListView().environmentObject(self.shareData).frame(width: geometry.size.width)
+//                }
                     .tabItem {
                         VStack {
                             Image(systemName: "book.fill")
@@ -81,17 +86,29 @@ struct MainView: View {
                 }.tag(4)
                 
                 ////                    自分のプロフィールページ
-                SettingView(datas: self.datas).environmentObject(self.shareData)
-                    
-                    .tabItem {
-                        VStack {
-                            Image(systemName: "ellipsis")
-                        }
-                }.tag(5)
+//                SettingView(datas: self.datas).environmentObject(self.shareData)
+//
+//                    .tabItem {
+//                        VStack {
+//                            Image(systemName: "ellipsis")
+//                        }
+//                }.tag(5)
                 
             } //tabView
-            .accentColor(self.shareData.yellow)
-//250 G:236 B:135
+                .accentColor(self.shareData.pink)
+                .animation(nil)
+                
+                if self.shareData.myProfile{
+                    SettingView(datas: self.datas).environmentObject(self.shareData)
+//                    .navigationBarTitle("")
+//                    .navigationBarHidden(true)
+                }
+                
+            }//ZStack
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
+        }
+        //250 G:236 B:135
     }
 }
 

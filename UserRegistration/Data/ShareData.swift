@@ -12,8 +12,6 @@ import FirebaseFirestore
 import FirebaseAuth
 import SwiftUI
 
-//let shareData = ShareData()
-
 class ShareData:ObservableObject{
     
     let db = Firestore.firestore()
@@ -29,6 +27,11 @@ class ShareData:ObservableObject{
     @Published var currentUserData = [String : Any]()
     
     @Published var switchFavAndLike = false
+    
+    @Published var myProfile = false
+    @Published var messageView = false
+    
+    
     
     //ScrollViewには最初に配列に初期値を設定する必要あり
     
@@ -298,13 +301,14 @@ class ShareData:ObservableObject{
                 self.deleteUserData()
                 self.deleteUserPicture()
                 
-                ///マッチテーブルどうなる
             }
         }
     }
     // Firestore
     func deleteUserData(){
-        dbCollection
+        ///Tableごとにすべて削除
+        //Users削除
+        db.collection("Users")
             .whereField("id", isEqualTo: self.currentUserData["id"] ?? "")
             .getDocuments { (snap, err) in
                 if err != nil {
@@ -313,12 +317,40 @@ class ShareData:ObservableObject{
                 if let snap = snap {
                     for user in snap.documents {
                         user.reference.delete()
-                        print("firestore削除！")
+                        print("Usesコレクション削除！")
                     }
                 }
         }
+        
+        ///MatchUsersコレクションの自分のデータを削除せよ
+        //自分のFavorite削除
+//        db.collection("FavoriteTable").document(self.currentUserData["id"] as! String)
+//            .collection("FavoriteUser")
+//            .getDocuments { (snap, err) in
+//                if err != nil {
+//                    return
+//                }
+//                if let snap = snap {
+//                    for user in snap.documents {
+//                        user.reference.delete()
+//                        print("自分のFavaroiteTableコレクション削除！")
+//                    }
+//                }
+//        }
+//        //他人のFavoriteの自分削除
+//        db.collection("FavoriteTable").document().collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+//            if let snap = snap{
+//                for data in snap.documents{
+//                    data.reference.delete()
+//                    print("他ユーザーFavoriteTableにある自分削除")
+//                }
+//            }
+//        }
+        
     }
     //storage
+    
+    
     func deleteUserPicture(){
         let storageRef = Storage.storage().reference()
         
@@ -328,7 +360,7 @@ class ShareData:ObservableObject{
             .delete { error in
                 if error != nil {
                     // Uh-oh, an error occurred!
-                    print(error?.localizedDescription ?? "エラーがdeleteUserPictuireで発生なう")
+                    print(error?.localizedDescription ?? "エラーがdeleteUserPictuireで発生")
                     return
                 } else {
                     // File deleted successfully
@@ -339,7 +371,7 @@ class ShareData:ObservableObject{
     
     
     
-    func saveEditInfo(name: String, subject: String, hometown: String, hobby: String, introduction: String, personality: String, studystyle:String, work:String,purpose:String){
+    func saveEditInfo(name: String, age: String, subject: String, hometown: String, hobby: String, introduction: String, personality: String, studystyle:String, work:String, purpose:String){
         db.collection("Users")
             .whereField("id", isEqualTo: self.currentUserData["id"] ?? "")
             .getDocuments { (snap, err) in
@@ -355,6 +387,7 @@ class ShareData:ObservableObject{
                     let document = snap!.documents.first
                     document?.reference.updateData([
                         "name": name,
+                        "age": age,
                         "subject": subject,
                         "hometown": hometown,
                         "hobby" : hobby,
@@ -365,6 +398,7 @@ class ShareData:ObservableObject{
                         "purpose" : purpose
                         
                     ])
+                    self.getCurrentUser()
                     print("編集しました。")
                 }
         }

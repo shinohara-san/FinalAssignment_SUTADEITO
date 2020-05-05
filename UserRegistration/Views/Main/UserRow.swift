@@ -21,15 +21,16 @@ struct UserRow: View{
                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
                        .padding(.top, 8)
                    HStack(spacing: 5){
-                       
+                       Spacer()
                        Text(user.age).frame(width: geometry.size.width * 0.2, alignment: .trailing)
                        Text(user.hometown).frame(width: geometry.size.width * 0.3, alignment: .leading)
                    }.frame(width: geometry.size.width * 0.5)
                }
+            
                HStack(spacing: 0){
                    chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                   Text(user.subject).padding().frame(width: geometry.size.width * 0.4, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
-               }
+                   Text(user.subject).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+            }
                Spacer()
                
            }
