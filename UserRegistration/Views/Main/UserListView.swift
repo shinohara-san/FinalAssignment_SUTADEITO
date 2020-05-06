@@ -34,16 +34,16 @@ struct UserListView: View {
                     //                    ScrollView(showsIndicators: false){
                     
                     List{
-                        ForEach(self.shareData.allUsers){ user in
+                        ForEach(self.shareData.filteredAllUsers){ user in
                             //                            VStack{
-                            UserRow(user: user, geometry: geometry)
+                            UserRow(user: user, geometry: geometry).animation(nil)
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
                             }
                         } //foreach
                             .listRowBackground(self.shareData.white)
-                    }
+                        }
                     .onAppear{
 //                        DispatchQueue.global().sync {
                             self.shareData.getCurrentUser()
@@ -53,7 +53,7 @@ struct UserListView: View {
 //                .animation(nil)
                         .onAppear { UITableView.appearance().separatorStyle = .none }
                         .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-                        
+                    
                 }
                     //
                     .navigationBarTitle("ユーザー", displayMode: .inline)

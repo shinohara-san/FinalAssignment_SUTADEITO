@@ -77,22 +77,25 @@ struct MainView: View {
                 
                 
                 
+                LikeMeUserView().environmentObject(self.shareData)
+
+                    .tabItem {
+                        VStack {
+                            Image(systemName: "suit.heart")
+                        }
+                }.tag(4)
+                
+                
+                
                 ////                   マッチングページ
                 MatchingListView().environmentObject(self.shareData)
                     .tabItem {
                         VStack {
                             Image(systemName: "suit.heart.fill")
                         }
-                }.tag(4)
+                }.tag(5)
                 
-                ////                    自分のプロフィールページ
-//                SettingView(datas: self.datas).environmentObject(self.shareData)
-//
-//                    .tabItem {
-//                        VStack {
-//                            Image(systemName: "ellipsis")
-//                        }
-//                }.tag(5)
+                
                 
             } //tabView
                 .accentColor(self.shareData.pink)
@@ -100,15 +103,15 @@ struct MainView: View {
                 
                 if self.shareData.myProfile{
                     SettingView(datas: self.datas).environmentObject(self.shareData)
-//                    .navigationBarTitle("")
-//                    .navigationBarHidden(true)
+
                 }
                 
             }//ZStack
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+
         }
-        //250 G:236 B:135
+        .navigationBarTitle("")
+        .navigationBarHidden(true) //自分のプロフィール用
+        
     }
 }
 

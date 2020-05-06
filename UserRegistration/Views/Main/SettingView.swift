@@ -22,7 +22,6 @@ struct SettingView: View {
                 GeometryReader{ geo in
                     VStack {
                         Group{
-//                            if !self.shareData.editOn{
                                 NavigationView{
                                 ZStack{
                                     self.shareData.white.edgesIgnoringSafeArea(.all)
@@ -60,6 +59,11 @@ struct SettingView: View {
                                             self.datas.logOut()
                                             self.shareData.myProfile = false
                                             self.shareData.currentUserData = [String : Any]()
+                                            self.shareData.filteredMatchUserArray = [User]()
+                                            self.shareData.filteredAllUsers = [User]()
+                                            self.shareData.filteredFavoriteUsers = [User]()
+                                            self.shareData.filteredLikeUsers = [User]()
+                                            self.shareData.filteredLikeMeUsers = [User]()
                                             print("ログアウトしました")
                                         } //ProfileUserDetailView
                                             .foregroundColor(Color.gray)
@@ -77,10 +81,7 @@ struct SettingView: View {
                                     
                                     )
                             }//navi
-//                            }
-//                            else {
-//                                //                    ProfileEditView(datas: self.datas)
-//                            }
+
                         }//Group
                             .sheet(isPresented: self.$isModal) {
                                 ProfileEditView(datas: self.datas).environmentObject(self.shareData)

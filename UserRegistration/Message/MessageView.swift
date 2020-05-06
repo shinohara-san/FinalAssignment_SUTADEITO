@@ -12,7 +12,6 @@ import FirebaseFirestore
 
 struct MessageView: View {
     
-    
     let matchUserInfo: User
     let matchRoomId: String
     
@@ -24,6 +23,7 @@ struct MessageView: View {
         //_　アンダーバーつけるとtypeじゃなくなりエラー消える 
         self._msgVM = ObservedObject(initialValue: MessageViewModel(matchId: matchRoomId))
     }
+    
     @Environment(\.presentationMode) var presentation
     @EnvironmentObject var shareData : ShareData
     @State var text = ""
@@ -31,35 +31,37 @@ struct MessageView: View {
     @State var isModal = false
     var body: some View {
         GeometryReader{ geometry in
+            
             ZStack{
                 self.shareData.pink.edgesIgnoringSafeArea(.all)
+                //                NavigationView{
                 VStack{
                     List{
                         ForEach(self.msgVM.messages){ i in
                             if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
                                 MessageRow(message: i.msg, isMyMessage: true).frame(height: 63)//rowの高さが足りないと表示されない
-
-                               
+                                
+                                
                             } else {
-                                MessageRow(message: i.msg, isMyMessage: false).frame(height: 63)
-
+                                MessageRow(message: i.msg, isMyMessage: false)
+                                
                             }
                             
                         }.listRowBackground(self.shareData.white)
                     }
-                    .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
-                    .onAppear { UITableView.appearance().separatorStyle = .none }
-                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-
+                        .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
+                        .onAppear { UITableView.appearance().separatorStyle = .none }
+                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                    
                     HStack{
-                        TextField("メッセージ(44文字まで)", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                        TextField("メッセージ", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                         Button(action: {
                             if self.text.count > 0 && self.text.count < 44{
-//                                print("送信時マッチID: \(self.msgVM.matchId)")
+                                //                                print("送信時マッチID: \(self.msgVM.matchId)")
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
                                 
                                 self.text = ""
-//                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
+                                //                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
                             }
                             
                         }) {
@@ -71,32 +73,23 @@ struct MessageView: View {
                     }
                     
                 }//vstack
-     
+                    .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
+                    .navigationBarItems(leading:
+                        Button(action: {
+                            self.presentation.wrappedValue.dismiss()
+                        }, label: {
+                            Image(systemName: "arrow.turn.up.left").foregroundColor(self.shareData.white)
+                        }),
+                                        trailing: Button(action: {
+                                            self.isModal = true
+                                        }, label: {
+                                            Image(systemName: "person.fill").foregroundColor(self.shareData.white)
+                                        })
+                )
+                    .navigationBarBackButtonHidden(true)
+                
+                
             }
-            .navigationBarTitle("\(self.matchUserInfo.name)", displayMode: .inline)
-            .navigationBarItems(leading:
-                Button(action: {
-                    self.presentation.wrappedValue.dismiss()
-                }, label: {
-                    Image(systemName: "arrow.turn.up.left").foregroundColor(self.shareData.white)
-                }),
-                                trailing: Button(action: {
-                                    self.isModal = true
-                                }, label: {
-                                    Image(systemName: "person.fill").foregroundColor(self.shareData.white)
-                                })
-            )
-                .navigationBarBackButtonHidden(true)
-            //            .onAppear{
-            //                print("MessageViewでのmessages: \(self.msgVM.messages)")
-            //        }
-            
-            
-            //        .onDisappear{
-            //            self.msgVM.messages = [Message]()
-            //        }
-            
-            
         }// geo
     }
     

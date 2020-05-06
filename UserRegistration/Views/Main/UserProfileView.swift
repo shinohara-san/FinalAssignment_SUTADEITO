@@ -376,6 +376,7 @@ struct UserProfileView: View {
                         
                             Button("戻る"){
                                 self.shareData.matchNotification = false
+                                self.presentation.wrappedValue.dismiss() //ok?
                             }.foregroundColor(.black)
                         }.frame(width: geo.size.width * 0.7, height: geo.size.height * 0.4).background(Image("matchheart").resizable().aspectRatio(contentMode: .fill)).cornerRadius(10).animation(.spring())
 
@@ -390,10 +391,9 @@ struct UserProfileView: View {
             self.checkLikeTable()
         }
         .onDisappear{
-            self.shareData.getAllUsers()
          
             self.shareData.getAllFavoriteUsers()
-
+            self.shareData.getAllLikeMeUser()
             self.shareData.getAllLikeUsers()
         }
 

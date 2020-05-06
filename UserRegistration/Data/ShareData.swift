@@ -22,8 +22,8 @@ class ShareData:ObservableObject{
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
     let yellow = Color(red: 250/255, green: 236/255, blue: 135/255)
     let green = Color(red: 135/255, green: 250/255, blue: 179/255)
-//    let listBackground = Color(red: 255 / 255, green: 250 / 255, blue: 205 / 255)
-//    R:135 G:250 B:179
+    //    let listBackground = Color(red: 255 / 255, green: 250 / 255, blue: 205 / 255)
+    //    R:135 G:250 B:179
     @Published var currentUserData = [String : Any]()
     
     @Published var switchFavAndLike = false
@@ -35,20 +35,19 @@ class ShareData:ObservableObject{
     
     //ScrollViewには最初に配列に初期値を設定する必要あり
     
-    @Published var allUsers : [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+    @Published var allUsers = [User]()
+    @Published var filteredAllUsers = [User]()
     
     @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
-    //    @Published var matchUserInfo: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "")
+    @Published var favoriteUsers =  [User]()
+    @Published var filteredFavoriteUsers =  [User]()
+    @Published var likeUsers = [User]()
+    @Published var filteredLikeUsers =  [User]()
+    @Published var searchedUsers = [User]()
     
-    //    @Published var favoriteUserIds = [String]()
-    
-    @Published var favoriteUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-    
-    @Published var likeUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-    
-    @Published var searchedUsers: [User] = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-    
+    @Published var likeMeUsers = [User]()
+    @Published var filteredLikeMeUsers =  [User]()
     @Published var MatchUsers: [User] = [User]()
     
     @Published var imageURL = ""
@@ -74,13 +73,16 @@ class ShareData:ObservableObject{
                      "奈良県","和歌山県","鳥取県","島根県","岡山県","広島県","山口県",
                      "徳島県","香川県","愛媛県","高知県","福岡県","佐賀県","長崎県",
                      "熊本県","大分県","宮崎県","鹿児島県","沖縄県"]
-    let jobs = ["会社員", "教師", "医者", "公務員","フリーター", "学生", "その他"]
-    let personalities = ["おっとり", "社交的", "元気", "物静か", "その他"]
-    let purposes  = ["勉強", "出会い", "婚活", "その他"]
+    let jobs = ["営業", "経営者","事務", "自営業","美容師","教師", "受付","エンジニア","フリーランス","医者", "看護師","公務員","飲食店勤務", "介護士","サービス業", "フリーター", "パート","学生", "その他"]
+    let personalities = ["明るい", "社交的", "優しい", "物静か", "好奇心旺盛", "真面目" ,"謙虚", "前向き" ,"マイペース", "計画的", "世話好き", "責任感が強い"]
+    let purposes  = ["勉強", "恋活", "婚活", "友達","その他"]
     
     @Published var editOn = false
     
     @Published var matchUserArray = [User]()
+    @Published var filteredMatchUserArray = [User]()
+    
+    @Published var naviLinkOff = false
     
     
     func loadImageFromFirebase(path: String){
@@ -104,7 +106,7 @@ class ShareData:ObservableObject{
             } else {
                 for document in querySnapshot!.documents {
                     self.currentUserData = document.data()
-                    
+                    self.numberOfMatch()
                     self.getAllUsers()
                     
                 }
@@ -113,20 +115,37 @@ class ShareData:ObservableObject{
         
         //        self.getAllUsers()
     }
+    
+    
     func filtering(){
         for user in self.allUsers{
             for match in self.MatchUsers{
                 if user == match {
                     self.allUsers = self.allUsers.filter{ !self.MatchUsers.contains($0)}
-                    //                    print("フィルター後: \(self.allUsers)")
+                    self.filteredAllUsers = self.allUsers
                 }
             }
         }
     }
     
+    func numberOfMatch(){
+        self.db.collection("MatchTable")
+            .document(self.currentUserData["id"] as! String)
+            .collection("MatchUser").getDocuments { (snap, err) in
+                if err != nil{
+                    print(err?.localizedDescription ?? "error")
+                    return
+                }
+                //            print(snap!.count) //0
+                if let snap = snap {
+                    print("マッチ数: \(snap.count)")
+                }
+        }
+    }
+    
     
     func getAllUsers(){
-        self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除
+        self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除_
         
         self.db.collection("Users").getDocuments { (querySnapshot, err) in
             if let err = err {
@@ -153,18 +172,30 @@ class ShareData:ObservableObject{
                             purpose: user.data()["purpose"] as! String,
                             photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                         ))
+                        //                        self.filteredAllUsers = self.allUsers
                     }
                 }
+                //                　これ入れないとマッチ0で困るし、入れるとマッチ1以上で困る
             }
         }
-        
         self.db.collection("MatchTable")
             .document(self.currentUserData["id"] as! String)
             .collection("MatchUser").getDocuments { (snap, err) in
+                if err != nil{
+                    print(err?.localizedDescription ?? "error")
+                    return
+                }
+                
                 if let snap = snap {
+                    if snap.count == 0 {//マッチゼロでMatchTableとかfilterを介さず代入
+                        self.filteredAllUsers = self.allUsers
+                        return
+                    }
                     for id in snap.documents {
+                        
                         self.db.collection("Users").whereField("id", isEqualTo: id.data()["MatchUserId"] as! String).getDocuments { (snap, err) in
                             if let snap = snap {
+                                
                                 for user in snap.documents {
                                     self.MatchUsers.append(User(
                                         id: user.data()["id"] as! String,
@@ -182,7 +213,13 @@ class ShareData:ObservableObject{
                                         purpose: user.data()["purpose"] as! String,
                                         photoURL: user.data()["photoURL"] as! String, matchRoomId: ""
                                     ))
+                                    //                                    print("マッチの数: \(self.MatchUsers.count)個")
+                                    //                                    if self.MatchUsers.count == 0 {
+                                    //                                        self.filteredAllUsers = self.allUsers
+                                    //                                    } else {
                                     self.filtering()
+                                    //                                    }
+                                    
                                 }
                                 //                                self.filtering()
                             }
@@ -197,7 +234,6 @@ class ShareData:ObservableObject{
         //        self.filtering()
     } //getAllUsers()
     
-    
     func getAllFavoriteUsers(){
         self.favoriteUsers = [User]()
         db.collection("FavoriteTable")
@@ -210,6 +246,11 @@ class ShareData:ObservableObject{
                 }
                 
                 if let snap = snap {
+                    if snap.count == 0
+                    {//お気に入りが誰もいなかったら空配列入れる：表示のため
+                        self.filteredFavoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+                        return
+                    }
                     for user1 in snap.documents {
                         //                    print(user.data()["FavoriteUserId"] as? String ?? "")
                         self.db.collection("Users")
@@ -219,15 +260,15 @@ class ShareData:ObservableObject{
                                     for user in snap.documents {
                                         
                                         self.favoriteUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? "", matchRoomId: "none"))
-
+                                        
                                     }
-                                    
+                                    self.filteredFavoriteUsers = self.favoriteUsers
                                 } //snap = snap
                                 
                         } // getDocuments
                     }
                 }
-//                self.favoriteUsers.remove(at: 0) //最初のから配列を消してる？
+                //                self.favoriteUsers.remove(at: 0) //最初のから配列を消してる？
         }
     }
     
@@ -242,6 +283,11 @@ class ShareData:ObservableObject{
                 }
                 
                 if let snap = snap {
+                    if snap.count == 0
+                    {//いいねしたのが誰もいなかったら空配列入れる：表示のため
+                        self.filteredLikeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+                        return
+                    }
                     for user1 in snap.documents {
                         self.db.collection("Users")
                             .whereField("id", isEqualTo: user1.data()["LikeUserId"] as? String ?? "")
@@ -256,12 +302,48 @@ class ShareData:ObservableObject{
                                     print(err?.localizedDescription ?? "")
                                     return
                                 }
+                                self.filteredLikeUsers = self.likeUsers
                         }
                     }
                 } else { return }
-//                self.likeUsers.remove(at: 0)
         }
     }
+    
+    func getAllLikeMeUser(){
+        self.likeMeUsers = [User]()
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if let err = err {
+                print(err.localizedDescription)
+                return
+            }
+            if let snap = snap {
+                
+                if snap.count == 0 {//いいねしてくれたのが誰もいなかったら空配列入れる
+                    self.filteredLikeMeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+                    return
+                }
+                
+                for id in snap.documents{
+                    let likeMeId = id.data()["MyUserId"] as! String
+                    self.db.collection("Users").whereField("id", isEqualTo: likeMeId).getDocuments { (snap, err) in
+                        if let err = err {
+                            print(err.localizedDescription)
+                            return
+                        }
+                        if let snap = snap {
+                            for user in snap.documents{
+                                self.likeMeUsers.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as? String ?? "", matchRoomId: "N/A"))
+                            }
+                            self.filteredLikeMeUsers = self.likeMeUsers
+                        }
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+    
     
     func getAllMatchUser(){
         db.collection("MatchUsers")
@@ -273,13 +355,19 @@ class ShareData:ObservableObject{
                     return
                 }
                 if let snap = snap{
+                    if snap.count == 0 {
+                        self.matchUserArray = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+                        self.naviLinkOff = true
+                        return
+                    }
+                    self.naviLinkOff = false
                     for user in snap.documents{
-                        
                         
                         self.matchUserArray.append(User(id: user.data()["id"] as! String, email: user.data()["email"] as! String, name: user.data()["name"] as! String, gender: user.data()["gender"] as! String, age: user.data()["age"] as! String, hometown: user.data()["hometown"] as! String, subject: user.data()["subject"] as! String, introduction: user.data()["introduction"] as! String, studystyle: user.data()["studystyle"] as! String, hobby: user.data()["hobby"] as! String, personality: user.data()["personality"] as! String, work: user.data()["work"] as! String, purpose: user.data()["purpose"] as! String, photoURL: user.data()["photoURL"] as! String, matchRoomId: user.data()["MatchRoomId"] as! String))
                         
                         
                     }
+                    self.filteredMatchUserArray = self.matchUserArray
                 }
                 
         }
@@ -322,30 +410,73 @@ class ShareData:ObservableObject{
                 }
         }
         
-        ///MatchUsersコレクションの自分のデータを削除せよ
-        //自分のFavorite削除
-//        db.collection("FavoriteTable").document(self.currentUserData["id"] as! String)
-//            .collection("FavoriteUser")
-//            .getDocuments { (snap, err) in
-//                if err != nil {
-//                    return
-//                }
-//                if let snap = snap {
-//                    for user in snap.documents {
-//                        user.reference.delete()
-//                        print("自分のFavaroiteTableコレクション削除！")
-//                    }
-//                }
-//        }
-//        //他人のFavoriteの自分削除
-//        db.collection("FavoriteTable").document().collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
-//            if let snap = snap{
-//                for data in snap.documents{
-//                    data.reference.delete()
-//                    print("他ユーザーFavoriteTableにある自分削除")
-//                }
-//            }
-//        }
+        //MatchUsers削除
+        db.collection("MatchUsers").document().collection("MatchUserData").whereField("id", isEqualTo: self.currentUserData["id"] ?? "")
+            .getDocuments { (snap, err) in
+                if err != nil {
+                    return
+                }
+                if let snap = snap {
+                    for user in snap.documents {
+                        user.reference.delete()
+                        print("他人のMatchUsersコレクションの自分のデータ削除！")
+                    }
+                }
+        }
+        
+        db.collection("MatchUsers").document(self.currentUserData["id"] as! String).collection("MatchUserData").getDocuments { (snap, err) in
+            if let snap = snap {
+                for user in snap.documents{
+                    user.reference.delete()
+                    print("自分のMatchUsersコレクション削除！")
+                }
+            }
+        }
+        
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+            if let snap = snap {
+                for user in snap.documents{
+                    user.reference.delete()
+                    print("自分のMatchTableコレクション削除！")
+                }
+            }
+        }
+        
+        db.collection("LikeTable").whereField("MyUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if let snap = snap {
+                for user in snap.documents{
+                    user.reference.delete()
+                    print("自分のLikeTableコレクション削除！")
+                }
+            }
+        }
+        
+        db.collection("FavoriteTable").document(self.currentUserData["id"] as! String).collection("FavoriteUser").getDocuments { (snap, err) in
+            if let snap = snap {
+                for user in snap.documents{
+                    user.reference.delete()
+                    print("自分のFavoriteTableコレクション削除！")
+                }
+            }
+        }
+        
+        db.collection("MatchRoom").whereField("matchUser1", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if let snap = snap {
+                for user in snap.documents{
+                    user.reference.delete()
+                    print("自分のMatchRoomコレクション削除！")
+                }
+            }
+        }
+        //        //他人のFavoriteの自分削除
+        //        db.collection("FavoriteTable").document().collection("FavoriteUser").whereField("FavoriteUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+        //            if let snap = snap{
+        //                for data in snap.documents{
+        //                    data.reference.delete()
+        //                    print("他ユーザーFavoriteTableにある自分削除")
+        //                }
+        //            }
+        //        }
         
     }
     //storage

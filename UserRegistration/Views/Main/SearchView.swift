@@ -73,12 +73,14 @@ struct SearchView: View {
                         
                         Divider().frame(width: geo.size.width * 0.8)
                         
+                         
                         //ユーザーリスト
                         
                         List{
                             ForEach(self.shareData.searchedUsers){ user in
                                 SmallUserRow(user: user, geometry: geo)
                                     .onTapGesture {
+                                        
                                         self.userInfo = user
                                         self.userProfileOn = true
                                         
@@ -88,8 +90,12 @@ struct SearchView: View {
                         } //scroll
                             .onAppear { UITableView.appearance().separatorStyle = .none }
                             .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+
+                            
                         
-                    }//vstac
+                   }//vstac
+
+//                    .frame(height: geo.size.height * 0.8)
                         
                 }//zstac
                  .navigationBarTitle(Text("ユーザー検索"), displayMode: .inline)
@@ -108,7 +114,7 @@ struct SearchView: View {
         } //geo
             .onDisappear{
                 //                self.userProfileOn = false
-                self.shareData.searchedUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
+                self.shareData.searchedUsers = [User]()
                 self.hometown = ""
                 self.purpose = ""
                 self.subject = ""
@@ -161,3 +167,4 @@ struct searchRow: View{
         .navigationBarHidden(true)
     }
 }
+

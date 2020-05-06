@@ -21,7 +21,7 @@ struct FavoriteUserView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     List{
-                        ForEach(self.shareData.favoriteUsers){ user in
+                        ForEach(self.shareData.filteredFavoriteUsers){ user in
                             
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
@@ -37,6 +37,7 @@ struct FavoriteUserView: View {
                                 }
                             .listRowBackground(self.shareData.white)
                                 .onTapGesture {
+                                    if user.id == "" {return}
                                     self.favoriteUserInfo = user
                                     self.isModal = true
                             }
@@ -68,10 +69,7 @@ struct FavoriteUserView: View {
                             //                }
                             
                     }
-                    .onDisappear{
-                        self.shareData.favoriteUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-                        
-                    }
+
                 } //navi
             }
             

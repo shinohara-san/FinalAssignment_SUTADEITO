@@ -60,31 +60,6 @@ struct TopPageView: View {
                     //
                     VStack{
                         Spacer()
-                        HStack(spacing: 50){
-                            Button(action: {
-                                if self.index == 0 {
-                                    self.index = 3
-                                } else {
-                                    self.index -= 1
-                                }
-                                
-                            }) {
-                                Image(systemName: "backward.fill").foregroundColor(self.shareData.white)
-                            }
-                            
-                            
-                            Button(action: {
-                                if self.index == 3 {
-                                    self.index = 0
-                                } else {
-                                    self.index += 1
-                                }
-                                
-                            }) {
-                                Image(systemName: "forward.fill").foregroundColor(self.shareData.white)
-                            }
-                        }.padding(.bottom)
-                        
                         
                         NavigationLink(destination: LoginView().environmentObject(self.shareData)) {
                             Text("ログイン")
@@ -107,7 +82,32 @@ struct TopPageView: View {
                         .background(self.shareData.white)
                         .cornerRadius(10)
                         .shadow(radius: 2, y:2)
-                        .padding(.bottom, 200)
+                        .padding(.bottom, 140)
+                        
+                        HStack(spacing: 50){
+                            Button(action: {
+                                if self.index == 0 {
+                                    self.index = 3
+                                } else {
+                                    self.index -= 1
+                                }
+                                
+                            }) {
+                                Text("前へ").foregroundColor(self.shareData.white)
+                            }
+                            
+                            
+                            Button(action: {
+                                if self.index == 3 {
+                                    self.index = 0
+                                } else {
+                                    self.index += 1
+                                }
+                                
+                            }) {
+                                Text("次へ").foregroundColor(self.shareData.white)
+                            }
+                        }.padding(.bottom)
                     }
                     
                 } //zstack

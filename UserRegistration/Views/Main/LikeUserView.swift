@@ -21,7 +21,7 @@ struct LikeUserView: View {
             List{
 //                VStack{
                    
-                        ForEach(self.shareData.likeUsers){ user in
+                        ForEach(self.shareData.filteredLikeUsers){ user in
 //                            VStack{
                             HStack{
                                 FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
@@ -36,6 +36,7 @@ struct LikeUserView: View {
 //                                Divider().frame(width: geometry.size.width * 0.8)
                 .listRowBackground(self.shareData.white)
                             .onTapGesture {
+                                if user.id == "" {return}
                                 self.likeUserInfo = user
                                 self.likeProfileOn = true
                             }
@@ -67,10 +68,7 @@ struct LikeUserView: View {
                 self.shareData.getAllLikeUsers()
                 //                }
             }
-            .onDisappear{
-                self.shareData.likeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
-                //                        self.likeProfileOn = false //favorite viewを去るときにmain viewも元の一覧表示に戻してあげる処理
-            }
+
             
         } //zsat
         }
