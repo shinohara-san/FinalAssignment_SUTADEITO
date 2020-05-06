@@ -30,16 +30,17 @@ struct MatchingListView: View {
                                     Text(user.name)
                                     Text(user.age)
                                 }
-//                                    Divider() pathで線引く
+//                                    if user.id == ""{
+//                                        Divider().hidden()
+//                                    } else {
+//                                        Divider()
+//                                    }
                                 }
                             }.disabled(self.shareData.naviLinkOff)
                         }.listRowBackground(self.shareData.white) //foreachに
                     }
-                    .onAppear {
-                        UITableView.appearance().separatorStyle = .none
-                        
-                    }
-                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                    .onAppear { UITableView.appearance().separatorStyle = .none}
+                    .onDisappear { UITableView.appearance().separatorStyle = .none }
                     .navigationBarTitle(Text("マッチ一覧"), displayMode: .inline)
                     .navigationBarItems(trailing:
                     Button(action: {

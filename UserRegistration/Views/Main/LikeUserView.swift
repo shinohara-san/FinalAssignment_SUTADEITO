@@ -13,68 +13,72 @@ struct LikeUserView: View {
     @State var likeListOn = false
     @State var likeProfileOn = false
     @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
+
     var body: some View {
         GeometryReader{ geometry in
-        NavigationView{
-        ZStack{
-            self.shareData.white.edgesIgnoringSafeArea(.all)
-            List{
-//                VStack{
-                   
+            NavigationView{
+                ZStack{
+                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                    List{
                         ForEach(self.shareData.filteredLikeUsers){ user in
-//                            VStack{
-                            HStack{
-                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
-                                .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                                    .padding(.top, 8).padding(.leading)
-                            VStack(alignment: .leading,spacing: 5){
-                                
-                                Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                            VStack{
+                                HStack{
+                                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                        .padding(.top, 8).padding(.leading)
+                                    VStack(alignment: .leading,spacing: 5){
+                                        
+                                        Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                        Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    }
+                                } //hs
+                                if user.id == "" {
+                                    Divider().hidden()
+                                } else {
+                                    Divider()
+                                }
                             }
-                        } //hs
-//                                Divider().frame(width: geometry.size.width * 0.8)
-                .listRowBackground(self.shareData.white)
+                            .listRowBackground(self.shareData.white)
                             .onTapGesture {
                                 if user.id == "" {return}
                                 self.likeUserInfo = user
                                 self.likeProfileOn = true
                             }
                         }
-
-                }//vs
-            .onAppear { UITableView.appearance().separatorStyle = .none }
-            .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-            } //sc
-            .sheet(isPresented: self.$likeProfileOn) {
-                UserProfileView(user: self.likeUserInfo, matchUserProfile: false).environmentObject(self.shareData)
-            }
-            .navigationBarTitle("いいねしたユーザー", displayMode: .inline)
-            .navigationBarItems(leading:
-            Button(action: {
-                self.shareData.switchFavAndLike = false
-            }, label: {
-                Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
-            }), trailing:
-            Button(action: {
-                self.shareData.myProfile = true
-            }, label: {
-                Image(systemName: "house.fill").foregroundColor(self.shareData.white)
-            })
-            )
-//            .navigationBarHidden(true)
-            .onAppear{
-                //                DispatchQueue.global().sync {
-                self.shareData.getAllLikeUsers()
-                //                }
-            }
-
-            
-        } //zsat
+                        
+                    }
+                    .onAppear { UITableView.appearance().separatorStyle = .none }
+                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                } //sc
+                    .sheet(isPresented: self.$likeProfileOn) {
+                        UserProfileView(user: self.likeUserInfo, matchUserProfile: false).environmentObject(self.shareData)
+                }
+                .navigationBarTitle("いいねしたユーザー", displayMode: .inline)
+                .navigationBarItems(leading:
+                    Button(action: {
+                        self.shareData.switchFavAndLike = false
+                    }, label: {
+                        Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+                    }), trailing:
+                    Button(action: {
+                        self.shareData.myProfile = true
+                    }, label: {
+                        Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                    })
+                )
+                    //            .navigationBarHidden(true)
+                    .onAppear{
+                        //                DispatchQueue.global().sync {
+                        self.shareData.getAllLikeUsers()
+                        //                }
+                }
+                
+                
+            } //zsat
         }
     }
-    } //body
- //view
+} //body
+//view
 
 struct LikeUserView_Previews: PreviewProvider {
     static var previews: some View {

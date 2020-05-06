@@ -137,7 +137,6 @@ struct LoginView: View {
                             .navigationBarHidden(true)
                             .padding(.top, 80)
                         
-                       ///横からニョキメニュー
                         }
                     }
                     }

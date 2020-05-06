@@ -33,7 +33,7 @@ struct SearchBoxView: View {
                         self.subject = ""
                         self.shareData.searchBoxOn = false
                     }) {
-                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.07).accentColor(.yellow)
+                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.08).accentColor(.yellow)
                     }
                     .padding(.trailing)
                 }
@@ -47,7 +47,7 @@ struct SearchBoxView: View {
                         self.subject = ""
                         self.shareData.searchBoxOn = false
                     }) {
-                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.07).accentColor(.green)
+                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.08).accentColor(.green)
                     }
                     .padding(.trailing)
                 }
@@ -60,7 +60,7 @@ struct SearchBoxView: View {
                         self.purpose = ""
                         self.shareData.searchBoxOn = false
                     }) {
-                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.07).accentColor(.purple)
+                        Image(systemName: "magnifyingglass.circle.fill").resizable().frame(width: geo.size.width * 0.1, height: geo.size.height * 0.08).accentColor(.purple)
                     }
                     .padding(.trailing)
                 }

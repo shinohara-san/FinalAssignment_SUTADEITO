@@ -15,15 +15,15 @@ struct UserListView: View {
     
     
     
-//    let currentUser: [String : Any]
-//
-//    @ObservedObject private var userVM:UserViewModel
-//    init(currentUser: [String: Any]){
-//
-//        self.currentUser = currentUser
-//        print("\(String(describing: self.currentUser["name"]))はログイン中ユーザだお")
-//        self._userVM = ObservedObject(initialValue: UserViewModel(currentUser: self.currentUser))
-//    }
+    //    let currentUser: [String : Any]
+    //
+    //    @ObservedObject private var userVM:UserViewModel
+    //    init(currentUser: [String: Any]){
+    //
+    //        self.currentUser = currentUser
+    //        print("\(String(describing: self.currentUser["name"]))はログイン中ユーザだお")
+    //        self._userVM = ObservedObject(initialValue: UserViewModel(currentUser: self.currentUser))
+    //    }
     
     var body: some View {
         
@@ -43,29 +43,30 @@ struct UserListView: View {
                             }
                         } //foreach
                             .listRowBackground(self.shareData.white)
-                        }
+                    }
+                    .onAppear { UITableView.appearance().separatorStyle = .none }
+                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     .onAppear{
-//                        DispatchQueue.global().sync {
-                            self.shareData.getCurrentUser()
-                            //  print(self.userVM.users)
-//                        }
-                   }
-//                .animation(nil)
-                        .onAppear { UITableView.appearance().separatorStyle = .none }
-                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                        //                        DispatchQueue.global().sync {
+                        self.shareData.getCurrentUser()
+                        //  print(self.userVM.users)
+                        //                        }
+                    }
+                    //                .animation(nil)
+                    
                     
                 }
                     //
                     .navigationBarTitle("ユーザー", displayMode: .inline)
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        self.shareData.myProfile = true
-                    }, label: {
-                        Image(systemName: "house.fill").foregroundColor(self.shareData.white)
-                    })
-                    )
-//                    .animation(nil)
-//                    .id(UUID())
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            self.shareData.myProfile = true
+                        }, label: {
+                            Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                        })
+                )
+                    //                    .animation(nil)
+                    //                    .id(UUID())
                     .sheet(isPresented: self.$userProfileOn) {
                         UserProfileView(user: self.userInfo, matchUserProfile: false).environmentObject(self.shareData)
                 } //sheet

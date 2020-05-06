@@ -127,7 +127,7 @@ struct ProfileEditView: View {
                     }
                     .foregroundColor(self.shareData.white)
                     .padding()
-                    .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                    .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
                     .background(self.shareData.brown)
                     .cornerRadius(10)
                     .shadow(radius: 2, y: 2)
@@ -141,7 +141,7 @@ struct ProfileEditView: View {
                         self.presentation.wrappedValue.dismiss()
                         }
                         .padding()
-                        .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
                         .foregroundColor(self.shareData.white)
                     .background(self.shareData.pink).cornerRadius(10)
                     .shadow(radius: 2, y: 2)

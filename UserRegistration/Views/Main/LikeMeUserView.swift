@@ -22,7 +22,7 @@ struct LikeMeUserView: View {
                         self.shareData.white.edgesIgnoringSafeArea(.all)
                         List{
                             ForEach(self.shareData.filteredLikeMeUsers){ user in
-                                
+                                VStack{
                                     HStack{
                                         FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                             .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
@@ -34,8 +34,15 @@ struct LikeMeUserView: View {
                                                 .frame(width: geometry.size.width * 0.5, alignment: .leading)
                                         }
                                         
-                                    }.padding(.bottom)
-                                .listRowBackground(self.shareData.white)
+                                    }
+                                    if user.id == "" {
+                                        Divider().hidden()
+                                    } else {
+                                        Divider()
+                                    }
+                            }
+                                    .padding(.bottom)
+                                    .listRowBackground(self.shareData.white)
                                     .onTapGesture {
                                          if user.id == "" {return}
                                         self.likeUserInfo = user

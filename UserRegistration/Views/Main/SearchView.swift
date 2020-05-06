@@ -24,15 +24,21 @@ struct SearchView: View {
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     List{
                         ForEach(self.shareData.filteredSearchedUsers){ user in
-                            
+                            VStack{
                             SmallUserRow(user: user, geometry: geometry)
-                                .listRowBackground(self.shareData.white)
-                                .onTapGesture {
+                                                               .onTapGesture {
                                     if user.id == "" {return}
                                     self.userInfo = user
                                     self.isModal = true
                             }
-                        }
+                                if user.id == "" {
+                                    Divider().hidden()
+                                } else {
+                                    Divider()
+                                }
+                            }
+                        }.listRowBackground(self.shareData.white)
+
                         
                     } //list
                         
