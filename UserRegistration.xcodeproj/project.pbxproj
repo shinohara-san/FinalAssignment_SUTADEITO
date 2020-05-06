@@ -17,6 +17,7 @@
 		95684ADD2451737900154A18 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95684ADC2451737900154A18 /* MessageRow.swift */; };
 		95684ADF2451740E00154A18 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95684ADE2451740E00154A18 /* MessageView.swift */; };
 		9569F6E824614E82006D3652 /* LikeMeUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6E724614E82006D3652 /* LikeMeUserView.swift */; };
+		9569F6EA24625570006D3652 /* SearchBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6E924625570006D3652 /* SearchBoxView.swift */; };
 		958721CE245856120001ED81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 958721CD245856110001ED81 /* GoogleService-Info.plist */; };
 		959B9205244995BC00A16952 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B9204244995BC00A16952 /* ShareData.swift */; };
 		95C458AE245D630000C4ADA1 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C458AD245D630000C4ADA1 /* UserListView.swift */; };
@@ -55,6 +56,7 @@
 		95684ADC2451737900154A18 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
 		95684ADE2451740E00154A18 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		9569F6E724614E82006D3652 /* LikeMeUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeMeUserView.swift; sourceTree = "<group>"; };
+		9569F6E924625570006D3652 /* SearchBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBoxView.swift; sourceTree = "<group>"; };
 		958721CD245856110001ED81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959B9204244995BC00A16952 /* ShareData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
 		95C458AD245D630000C4ADA1 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				95C85F8A2460346000933CFC /* UserRow.swift */,
 				95C85F8C24603CAA00933CFC /* SmallUserRow.swift */,
 				953B24EB244919EB007BD077 /* SearchView.swift */,
+				9569F6E924625570006D3652 /* SearchBoxView.swift */,
 				95E9C5EB245D4513009E11DF /* FavoriteUserView.swift */,
 				95E9C5ED245D4526009E11DF /* LikeUserView.swift */,
 				9569F6E724614E82006D3652 /* LikeMeUserView.swift */,
@@ -358,6 +361,7 @@
 				952138E9244D0D600090F943 /* UserProfileView.swift in Sources */,
 				9569F6E824614E82006D3652 /* LikeMeUserView.swift in Sources */,
 				95DA4B67244AE869009921D4 /* Note.swift in Sources */,
+				9569F6EA24625570006D3652 /* SearchBoxView.swift in Sources */,
 				95684ADF2451740E00154A18 /* MessageView.swift in Sources */,
 				95CDFB0F24482C300054FADF /* LoginView.swift in Sources */,
 				95CDFABB2446B4020054FADF /* User.swift in Sources */,

@@ -45,6 +45,7 @@ class ShareData:ObservableObject{
     @Published var likeUsers = [User]()
     @Published var filteredLikeUsers =  [User]()
     @Published var searchedUsers = [User]()
+    @Published var filteredSearchedUsers = [User]()
     
     @Published var likeMeUsers = [User]()
     @Published var filteredLikeMeUsers =  [User]()
@@ -317,7 +318,6 @@ class ShareData:ObservableObject{
                 return
             }
             if let snap = snap {
-                
                 if snap.count == 0 {//いいねしてくれたのが誰もいなかったら空配列入れる
                     self.filteredLikeMeUsers = [User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")]
                     return
@@ -536,13 +536,6 @@ class ShareData:ObservableObject{
         
     }
     
-    
-    
-    
-    
-    
-    @Published var matchUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
-    
     func searchUser(key: String, value: String){
         
         self.searchedUsers = [User]()
@@ -565,13 +558,16 @@ class ShareData:ObservableObject{
                                 }
                             }
                         } //マッチしてるユーザをフィルターにかける
+                        self.filteredSearchedUsers = self.searchedUsers
                     } //同性を外す条件分岐とじ
+                    
                 }
             }
         }
         
     }
     @Published var matchNotification = false
+    @Published var searchBoxOn = false
 }//func
 
 
