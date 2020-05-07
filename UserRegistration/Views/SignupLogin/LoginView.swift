@@ -106,14 +106,14 @@ struct LoginView: View {
                                 if self.email == "" || self.password == ""{
                                     return
                                 }
-                                self.datas.logIn(email: self.email, password: self.password) { (res, err) in
+                                self.datas.logIn(email: self.email.trimmingCharacters(in: .whitespacesAndNewlines), password: self.password.trimmingCharacters(in: .whitespacesAndNewlines)) { (res, err) in
                                     if err != nil {
                                         print("Error: ログイン")
                                         
                                     } else {
                                         self.email = ""
                                         self.password = ""
-                     
+//                                        self.datas.listen()
                                     }
                                 }
                             }) {

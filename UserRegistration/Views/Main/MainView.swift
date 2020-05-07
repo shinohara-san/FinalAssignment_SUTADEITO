@@ -27,8 +27,8 @@ struct MainView: View {
     
     @State var matchid = ""
     
-    @State private var xOffset = CGFloat.zero
-    @State private var defaultOffset = CGFloat.zero
+//    @State private var xOffset = CGFloat.zero
+//    @State private var defaultOffset = CGFloat.zero
     
     init(_ datas: FirebaseData) {
         self.datas = datas
@@ -50,7 +50,7 @@ struct MainView: View {
                         VStack {
                             Image(systemName: "book.fill")
                         }
-                }.tag(2)
+                }.tag(1)
                 
                 ////                    検索ページ
                 SearchView().environmentObject(self.shareData)
@@ -58,7 +58,7 @@ struct MainView: View {
                         VStack {
                             Image(systemName: "magnifyingglass")
                         }
-                }.tag(1)
+                }.tag(2)
                 
                 ///お気に入りいいね一覧ページ
                 Group{
@@ -111,7 +111,11 @@ struct MainView: View {
         }
         .navigationBarTitle("")
         .navigationBarHidden(true) //自分のプロフィール用
-        
+        .onAppear{
+//                self.shareData.getCurrentUser()
+                self.shareData.myProfile = false
+                self.shareData.filteredMatchUserArray = [User]()//追記0507
+        }
     }
 }
 

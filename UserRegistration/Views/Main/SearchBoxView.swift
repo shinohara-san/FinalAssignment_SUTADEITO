@@ -28,7 +28,7 @@ struct SearchBoxView: View {
                     TextField("current city", text: self.$hometown).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                     
                     Button(action: {
-                        self.shareData.searchUser(key: "hometown", value: self.hometown)
+                        self.shareData.searchUser(key: "hometown", value: self.hometown.trimmingCharacters(in: .whitespacesAndNewlines))
                         self.purpose = ""
                         self.subject = ""
                         self.shareData.searchBoxOn = false
@@ -42,7 +42,7 @@ struct SearchBoxView: View {
                     TextField("purpose", text: self.$purpose).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                     
                     Button(action: {
-                        self.shareData.searchUser(key: "purpose", value: self.purpose)
+                        self.shareData.searchUser(key: "purpose", value: self.purpose.trimmingCharacters(in: .whitespacesAndNewlines))
                         self.hometown = ""
                         self.subject = ""
                         self.shareData.searchBoxOn = false
@@ -55,7 +55,7 @@ struct SearchBoxView: View {
                     TextField("subject", text: self.$subject).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
                     
                     Button(action: {
-                        self.shareData.searchUser(key: "subject", value: self.subject)
+                        self.shareData.searchUser(key: "subject", value: self.subject.trimmingCharacters(in: .whitespacesAndNewlines))
                         self.hometown = ""
                         self.purpose = ""
                         self.shareData.searchBoxOn = false

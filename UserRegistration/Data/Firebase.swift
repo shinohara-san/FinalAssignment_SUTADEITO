@@ -24,7 +24,7 @@ class FirebaseData: ObservableObject{
             //            ユーザーがいたら
             if let user = user {
 //                print(user.email)
-                self.session = user
+                self.session = user 
             } else {
                 //  ユーザーがいなかったら
                 self.session = nil

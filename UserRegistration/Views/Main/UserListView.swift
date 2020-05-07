@@ -13,17 +13,7 @@ struct UserListView: View {
     @State var userProfileOn = false
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
     
-    
-    
-    //    let currentUser: [String : Any]
-    //
-    //    @ObservedObject private var userVM:UserViewModel
-    //    init(currentUser: [String: Any]){
-    //
-    //        self.currentUser = currentUser
-    //        print("\(String(describing: self.currentUser["name"]))はログイン中ユーザだお")
-    //        self._userVM = ObservedObject(initialValue: UserViewModel(currentUser: self.currentUser))
-    //    }
+
     
     var body: some View {
         
@@ -47,14 +37,10 @@ struct UserListView: View {
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     .onAppear{
-                        //                        DispatchQueue.global().sync {
-                        self.shareData.getCurrentUser()
-                        //  print(self.userVM.users)
-                        //                        }
+                        DispatchQueue.global().async {
+                            self.shareData.getCurrentUser()
+                        }
                     }
-                    //                .animation(nil)
-                    
-                    
                 }
                     //
                     .navigationBarTitle("ユーザー", displayMode: .inline)

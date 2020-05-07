@@ -156,12 +156,12 @@ struct ProfileEditView: View {
                 }
             }.actionSheet(isPresented: self.$confirmDelete) {
                 ActionSheet(title: Text("本当に退会しますか？"), message: Text("全てのデータやお相手とのメッセージが削除されます。\n※退会できない場合は再度ログインしてからお試しください。"), buttons: [ .default(Text("退会しない"), action:{}),                                    .destructive(Text("退会する"), action:{
-                    self.shareData.deleteAccount()
-                    self.shareData.deleteUserData()
-                    self.shareData.deleteUserPicture()
+                    self.shareData.deleteAccount() //Auth
+                    self.shareData.deleteUserData() //Firestore
+                    self.shareData.deleteUserPicture() //storage
+                    self.datas.logOut()
                     self.presentation.wrappedValue.dismiss()
                     self.shareData.currentUserData = [String : Any]()
-                    self.datas.session = nil
                 })
                     ]
                 )
@@ -196,7 +196,7 @@ struct ProfileEditView: View {
         }
         .onDisappear{
 //            self.shareData.editOn = false
-//            self.shareData.getCurrentUser()
+//            self.shareData.getCurrentUser()bbb@bbb.com
         }
     }
     func getIndex() {

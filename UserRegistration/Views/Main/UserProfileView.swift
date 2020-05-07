@@ -113,7 +113,7 @@ struct UserProfileView: View {
                                                 "work":  user["work"] as! String,
                                                 "purpose":  user["purpose"] as! String,
                                                 "photoURL":  user["photoURL"] as! String,
-                                                "id": self.shareData.currentUserData["id"] as? String ?? ""
+                                                "id": user["id"] as! String
                                                 
                                             ]){ err in
                                                 if let err = err {
@@ -148,7 +148,7 @@ struct UserProfileView: View {
                                                 "work":  user["work"] as! String,
                                                 "purpose":  user["purpose"] as! String,
                                                 "photoURL":  user["photoURL"] as! String,
-                                                "id": i.data()["LikeUserId"] as? String ?? ""
+                                                "id": user["id"] as! String
                                                 
                                             ]){ err in
                                                 if let err = err {

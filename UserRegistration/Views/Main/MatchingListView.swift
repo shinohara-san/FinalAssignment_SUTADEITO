@@ -19,8 +19,9 @@ struct MatchingListView: View {
                 NavigationView{
                     
                     List{
-                        ForEach(self.shareData.filteredMatchUserArray, id: \.id){ user in
+                        ForEach(self.shareData.filteredMatchUserArray, id: \.matchRoomId){ user in
                             //id: がないとForEachが狂う？
+                            //idでダメだったのでmatchRoomIdに変えたら行けた
                             NavigationLink(destination: MessageView(user, user.matchRoomId)){
                                 VStack{
                                     HStack{

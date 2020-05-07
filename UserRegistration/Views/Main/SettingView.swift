@@ -60,7 +60,7 @@ struct SettingView: View {
                                             self.shareData.myProfile = false
                                             self.shareData.currentUserData = [String : Any]()
                                             self.shareData.filteredMatchUserArray = [User]()
-                                            self.shareData.filteredAllUsers = [User]()
+//                                            self.shareData.filteredAllUsers = [User]()
                                             self.shareData.filteredFavoriteUsers = [User]()
                                             self.shareData.filteredLikeUsers = [User]()
                                             self.shareData.filteredLikeMeUsers = [User]()
