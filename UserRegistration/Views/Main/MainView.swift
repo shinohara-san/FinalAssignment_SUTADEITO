@@ -113,6 +113,7 @@ struct MainView: View {
         .navigationBarHidden(true) //自分のプロフィール用
         .onAppear{
 //                self.shareData.getCurrentUser()
+                
                 self.shareData.myProfile = false
                 self.shareData.filteredMatchUserArray = [User]()//追記0507
         }

@@ -36,10 +36,12 @@ struct UserListView: View {
                     }
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
-                    
-                
                     .onAppear{
                             self.shareData.getCurrentUser()
+                        
+                    }
+                    Button("テスト"){
+                        self.shareData.delteLikeTable()
                     }
                 }
                     //

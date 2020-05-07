@@ -159,10 +159,10 @@ struct ProfileEditView: View {
                     self.shareData.deleteAccount() //Auth
                     self.shareData.deleteUserData() //Firestore
                     self.shareData.deleteUserPicture() //storage
-                    self.datas.logOut()
+//                    self.datas.logOut()
                     self.presentation.wrappedValue.dismiss()
-                    self.shareData.currentUserData = [String : Any]()
-                    self.datas.session = nil
+//                    self.shareData.currentUserData = [String : Any]()
+//                    self.datas.session = nil
                 })
                     ]
                 )
