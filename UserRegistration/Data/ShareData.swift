@@ -22,8 +22,7 @@ class ShareData:ObservableObject{
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
     let yellow = Color(red: 250/255, green: 236/255, blue: 135/255)
     let green = Color(red: 135/255, green: 250/255, blue: 179/255)
-    //    let listBackground = Color(red: 255 / 255, green: 250 / 255, blue: 205 / 255)
-    //    R:135 G:250 B:179
+    
     @Published var currentUserData = [String : Any]()
     
     @Published var switchFavAndLike = false
@@ -389,16 +388,110 @@ class ShareData:ObservableObject{
         db.collection("LikeTable").whereField("MyUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
             if let snap = snap {
 //                for data in snap.documents{
+                if snap.count == 0 {
+                    print("削除なし")
+                    return
+                }
                 print("いいねを送った数: \(snap.count)")
 //                }
             }
         }
         db.collection("FavoriteTable").document(self.currentUserData["id"] as! String).collection("FavoriteUser").getDocuments { (snap, err) in
             if let snap = snap {
+                if snap.count == 0 {
+                    print("削除なし")
+                    return
+                }
                 print("お気に入りに追加した数: \(snap.count)")
             }
         }
-        //favの数
+        
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+            if let snap = snap {
+                if snap.count == 0 {
+                    print("削除なし")
+                    return
+                }
+            print("マッチテーブルの数: \(snap.count)")
+         }
+        }
+        
+        db.collection("MatchRoom").whereField("matchUser1", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if let snap = snap {
+                if snap.count == 0 {
+                    print("削除なし")
+                    return
+                }
+               print("マッチルーム1の数: \(snap.count)")
+            }
+        }
+        db.collection("MatchRoom").whereField("matchUser2", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+            if let snap = snap {
+                if snap.count == 0 {
+                    print("削除なし")
+                    return
+                }
+               print("マッチルーム2の数: \(snap.count)")
+            }
+        }
+        
+        
+        var array = [String]()
+//        マッチユーザー配列のユーザーを使用する？
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+            if let snap = snap {
+                for id in snap.documents{
+            
+                    let matchUserId = id.data()["MatchUserId"] as! String
+                    array.append(matchUserId)
+                }
+         }
+            for id in array{
+                self.db.collection("MatchUsers").document(id).collection("MatchUserData").whereField("id", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+                    if let snap = snap{
+                        if snap.count == 0 {
+                            print("削除なし")
+                            return
+                        }
+                        print("MatchUsersにある他人の中の自分のデータの数: \(snap.count)")
+                    }
+                }
+            }
+        }
+        
+        db.collection("MatchUsers").document(self.currentUserData["id"] as! String).collection("MatchUserData").getDocuments { (snap, err) in
+                if let snap = snap{
+                    if snap.count == 0 {
+                        print("削除なし")
+                        return
+                    }
+                    print("自分のMatchUsersの相手の数: \(snap.count)")
+                }
+            }
+        
+        
+        var matchIdArray = [String]()
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+            if let snap = snap {
+                for id in snap.documents{
+                    let matchId = id.data()["MatchRoomId"] as! String
+                    matchIdArray.append(matchId)
+                }
+            }
+            for id in matchIdArray{
+                self.db.collection("Messages").whereField("matchId", isEqualTo: id).getDocuments { (snap, err) in
+                    if let snap = snap {
+                        if snap.count == 0 {
+                            print("削除なし")
+                            return
+                        }
+                        print("メッセージの数: \(snap.count)")
+                    }
+                }
+            }
+        }
+        
+        //MatchRoom
         //matchtable
         //matchusers
         
