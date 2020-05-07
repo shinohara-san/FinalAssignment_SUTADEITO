@@ -162,6 +162,7 @@ struct ProfileEditView: View {
                     self.datas.logOut()
                     self.presentation.wrappedValue.dismiss()
                     self.shareData.currentUserData = [String : Any]()
+                    self.datas.session = nil
                 })
                     ]
                 )

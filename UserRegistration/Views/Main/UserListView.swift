@@ -22,11 +22,11 @@ struct UserListView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     //                    ScrollView(showsIndicators: false){
-                    
+                   
                     List{
                         ForEach(self.shareData.filteredAllUsers, id: \.id){ user in
                             //                            VStack{
-                            UserRow(user: user, geometry: geometry).animation(nil)
+                            UserRow(user: user, geometry: geometry)
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
@@ -36,10 +36,10 @@ struct UserListView: View {
                     }
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                    
+                
                     .onAppear{
-                        DispatchQueue.global().async {
                             self.shareData.getCurrentUser()
-                        }
                     }
                 }
                     //
@@ -51,8 +51,6 @@ struct UserListView: View {
                             Image(systemName: "house.fill").foregroundColor(self.shareData.white)
                         })
                 )
-                    //                    .animation(nil)
-                    //                    .id(UUID())
                     .sheet(isPresented: self.$userProfileOn) {
                         UserProfileView(user: self.userInfo, matchUserProfile: false).environmentObject(self.shareData)
                 } //sheet
