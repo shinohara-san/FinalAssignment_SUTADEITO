@@ -31,7 +31,6 @@ struct PictureUploadView: View {
     @Environment(\.presentationMode) var presentation
     @Binding var pre: PresentationMode
     
-//    @State var showingAlert = false
     @State var showingCompletion = false
     
     var allSectionsFilled: Bool {
@@ -43,12 +42,7 @@ struct PictureUploadView: View {
     }
     
     var body: some View {
-        //        Group {
-        //            if self.datas.session != nil {
-        //                MainView(datas: self.datas)
-        //                    .navigationBarBackButtonHidden(true)
-        //
-        //            } else {
+       
         GeometryReader{ geometry in
             ZStack{
                 self.shareData.white.edgesIgnoringSafeArea(.all)
@@ -76,7 +70,8 @@ struct PictureUploadView: View {
                                 if err != nil{
                                     print("Signup失敗...")
                                 } else {
-                                    self.datas.listen()
+//                                    self.datas.listen()
+                                    self.datas.logOut()
                                     print("Signup成功！")
                                     self.showingCompletion = true
                                 }

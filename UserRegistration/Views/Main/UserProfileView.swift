@@ -208,19 +208,19 @@ struct UserProfileView: View {
                     
                     ///マッチ後お互いをいいねユーザーから削除
                     
-                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").whereField("MyUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
                         if err != nil {
                             return
                         }
                         if let snap = snap {
                             for user in snap.documents{
                                 user.reference.delete()
-                                print("マッチしたのでいいねから削除しました。")
+                                print("マッチしたのでいいねから削除しました。")//
                             }
                         }
                     }
                     
-                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").getDocuments { (snap, err) in
+                    self.db.collection("LikeTable").whereField("LikeUserId", isEqualTo: i.data()["MyUserId"] as? String ?? "").whereField("MyUserId", isEqualTo: i.data()["LikeUserId"] as? String ?? "").getDocuments { (snap, err) in
                         if err != nil {
                             return
                         }

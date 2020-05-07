@@ -21,7 +21,7 @@ struct FavoriteUserView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     List{
-                        ForEach(self.shareData.filteredFavoriteUsers){ user in
+                        ForEach(self.shareData.filteredFavoriteUsers, id: \.id){ user in
                             VStack{
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)

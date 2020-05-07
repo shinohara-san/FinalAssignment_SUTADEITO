@@ -34,7 +34,7 @@ struct UserListView: View {
                     //                    ScrollView(showsIndicators: false){
                     
                     List{
-                        ForEach(self.shareData.filteredAllUsers){ user in
+                        ForEach(self.shareData.filteredAllUsers, id: \.id){ user in
                             //                            VStack{
                             UserRow(user: user, geometry: geometry).animation(nil)
                                 .onTapGesture {

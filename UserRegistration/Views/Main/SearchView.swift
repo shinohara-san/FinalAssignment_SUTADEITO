@@ -23,7 +23,7 @@ struct SearchView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     List{
-                        ForEach(self.shareData.filteredSearchedUsers){ user in
+                        ForEach(self.shareData.filteredSearchedUsers, id: \.id){ user in
                             VStack{
                             SmallUserRow(user: user, geometry: geometry)
                                                                .onTapGesture {
@@ -75,7 +75,7 @@ struct SearchView: View {
                     if self.shareData.searchBoxOn{
                         Color.black.edgesIgnoringSafeArea(.all).opacity(0.3)
                         ScrollView{
-                            SearchBoxView(hometown: self.$hometown, purpose: self.$purpose, subject: self.$subject).background(self.shareData.white).cornerRadius(10).frame(width : geometry.size.width * 0.8, height: geometry.size.height * 0.5).offset(y: 25).animation(.default)
+                            SearchBoxView(hometown: self.$hometown, purpose: self.$purpose, subject: self.$subject).background(self.shareData.white).cornerRadius(10).frame(width : geometry.size.width * 0.8, height: geometry.size.height * 0.4).offset(y: 25).animation(.default)
                         }
                     }
                     

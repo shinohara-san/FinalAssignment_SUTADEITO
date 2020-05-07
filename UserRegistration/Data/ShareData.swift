@@ -367,6 +367,7 @@ class ShareData:ObservableObject{
                         
                         
                     }
+                    
                     self.filteredMatchUserArray = self.matchUserArray
                 }
                 

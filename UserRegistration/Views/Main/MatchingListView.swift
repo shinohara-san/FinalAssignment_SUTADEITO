@@ -5,7 +5,6 @@
 //  Created by Yuki Shinohara on 2020/05/02.
 //  Copyright © 2020 Yuki Shinohara. All rights reserved.
 //
-
 import SwiftUI
 
 struct MatchingListView: View {
@@ -20,8 +19,8 @@ struct MatchingListView: View {
                 NavigationView{
                     
                     List{
-                        ForEach(self.shareData.filteredMatchUserArray){ user in
-                            
+                        ForEach(self.shareData.filteredMatchUserArray, id: \.id){ user in
+                            //id: がないとForEachが狂う？
                             NavigationLink(destination: MessageView(user, user.matchRoomId)){
                                 VStack{
                                     HStack{
@@ -31,10 +30,10 @@ struct MatchingListView: View {
                                     Text(user.age)
                                 }
 //                                    if user.id == ""{
-//                                        Divider().hidden()
-//                                    } else {
-//                                        Divider()
-//                                    }
+//                                        Divider().hidden()heima@aaa.com
+//                                    } else {fff@fff.com
+//                                        Divider()eee@eee.com
+//                                    }ggg@ggg.com
                                 }
                             }.disabled(self.shareData.naviLinkOff)
                         }.listRowBackground(self.shareData.white) //foreachに
@@ -64,6 +63,3 @@ struct MatchingListView_Previews: PreviewProvider {
         MatchingListView()
     }
 }
-
-//ai@aaa.com
-//1234ai

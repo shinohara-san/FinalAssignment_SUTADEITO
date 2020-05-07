@@ -21,7 +21,7 @@ struct LikeMeUserView: View {
                     ZStack{
                         self.shareData.white.edgesIgnoringSafeArea(.all)
                         List{
-                            ForEach(self.shareData.filteredLikeMeUsers){ user in
+                            ForEach(self.shareData.filteredLikeMeUsers, id: \.id){ user in
                                 VStack{
                                     HStack{
                                         FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
@@ -72,7 +72,7 @@ struct LikeMeUserView: View {
                                 
                         }
                         .onDisappear{
-                            self.shareData.filteredLikeMeUsers = [User]()
+//                            self.shareData.filteredLikeMeUsers = [User]()
                         }
                     } //navi
                 }
