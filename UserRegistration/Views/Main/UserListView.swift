@@ -22,7 +22,7 @@ struct UserListView: View {
                 ZStack{
                     self.shareData.white.edgesIgnoringSafeArea(.all)
                     //                    ScrollView(showsIndicators: false){
-                   
+                    
                     List{
                         ForEach(self.shareData.filteredAllUsers, id: \.id){ user in
                             //                            VStack{
@@ -40,12 +40,10 @@ struct UserListView: View {
                             self.shareData.getCurrentUser()
                         
                     }
-                    Button("テスト"){
-                        self.shareData.delteLikeTable()
-                    }
+                   
                 }
                     //
-                    .navigationBarTitle("ユーザー", displayMode: .inline)
+                    .navigationBarTitle("すたでいと", displayMode: .inline)
                     .navigationBarItems(trailing:
                         Button(action: {
                             self.shareData.myProfile = true
