@@ -231,12 +231,4 @@ struct ProfileEditView: View {
 //    }
 //}
 
-//self.shareData.deleteAccount() //Auth
-//                    self.shareData.deleteUserData() //Firestore
-//                    self.shareData.deleteUserPicture() //storage
-//                    self.datas.logOut() //追記0508
-//                    self.presentation.wrappedValue.dismiss()
-////                    self.shareData.currentUserData = [String : Any]()
-////                    self.datas.session = nil
-//                    self.shareData.filteredAllUsers = [User]()
-//                    self.shareData.filteredMatchUserArray = [User]()aaa@aaa.com
+
