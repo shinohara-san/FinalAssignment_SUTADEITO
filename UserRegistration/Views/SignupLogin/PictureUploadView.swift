@@ -59,10 +59,7 @@ struct PictureUploadView: View {
                     }.padding(.bottom)
                     
                     Button(action: {
-                        
-//                        if self.imageURL == ""  {
-//                            self.showingAlert = true
-//                        } else {
+
                             self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL)
                             
                             //                    Authの処理

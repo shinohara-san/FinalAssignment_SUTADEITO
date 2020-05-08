@@ -138,7 +138,7 @@ struct ProfileEditView: View {
                                 .padding(.bottom)
                                 
                                 Button("保存する"){
-                                    self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.work, purpose: self.shareData.purposes[self.selectedPurpose])
+                                    self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose])
                                     //編集後のログインしているユーザーのデータを入れ直す
                                     //                        self.shareData.editOn = false
                                     self.presentation.wrappedValue.dismiss()

@@ -26,8 +26,8 @@ struct RegisterView: View {
     @State var hobby = ""
     @State var selectedPersonality = 2
     
-    @State var selectedWork = 1
-    
+    @State var selectedWork = 5
+    @State var selectedStudyStyle = 0
     @State var selectedPurpose = 2
     
     @State var imageURL = ""
@@ -37,6 +37,9 @@ struct RegisterView: View {
     
     @State var showingAlert = false
     
+    var allSectionsFilled: Bool{
+        return !email.isEmpty && !password.isEmpty && !name.isEmpty && !subject.isEmpty && !hobby.isEmpty && !introduction.isEmpty
+    }
     var body: some View {
         
         NavigationView {    // Formで使う場合はNavigationViewが必須
@@ -61,6 +64,7 @@ struct RegisterView: View {
                                     Text("※ログイン時に使用します。").foregroundColor(self.shareData.pink).font(.footnote)
                                     SecureField("password", text: self.$password)
                                     .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                                        .disableAutocorrection(true)
                                     .padding().keyboardType(.emailAddress)
                                 }
                                 
@@ -68,6 +72,7 @@ struct RegisterView: View {
                                 Text("あなたのニックネーム").foregroundColor(self.shareData.brown)
                                     TextField("name", text: self.$name)
                                     .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                                        .disableAutocorrection(true)
                                     .padding()
                                 }
                                 VStack{
@@ -85,6 +90,7 @@ struct RegisterView: View {
                                     Text("あなたが今勉強していること").foregroundColor(self.shareData.brown)
                                     TextField("subject", text: self.$subject)
                                     .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                                    .disableAutocorrection(true)
                                     .padding()
                                 }.padding(.top)
                                 
@@ -92,6 +98,7 @@ struct RegisterView: View {
                                     Text("あなたの趣味").foregroundColor(self.shareData.brown)
                                     TextField("hobby", text: self.$hobby)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                                        .disableAutocorrection(true)
                                         .padding()
                                     
                                 }
@@ -99,6 +106,7 @@ struct RegisterView: View {
                                     Text("あなたから一言").foregroundColor(self.shareData.brown)
                                     TextField("comment", text: self.$introduction)
                                     .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                                        .disableAutocorrection(true)
                                     .padding()
                                 }
                                 
@@ -117,14 +125,15 @@ struct RegisterView: View {
                             
                             VStack{
                                  Text("希望するデート").foregroundColor(self.shareData.brown)
-                                TextField("dating style", text: self.$studystyle)
-                                    .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
-                                    .padding()
+                               Picker(selection: self.$selectedStudyStyle, label: Text("デートスタイル")
+                                    .font(.title)
+                                    .padding(.leading)) {
+                                        ForEach(0..<self.shareData.studystyles.count){ index in
+                                            Text(self.shareData.studystyles[index]).tag(index).font(.subheadline)
+                                        }
+                                }.labelsHidden()
                                 //                                MultilineTextView(text: self.$introduction).frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.1).font(.body).background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)).cornerRadius(10).padding()
                             }
-                            
-                            
-                            
                             
                             
                             VStack{
@@ -178,17 +187,18 @@ struct RegisterView: View {
                         
                         
                         
-                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.studystyle, hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], pre: self.presentation).environmentObject(self.shareData)){
+                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.shareData.studystyles[self.selectedStudyStyle], hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], pre: self.presentation).environmentObject(self.shareData)){
                             
                             Button("写真を追加"){
-                                if self.password == "" || self.email == "" || self.name == "" || self.subject == "" || self.introduction == "" || self.studystyle == "" || self.hobby == "" {
+                                if !self.allSectionsFilled {
                                     self.showingAlert = true
+                                    return
                                 }
                             }
                             .padding()
                             .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                             .foregroundColor(self.shareData.white)
-                            .background(self.shareData.pink).cornerRadius(10)
+                            .background(self.allSectionsFilled ? self.shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255)).cornerRadius(10)
                             .shadow(radius: 2, y:2)
                             .padding(.bottom)
                         }.alert(isPresented: self.$showingAlert) {
@@ -214,9 +224,9 @@ struct RegisterView: View {
 
 
 
-struct ContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        RegisterView()
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//
+//    static var previews: some View {
+//        RegisterView()
+//    }
+//}

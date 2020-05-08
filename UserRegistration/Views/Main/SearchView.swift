@@ -25,8 +25,16 @@ struct SearchView: View {
                     List{
                         ForEach(self.shareData.filteredSearchedUsers, id: \.id){ user in
                             VStack{
-                            SmallUserRow(user: user, geometry: geometry)
-                                                               .onTapGesture {
+                            HStack{
+                                FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
+                                    .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                    .padding(.top, 8).padding(.leading)
+                                VStack(alignment: .leading,spacing: 5){
+                                    Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                }
+                            }
+                                    .onTapGesture {
                                     if user.id == "" {return}
                                     self.userInfo = user
                                     self.isModal = true
