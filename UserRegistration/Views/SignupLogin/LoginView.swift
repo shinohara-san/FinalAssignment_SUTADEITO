@@ -23,6 +23,8 @@ struct LoginView: View {
     
     @Environment(\.presentationMode) var presentation
     
+
+    
     func getMid()->Int{
         return shareData.pictures.count/2
     }
@@ -169,9 +171,9 @@ struct LoginView: View {
     }
 
     
-    
-    struct LoginView_Previews: PreviewProvider {
-        static var previews: some View {
-            LoginView()
-        }
-}
+//
+//    struct LoginView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            LoginView()
+//        }
+//}

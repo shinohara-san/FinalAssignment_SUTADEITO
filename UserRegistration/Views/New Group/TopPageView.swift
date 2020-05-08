@@ -34,7 +34,6 @@ struct TopPageView: View {
 //    @State var screen = UIScreen.main.bounds.width
     
     @State var isModal = false
-    
 //    func getMid()->Int{
 //        return self.shareData.pictures.count/2 //写真配列の中間地点を取得
 //    }

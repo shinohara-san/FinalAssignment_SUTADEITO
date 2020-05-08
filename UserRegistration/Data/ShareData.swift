@@ -30,8 +30,6 @@ class ShareData:ObservableObject{
     @Published var myProfile = false
     @Published var messageView = false
     
-    
-    
     //ScrollViewには最初に配列に初期値を設定する必要あり
     
     @Published var allUsers = [User]()
@@ -64,7 +62,6 @@ class ShareData:ObservableObject{
         }
         self.ages = array
     }
-    
     
     let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
                      "茨城県","栃木県","群馬県","埼玉県","千葉県","東京都","神奈川県",
@@ -432,19 +429,7 @@ class ShareData:ObservableObject{
             }
         }
         
-        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
-            if let snap = snap {
-                if snap.count == 0 {
-                    print("MatchTable削除なし")
-                    return
-                }
-//                print("マッチテーブルの数: \(snap.count)")
-                for table in snap.documents{
-                    table.reference.delete()
-                    print("MatchTable削除！")
-                }
-            }
-        }
+        
         
         db.collection("MatchRoom").whereField("matchUser1", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
             if let snap = snap {
@@ -477,6 +462,10 @@ class ShareData:ObservableObject{
 //        var array = [String]()
         db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
             if let snap = snap {
+                if snap.isEmpty{
+                    print("マッチテーブルはないのでMatchUsersもありません。")
+                    return
+                }
                 for id in snap.documents{
                     
                     let matchUserId = id.data()["MatchUserId"] as! String
@@ -484,7 +473,7 @@ class ShareData:ObservableObject{
 //                    array.append(matchUserId)
                     self.db.collection("MatchUsers").document(matchUserId).collection("MatchUserData").whereField("MatchRoomId", isEqualTo: matchRoomId).getDocuments { (snap, err) in
                                        if let snap = snap{
-                                           if snap.count == 0 {
+                                        if snap.isEmpty {
                                                print("MatchUsers(他ユーザーテーブル)削除なし")
                                                return
                                            }
@@ -521,13 +510,13 @@ class ShareData:ObservableObject{
         db.collection("MatchUsers").document(self.currentUserData["id"] as! String).collection("MatchUserData").getDocuments { (snap, err) in
             if let snap = snap{
                 if snap.count == 0 {
-//                    print("MatchUsers(自分テーブル)削除なし")
+                    print("MatchUsers(自分テーブル)削除なし")
                     return
                 }
                 //                    print("自分のMatchUsersの相手の数: \(snap.count)")
                 for data in snap.documents{
                     data.reference.delete()
-//                    print("自分のMatchUsers削除！")
+                    print("自分のMatchUsers削除！")
                 }
             }
         }
@@ -553,6 +542,20 @@ class ShareData:ObservableObject{
                 }
             }
         }
+        
+        db.collection("MatchTable").document(self.currentUserData["id"] as! String).collection("MatchUser").getDocuments { (snap, err) in
+                    if let snap = snap {
+                        if snap.count == 0 {
+                            print("MatchTable削除なし")
+                            return
+                        }
+        //                print("マッチテーブルの数: \(snap.count)")
+                        for table in snap.documents{
+                            table.reference.delete()
+                            print("自分側のMatchTable削除！")
+                        }
+                    }
+                }
 
         
         //Users削除
@@ -660,6 +663,7 @@ class ShareData:ObservableObject{
     }
     @Published var matchNotification = false
     @Published var searchBoxOn = false
+    
 }//func
 
 

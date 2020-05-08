@@ -53,6 +53,9 @@ struct SettingView: View {
                                             .shadow(radius: 2, y: 2)
                                             .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
                                             .padding(.vertical)
+                                            .sheet(isPresented: self.$isModal) {
+                                                ProfileEditView(datas: self.datas).environmentObject(self.shareData)
+                                            }
                                             
                                             Button("ログアウト"){
                                                 
@@ -68,6 +71,8 @@ struct SettingView: View {
                                             } //ProfileUserDetailView
                                                 .foregroundColor(Color.gray)
                                                 .padding(.bottom)
+                                            
+                                            
                                         }
                                     }
                                 }//zs
@@ -83,11 +88,12 @@ struct SettingView: View {
                             }//navi
                             
                         }//Group
-                            .sheet(isPresented: self.$isModal) {
-                                ProfileEditView(datas: self.datas).environmentObject(self.shareData)
-                        }
+                            
+                        
+                        
                     }
                 }//geo
+               
                     
                     .onAppear{
                         self.shareData.loadImageFromFirebase(path: "images/pictureOf_\(String(describing: self.shareData.currentUserData["email"] ?? ""))")
