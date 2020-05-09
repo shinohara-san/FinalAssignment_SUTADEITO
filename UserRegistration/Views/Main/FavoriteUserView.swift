@@ -25,8 +25,8 @@ struct FavoriteUserView: View {
                             VStack{
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
-                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                                        .padding(.top, 8).padding(.leading)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:5)
+                                        .padding(.top, 8).padding(.leading).animation(.spring())
                                     VStack(alignment: .leading,spacing: 5){
                                         
                                         Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)

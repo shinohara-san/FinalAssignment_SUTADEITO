@@ -28,7 +28,7 @@ struct SearchView: View {
                             HStack{
                                 FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                     .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                                    .padding(.top, 8).padding(.leading)
+                                    .padding(.top, 8).padding(.leading).animation(.spring())
                                 VStack(alignment: .leading,spacing: 5){
                                     Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                     Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
@@ -80,12 +80,7 @@ struct SearchView: View {
                         self.subject = ""
                     }
                     
-                    if self.shareData.searchBoxOn{
-                        Color.black.edgesIgnoringSafeArea(.all).opacity(0.3)
-                        ScrollView{
-                            SearchBoxView(hometown: self.$hometown, purpose: self.$purpose, subject: self.$subject).background(self.shareData.white).cornerRadius(10).frame(width : geometry.size.width * 0.8, height: geometry.size.height * 0.4).offset(y: 25).animation(.default)
-                        }
-                    }
+                    
                     
                 } //navi
             }

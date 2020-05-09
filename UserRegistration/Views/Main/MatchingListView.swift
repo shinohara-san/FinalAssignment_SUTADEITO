@@ -20,13 +20,12 @@ struct MatchingListView: View {
                     
                     List{
                         ForEach(self.shareData.filteredMatchUserArray, id: \.matchRoomId){ user in
-                            //id: がないとForEachが狂う？
-                            //idでダメだったのでmatchRoomIdに変えたら行けた
+                            //id: がないとForEachが狂う？ idでダメだったのでmatchRoomIdに変えたら行けた
                             NavigationLink(destination: MessageView(user, user.matchRoomId)){
                                 VStack{
                                     HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15, height: geometry.size.height * 0.1)
-                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
+                                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2).animation(.spring())
                                     Text(user.name)
                                     Text(user.age)
                                 }

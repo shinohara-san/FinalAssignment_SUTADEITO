@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ProfileUserDetailView: View {
-    
+    @EnvironmentObject var shareData: ShareData
     var name: String
     var age:String
     var gender:String
@@ -26,81 +26,57 @@ struct ProfileUserDetailView: View {
     var place:String
     
     
-    var body: some View {
-        VStack{
-            HStack{
-                Text("名前")
-                Spacer()
-                Text(self.name)
-            }.padding(.bottom, 20)
+    struct InfoRow : View{
+        @EnvironmentObject var shareData: ShareData
+        var title : String
+        var info : String
+        
+        var body: some View{
             
             HStack{
-                Text("年齢")
+                Text(title).foregroundColor(shareData.black)
                 Spacer()
-                //                Text(String(describing: self.currentUser["age"] ?? ""))
-                Text(self.age)
+                Text(info).foregroundColor(shareData.black)
             }.padding(.bottom, 20)
-            HStack{
-                Text("勉強中")
-                Spacer()
-                Text(self.subject)
-            }.padding(.bottom, 20)
-            HStack{
-                Text("現住所")
-                Spacer()
-                Text(self.hometown)
-            }.padding(.bottom, 20)
-            HStack{
-                Text("趣味")
-                Spacer()
-                Text(self.hobby)
-            }.padding(.bottom, 20)
-            HStack{
-                Text("自己紹介")
-                Spacer()
-                Text(self.introduction)
-            }.padding(.bottom, 20)
-            HStack{
-                Text("性格")
-                Spacer()
-                Text(self.personality)
-            }.padding(.bottom, 20)
-            HStack{
-                Text("目的")
-                Spacer()
-                Text(self.purpose)
-            }.padding(.bottom, 20)
+            
+        }
+    }
+    
+    var body: some View {
+        VStack{
             Section{
-                HStack{
-                    Text("希望するすたでいと")
-                    Spacer()
-                    Text(self.studystyle)
-                }.padding(.bottom, 20)
                 
-                HStack{
-                    Text("希望する時間帯")
-                    Spacer()
-                    Text(self.schedule)
-                }.padding(.bottom, 20)
-                HStack{
-                    Text("デート代")
-                    Spacer()
-                    Text(self.fee)
-                }.padding(.bottom, 20)
-                HStack{
-                    Text("希望する場所")
-                    Spacer()
-                    Text(self.place)
-                }.padding(.bottom, 20)
-                
-                
-                
-                HStack{
-                    Text("職業")
-                    Spacer()
-                    Text(self.work)
+                VStack{
+                    Text("基本情報").font(.title).fontWeight(.bold).padding(.bottom)
+                    InfoRow(title: "名前:", info: self.name)
+                    InfoRow(title: "年齢:", info: self.age)
+                    InfoRow(title: "現住所:", info: self.hometown)
+                    InfoRow(title: "趣味:", info: self.hobby)
+                    InfoRow(title: "職業:", info: self.work)
+                    InfoRow(title: "性格:", info: self.personality)
+                    InfoRow(title: "自己紹介:", info: self.introduction)
+                    
+                    
                 }
-            }
+            }.padding().background(self.shareData.white2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
+            
+            Section{
+                
+                VStack{
+                    Text("すたでいと").font(.title).fontWeight(.bold).padding(.bottom)
+                    if self.place == "カフェ" && self.schedule == "日中" && self.studystyle != "勉強はせずにお話をしてみたい" && self.studystyle != "その他"{
+                        Text("このユーザーは「すたでいと」ユーザーです").font(.subheadline).foregroundColor(.yellow).fontWeight(.bold).padding(.bottom)
+                    }
+                    InfoRow(title: "勉強中:", info: self.subject)
+                    InfoRow(title: "希望するすたでいと:", info: self.studystyle)
+                    InfoRow(title: "希望する時間帯:", info: self.schedule)
+                    InfoRow(title: "希望する場所:", info: self.place)
+                    InfoRow(title: "デート代:", info: self.fee)
+                    InfoRow(title: "目的:", info: self.purpose)
+                    
+                }
+                
+            }.padding().background(self.shareData.white2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
         }
     }
 }

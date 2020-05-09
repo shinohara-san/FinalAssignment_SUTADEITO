@@ -27,7 +27,7 @@ struct SettingView: View {
                                     self.shareData.white.edgesIgnoringSafeArea(.all)
                                     ScrollView(showsIndicators: false){
                                         VStack{
-                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 0.8, height: geo.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 2).padding(.vertical, 10)
+                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical, 10).animation(.spring())
                                             ProfileUserDetailView(
                                                 name: String(describing: self.shareData.currentUserData["name"] ?? ""),
                                                 age: String(describing: self.shareData.currentUserData["age"] ?? ""),
@@ -43,7 +43,7 @@ struct SettingView: View {
                                                 fee: String(describing: self.shareData.currentUserData["fee"] ?? ""),
                                                 schedule: String(describing: self.shareData.currentUserData["schedule"] ?? ""),
                                                 place: String(describing: self.shareData.currentUserData["place"] ?? "")
-                                            ).frame(width: geo.size.width * 0.9)
+                                            ).frame(width: geo.size.width * 1)
                                             
                                             Button(action: {
                                                 self.isModal = true

@@ -20,8 +20,10 @@ class ShareData:ObservableObject{
     let pink = Color(red: 250 / 255, green: 138 / 255, blue: 148 / 255)
     let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
     let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
-    let yellow = Color(red: 250/255, green: 236/255, blue: 135/255)
-    let green = Color(red: 135/255, green: 250/255, blue: 179/255)
+    let yellow = Color(red: 255/255, green: 244/255, blue: 148/255)
+    let green = Color(red: 144/255, green: 238/255, blue: 144/255)
+    let white2 = Color(red: 248/255, green: 248/255, blue: 248/255)
+    let black = Color(red: 51/255, green: 51/255, blue: 51/255)
     
     @Published var currentUserData = [String : Any]()
     
@@ -35,7 +37,7 @@ class ShareData:ObservableObject{
     @Published var allUsers = [User]()
     @Published var filteredAllUsers = [User]()
     
-    @Published var displayedUser: User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
+    @Published var displayedUser = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
     
     @Published var favoriteUsers =  [User]()
     @Published var filteredFavoriteUsers =  [User]()
@@ -62,7 +64,7 @@ class ShareData:ObservableObject{
         }
         self.ages = array
     }
-    let places = ["カフェ", "ファミレス", "オンライン", "その他"]
+    let places = ["カフェ", "オンライン", "その他"]
     let studystyles = ["共通の科目を教え合いながら勉強したい", "共通の科目をもくもくと勉強したい", "お相手の科目には特にこだわらず勉強したい", "勉強はせずにお話をしてみたい" ,"その他"]
     
     let hometowns = ["北海道","青森県","岩手県","宮城県","秋田県","山形県","福島県",
@@ -74,9 +76,9 @@ class ShareData:ObservableObject{
                      "熊本県","大分県","宮崎県","鹿児島県","沖縄県"]
     let jobs = ["営業", "経営者","事務", "自営業","美容師","教師", "受付","エンジニア","フリーランス","医者", "看護師","公務員","飲食店勤務", "介護士","サービス業", "フリーター", "パート","学生", "その他"]
     let personalities = ["明るい", "社交的", "優しい", "物静か", "好奇心旺盛", "真面目" ,"謙虚", "前向き" ,"マイペース", "計画的", "世話好き", "責任感が強い"]
-    let purposes  = ["勉強", "恋活", "婚活", "友達","その他"]
+    let purposes  = ["勉強", "勉強も恋もしたい", "恋活", "婚活"]
     
-    let schedules = ["午前中", "午後", "夜"]
+    let schedules = ["日中", "夕方", "夜"]
     let fee = ["割り勘", "相手が多めに払う", "自分が多めに払う", "相手が全額払う", "自分が全額払う"]
     
     @Published var editOn = false

@@ -50,11 +50,11 @@ struct ProfileEditView: View {
                     VStack{
                         ScrollView(showsIndicators: false){
                             VStack{
-                                Text("あなたのニックネーム").foregroundColor(self.shareData.brown)
+                                Text("名前").foregroundColor(self.shareData.brown)
                                 TextField("name", text: self.$name).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                             }.padding(.top)
                             VStack{
-                                Text("あなたの年齢").foregroundColor(self.shareData.brown)
+                                Text("年齢").foregroundColor(self.shareData.brown)
                                 Picker(selection: self.$selectedAge, label: Text("age")
                                     .font(.title)
                                     .padding(.leading)) {
@@ -62,52 +62,73 @@ struct ProfileEditView: View {
                                             Text(self.shareData.ages[index]).tag(index)
                                         }
                                 }.labelsHidden()
-                            }
-                            VStack{
-                                Text("あなたが今勉強していること").foregroundColor(self.shareData.brown)
-                                TextField("subject", text: self.$subject).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                                VStack{
+                                    Text("現住所").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedHometown, label: Text("current city")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.hometowns.count){ index in
+                                                Text(self.shareData.hometowns[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                VStack{
+                                    Text("趣味").foregroundColor(self.shareData.brown)
+                                    TextField("hobby", text: self.$hobby).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                                }
+                                
+                                VStack{
+                                    Text("職業").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedWork, label: Text("職業")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.jobs.count){ index in
+                                                Text(self.shareData.jobs[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                
+                                VStack{
+                                    Text("性格").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedPersonality, label: Text("性格")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.personalities.count){ index in
+                                                Text(self.shareData.personalities[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                
+                                VStack{
+                                    Text("自己紹介").foregroundColor(self.shareData.brown)
+                                    TextField("comment", text: self.$introduction).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                                }
                             }
                             
-                            VStack{
-                                Text("あなたの居住地").foregroundColor(self.shareData.brown)
-                                Picker(selection: self.$selectedHometown, label: Text("current city")
-                                    .font(.title)
-                                    .padding(.leading)) {
-                                        ForEach(0..<self.shareData.hometowns.count){ index in
-                                            Text(self.shareData.hometowns[index]).tag(index)
-                                        }
-                                }.labelsHidden()
-                            }
                             
-                            VStack{
-                                Text("あなたの趣味").foregroundColor(self.shareData.brown)
-                                TextField("hobby", text: self.$hobby).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
-                            }
                             
-                            VStack{
-                                Text("あなたから一言").foregroundColor(self.shareData.brown)
-                                TextField("comment", text: self.$introduction).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
-                            }
                             
-                            VStack{
-                                Text("あなたの性格").foregroundColor(self.shareData.brown)
-                                Picker(selection: self.$selectedPersonality, label: Text("性格")
-                                    .font(.title)
-                                    .padding(.leading)) {
-                                        ForEach(0..<self.shareData.personalities.count){ index in
-                                            Text(self.shareData.personalities[index]).tag(index)
-                                        }
-                                }.labelsHidden()
-                            }
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             
                             Section{
+                                VStack{
+                                    Text("勉強中").foregroundColor(self.shareData.brown)
+                                    TextField("subject", text: self.$subject).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                                }
+                                
                                 VStack{
                                     Text("希望するすたでいと").foregroundColor(self.shareData.brown)
                                     Picker(selection: self.$selectedStudyStyle, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
                                             ForEach(0..<self.shareData.studystyles.count){ index in
-                                                Text(self.shareData.studystyles[index]).tag(index)
+                                                Text(self.shareData.studystyles[index]).tag(index).font(.subheadline)
                                             }
                                     }.labelsHidden()
                                 }
@@ -144,20 +165,8 @@ struct ProfileEditView: View {
                                             }
                                     }.labelsHidden()
                                 }
-                                
                                 VStack{
-                                    Text("あなたの職業").foregroundColor(self.shareData.brown)
-                                    Picker(selection: self.$selectedWork, label: Text("職業")
-                                        .font(.title)
-                                        .padding(.leading)) {
-                                            ForEach(0..<self.shareData.jobs.count){ index in
-                                                Text(self.shareData.jobs[index]).tag(index)
-                                            }
-                                    }.labelsHidden()
-                                }
-                                
-                                VStack{
-                                    Text("このアプリを使う目的").foregroundColor(self.shareData.brown)
+                                    Text("目的").foregroundColor(self.shareData.brown)
                                     Picker(selection: self.$selectedPurpose, label: Text("目的")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -166,6 +175,9 @@ struct ProfileEditView: View {
                                             }
                                     }.labelsHidden()
                                 }
+                                
+                                
+                                
                             }
                             
                             
@@ -175,9 +187,9 @@ struct ProfileEditView: View {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
                                     Text("戻る").padding()
-                                    .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
                                 }
-                                
+                                    
                                 .foregroundColor(self.shareData.white)
                                 .background(self.shareData.brown)
                                 .cornerRadius(10)
@@ -191,15 +203,15 @@ struct ProfileEditView: View {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
                                     Text("保存する")
-                                    .padding()
-                                    .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
-                                    .foregroundColor(self.shareData.white)
-                                    .background(self.shareData.pink).cornerRadius(10)
-                                    .shadow(radius: 2, y: 2)
-                                    .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
-                                    .padding(.bottom)
+                                        .padding()
+                                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                        .foregroundColor(self.shareData.white)
+                                        .background(self.shareData.pink).cornerRadius(10)
+                                        .shadow(radius: 2, y: 2)
+                                        .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
+                                        .padding(.bottom)
                                 }
-                         
+                                
                                 Button(action: {
                                     self.confirmDelete = true
                                 }){

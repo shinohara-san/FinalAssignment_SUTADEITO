@@ -20,12 +20,16 @@ struct UserRow: View{
                VStack{
                    FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
                        .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                       .padding(.top, 8)
-                   HStack(spacing: 5){
-                       Spacer()
-                       Text(user.age).frame(width: geometry.size.width * 0.2, alignment: .trailing)
-                       Text(user.hometown).frame(width: geometry.size.width * 0.3, alignment: .leading)
-                   }.frame(width: geometry.size.width * 0.5)
+                       .padding(.top, 8).animation(.spring())
+                HStack(alignment: .firstTextBaseline){
+//                       Spacer()
+                    if user.place == "カフェ" && user.schedule == "日中" && user.studystyle != "勉強はせずにお話をしてみたい" && user.studystyle != "その他"{
+                       Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                    }
+                       Text(user.age)
+                       Text(user.hometown)
+                    
+                   }.frame(width: geometry.size.width * 0.4)
                 
                }
             
