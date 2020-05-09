@@ -13,7 +13,7 @@ struct TopPageView: View {
         // タイトルバーのフォントサイズを変更
         UINavigationBar.appearance().titleTextAttributes = [.font: UIFont.systemFont(ofSize: 16)]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)]
-        
+        UINavigationBar.appearance().tintColor = UIColor.white
         // タイトルバーの背景色を変更
         UINavigationBar.appearance().barTintColor = UIColor(red: 238 / 255, green: 143 / 255, blue: 143 / 255, alpha: 0)
         // タイトルバーの裏の背景色を変更
@@ -69,19 +69,19 @@ struct TopPageView: View {
                                 .shadow(radius: 2, y:2)
                         }
                         .padding(.vertical)
-                        
-                        
-                        //                    NavigationLink(destination: RegisterView().environmentObject(self.shareData)) {
-                        Button("新規登録"){
-                            self.isModal = true
+/// navigationlink?
+                        Button(action: {
+                             self.isModal = true
+                        }) {
+                            Text("新規登録")
+                            .foregroundColor(self.shareData.pink)
+                            .padding()
+                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
+                            .background(self.shareData.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 2, y:2)
+                            .padding(.bottom, 140)
                         }
-                        .foregroundColor(self.shareData.pink)
-                        .padding()
-                        .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-                        .background(self.shareData.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 2, y:2)
-                        .padding(.bottom, 140)
                         
                         HStack(spacing: 50){
                             Button(action: {

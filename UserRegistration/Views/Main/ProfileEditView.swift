@@ -124,33 +124,36 @@ struct ProfileEditView: View {
                             
                             
                             Section{
-                                Button("戻る"){
-                                    //                        self.shareData.editOn = false
+                                
+                                Button(action: {
                                     self.presentation.wrappedValue.dismiss()
+                                }) {
+                                    Text("戻る").padding()
+                                    .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
                                 }
+                                
                                 .foregroundColor(self.shareData.white)
-                                .padding()
-                                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
                                 .background(self.shareData.brown)
                                 .cornerRadius(10)
                                 .shadow(radius: 2, y: 2)
-                                .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
                                 .padding(.bottom)
                                 
-                                Button("保存する"){
+                                Button(action: {
                                     self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose])
                                     //編集後のログインしているユーザーのデータを入れ直す
                                     //                        self.shareData.editOn = false
                                     self.presentation.wrappedValue.dismiss()
+                                }) {
+                                    Text("保存する")
+                                    .padding()
+                                    .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                    .foregroundColor(self.shareData.white)
+                                    .background(self.shareData.pink).cornerRadius(10)
+                                    .shadow(radius: 2, y: 2)
+                                    .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
+                                    .padding(.bottom)
                                 }
-                                .padding()
-                                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
-                                .foregroundColor(self.shareData.white)
-                                .background(self.shareData.pink).cornerRadius(10)
-                                .shadow(radius: 2, y: 2)
-                                .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
-                                .padding(.bottom)
-                                
+                         
                                 Button(action: {
                                     self.confirmDelete = true
                                 }){

@@ -40,6 +40,9 @@ struct RegisterView: View {
     var allSectionsFilled: Bool{
         return !email.isEmpty && !password.isEmpty && !name.isEmpty && !subject.isEmpty && !hobby.isEmpty && !introduction.isEmpty
     }
+    
+    @State var selection: Int? = nil
+    
     var body: some View {
         
         NavigationView {    // Formで使う場合はNavigationViewが必須
@@ -187,26 +190,33 @@ struct RegisterView: View {
                         
                         
                         
-                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.shareData.studystyles[self.selectedStudyStyle], hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], pre: self.presentation).environmentObject(self.shareData)){
-                            
-                            Button("写真を追加"){
+                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.shareData.studystyles[self.selectedStudyStyle], hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], pre: self.presentation).environmentObject(self.shareData), tag: 1, selection: self.$selection){
+//                            https://stackoverflow.com/questions/57799548/navigationview-and-navigation-link-on-button-click-swift-ui
+                            Button(action: {
                                 if !self.allSectionsFilled {
                                     self.showingAlert = true
                                     return
                                 }
+                                print("navigation occured!")
+                                self.selection = 1
+                            }) {
+                                Text("写真を追加")
+                                .padding()
+                                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
                             }
-                            .padding()
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
+                            
                             .foregroundColor(self.shareData.white)
                             .background(self.allSectionsFilled ? self.shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255)).cornerRadius(10)
                             .shadow(radius: 2, y:2)
                             .padding(.bottom)
-                        }.alert(isPresented: self.$showingAlert) {
-                            Alert(title: Text("エラー"),
-                                  message: Text("必要事項を入力してください。"))
+//
                         }
-                        
                     }
+                    .alert(isPresented: self.$showingAlert) {
+                        Alert(title: Text("エラー"),
+                              message: Text("必要事項を入力してください。"))
+                    }
+                    
                 }//zstack
                 
             }

@@ -44,10 +44,9 @@ struct SettingView: View {
                                             Button(action: {
                                                 self.isModal = true
                                             }) {
-                                                Text("編集する")
+                                                Text("編集する").padding()
+                                                .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
                                             }
-                                            .padding()
-                                            .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
                                             .foregroundColor(self.shareData.white)
                                             .background(self.shareData.pink).cornerRadius(10)
                                             .shadow(radius: 2, y: 2)

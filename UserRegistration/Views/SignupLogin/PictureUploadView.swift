@@ -31,7 +31,9 @@ struct PictureUploadView: View {
     @Environment(\.presentationMode) var presentation
     @Binding var pre: PresentationMode
     
-    @State var showingCompletion = false
+//    @State var showingCompletion = false
+    
+    @State var showingAlert = false
     
     var allSectionsFilled: Bool {
         return !imageURL.isEmpty
@@ -40,6 +42,8 @@ struct PictureUploadView: View {
     var buttonColor: Color {
         return allSectionsFilled ? shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255)
     }
+    
+    @State private var alertItem: AlertItem?
     
     var body: some View {
        
@@ -54,11 +58,18 @@ struct PictureUploadView: View {
                     Button(action: {
                         self.shown.toggle()
                     }) {
-                        Text("写真を追加する").padding()
+                        Text("写真を追加する")
+                            .padding()
                             .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10).shadow(radius: 2, y:2)
                     }.padding(.bottom)
                     
                     Button(action: {
+                        
+                        if !self.allSectionsFilled{
+                            self.showingAlert = true
+                            self.alertItem = AlertItem(id: UUID(), title: Text("エラー"), message:Text("写真を追加してください。"), dismissButton: .default(Text("OK")))
+                            return
+                        }
 
                             self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL)
                             
@@ -70,7 +81,8 @@ struct PictureUploadView: View {
 //                                    self.datas.listen()
                                     self.datas.logOut()
                                     print("Signup成功！")
-                                    self.showingCompletion = true
+                                    self.alertItem = AlertItem(title: Text("登録が完了しました"), message:Text("トップページよりログインしてください"), dismissButton: .default(Text("OK"), action: {self.pre.dismiss()}))
+                                    self.showingAlert = true
                                 }
                                 
                             }
@@ -83,9 +95,13 @@ struct PictureUploadView: View {
                             .foregroundColor(self.shareData.white)
                             .background(self.buttonColor).cornerRadius(10)
                         .shadow(radius: 2, y:2)
-                        }.disabled(!self.allSectionsFilled)
+                        }
+//                        .alert(isPresented: self.$showingAlert) {
+//                                               Alert(title: Text("エラー"),
+//                                                     message: Text("写真を追加してください。"))
+//                                           }
                         .padding(.bottom)
-                    
+                   
 //                    Button("戻る"){
 //                        self.presentation.wrappedValue.dismiss()
 //                    }.foregroundColor(Color.gray)
@@ -93,19 +109,17 @@ struct PictureUploadView: View {
                     
                     
                 } //vstack
-                    .alert(isPresented: self.$showingCompletion) {
-                        Alert(title: Text("登録が完了しました"),
-                              message: Text("トップページよりログインしてください"),
-                              dismissButton: .default(Text("OK"),
-                                                      action: {self.pre.dismiss()}))
+                    .alert(isPresented: self.$showingAlert) {
+                        Alert(title: self.alertItem!.title,
+                              message: self.alertItem!.message,
+                              dismissButton: self.alertItem!.dismissButton)
                 }
-                    
+            
                 .sheet(isPresented: self.$shown) {
                     imagePicker(shown: self.$shown, imageURL: self.$imageURL, email:self.$email)
                 }
                     
                     
-                .animation(.spring())
                 .navigationBarTitle("プロフィール作成", displayMode: .inline)
                 .navigationBarItems(leading: Button("戻る"){
                     self.presentation.wrappedValue.dismiss()
@@ -124,3 +138,10 @@ struct PictureUploadView: View {
 //        PictureUploadView()
 //    }
 //}
+
+struct AlertItem: Identifiable {
+    var id = UUID()
+    var title: Text
+    var message: Text?
+    var dismissButton: Alert.Button?
+}
