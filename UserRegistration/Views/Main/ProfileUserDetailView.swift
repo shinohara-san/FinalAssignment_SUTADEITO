@@ -21,6 +21,10 @@ struct ProfileUserDetailView: View {
     var personality:String
     var work:String
     var purpose:String
+    var fee:String
+    var schedule:String
+    var place:String
+    
     
     var body: some View {
         VStack{
@@ -68,10 +72,29 @@ struct ProfileUserDetailView: View {
             }.padding(.bottom, 20)
             Section{
                 HStack{
-                    Text("希望する勉強スタイル")
+                    Text("希望するすたでいと")
                     Spacer()
                     Text(self.studystyle)
                 }.padding(.bottom, 20)
+                
+                HStack{
+                    Text("希望する時間帯")
+                    Spacer()
+                    Text(self.schedule)
+                }.padding(.bottom, 20)
+                HStack{
+                    Text("デート代")
+                    Spacer()
+                    Text(self.fee)
+                }.padding(.bottom, 20)
+                HStack{
+                    Text("希望する場所")
+                    Spacer()
+                    Text(self.place)
+                }.padding(.bottom, 20)
+                
+                
+                
                 HStack{
                     Text("職業")
                     Spacer()

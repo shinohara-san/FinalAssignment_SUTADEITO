@@ -34,7 +34,7 @@ class FirebaseData: ObservableObject{
 
 //
 //        // Reference link: https://firebase.google.com/docs/firestore/manage-data/add-data
-    func createData(_ email:String, _ name:String, _ age:String, _ gender:String, _ hometown:String, _ subject:String, _ introduction:String, _ studystyle:String, _ hobby:String, _ personality:String, _ work:String, _ purpose:String, _ photoURL: String) {
+    func createData(_ email:String, _ name:String, _ age:String, _ gender:String, _ hometown:String, _ subject:String, _ introduction:String, _ studystyle:String, _ hobby:String, _ personality:String, _ work:String, _ purpose:String, _ photoURL: String, _ fee:String, _ place:String, _ schedule: String) {
             // To create or overwrite a single documentbbb@bbb.com
         dbCollection.document().setData([
                 "id" : dbCollection.document().documentID,
@@ -52,6 +52,9 @@ class FirebaseData: ObservableObject{
                 "purpose": purpose,
 //                "uid": Auth.auth().currentUser?.uid ?? ""
                 "photoURL": photoURL,
+                "fee" : fee,
+                "place": place,
+                "schedule" : schedule
                 
             ]) { (err) in
                 if err != nil {

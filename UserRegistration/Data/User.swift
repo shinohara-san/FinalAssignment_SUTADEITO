@@ -25,6 +25,9 @@ struct User: Identifiable, Equatable, Hashable{
     let purpose: String
     let photoURL: String
     let matchRoomId: String
+    let fee: String
+    let schedule: String
+    let place: String
 //    var uid: String
 }
 

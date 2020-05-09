@@ -22,7 +22,14 @@ struct ProfileEditView: View {
     @State var studystyle:String = ""
     @State var work:String = ""
     @State var purpose = ""
+    @State var fee = ""
+    @State var place = ""
+    @State var schedule = ""
     
+    @State var selectedStudyStyle = 0
+    @State var selectedFee = 0
+    @State var selectedPlace = 0
+    @State var selectedSchedule = 0
     @State var selectedAge = 10
     @State var selectedHometown = 12
     @State var selectedWork = 0
@@ -95,8 +102,47 @@ struct ProfileEditView: View {
                             
                             Section{
                                 VStack{
-                                    Text("希望するデート").foregroundColor(self.shareData.brown)
-                                    TextField("dating style", text: self.$studystyle).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
+                                    Text("希望するすたでいと").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedStudyStyle, label: Text("")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.studystyles.count){ index in
+                                                Text(self.shareData.studystyles[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                
+                                VStack{
+                                    Text("希望する時間帯").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedSchedule, label: Text("")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.schedules.count){ index in
+                                                Text(self.shareData.schedules[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                
+                                VStack{
+                                    Text("希望する場所").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedPlace, label: Text("")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.places.count){ index in
+                                                Text(self.shareData.places[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
+                                }
+                                
+                                VStack{
+                                    Text("デート代").foregroundColor(self.shareData.brown)
+                                    Picker(selection: self.$selectedFee, label: Text("")
+                                        .font(.title)
+                                        .padding(.leading)) {
+                                            ForEach(0..<self.shareData.fee.count){ index in
+                                                Text(self.shareData.fee[index]).tag(index)
+                                            }
+                                    }.labelsHidden()
                                 }
                                 
                                 VStack{
@@ -139,7 +185,7 @@ struct ProfileEditView: View {
                                 .padding(.bottom)
                                 
                                 Button(action: {
-                                    self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.studystyle, work: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose])
+                                    self.shareData.saveEditInfo(name: self.name, age: self.shareData.ages[self.selectedAge], subject: self.subject, hometown: self.shareData.hometowns[self.selectedHometown], hobby: self.hobby, introduction: self.introduction, personality: self.shareData.personalities[self.selectedPersonality], studystyle: self.shareData.studystyles[self.selectedStudyStyle], work: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], fee: self.shareData.fee[self.selectedFee], place: self.shareData.places[self.selectedPlace], schedule: self.shareData.schedules[self.selectedSchedule])
                                     //編集後のログインしているユーザーのデータを入れ直す
                                     //                        self.shareData.editOn = false
                                     self.presentation.wrappedValue.dismiss()
@@ -200,6 +246,9 @@ struct ProfileEditView: View {
                 self.studystyle = self.shareData.currentUserData["studystyle"] as! String
                 self.work = self.shareData.currentUserData["work"] as! String
                 self.purpose = self.shareData.currentUserData["purpose"] as! String
+                self.fee = self.shareData.currentUserData["fee"] as! String
+                self.schedule = self.shareData.currentUserData["schedule"] as! String
+                self.place = self.shareData.currentUserData["place"] as! String
                 
                 self.getIndex()
                 
@@ -215,14 +264,21 @@ struct ProfileEditView: View {
         let personalityIndex = shareData.personalities.firstIndex(of: self.personality)
         let workIndex = shareData.jobs.firstIndex(of: self.work)
         let purposeIndex = shareData.purposes.firstIndex(of: self.purpose)
+        let styleIndex = shareData.studystyles.firstIndex(of: self.studystyle)
+        let feeIndex = shareData.fee.firstIndex(of: self.fee)
+        let scheduleIndex = shareData.schedules.firstIndex(of: self.schedule)
+        let placeIndex = shareData.places.firstIndex(of: self.place)
         
-        if let hometownIndex = hometownIndex, let personalityIndex = personalityIndex, let workIndex = workIndex, let purposeIndex = purposeIndex, let ageIndex = ageIndex{
+        if let hometownIndex = hometownIndex, let personalityIndex = personalityIndex, let workIndex = workIndex, let purposeIndex = purposeIndex, let ageIndex = ageIndex, let styleIndex = styleIndex, let feeIndex = feeIndex, let scheduleIndex = scheduleIndex, let placeIndex = placeIndex{
             selectedAge = ageIndex
             selectedHometown = hometownIndex
             selectedPurpose = purposeIndex
             selectedWork = workIndex
             selectedPersonality = personalityIndex
-            //            print(selectedHometown)
+            selectedStudyStyle = styleIndex
+            selectedFee = feeIndex
+            selectedSchedule = scheduleIndex
+            selectedPlace = placeIndex
         }
     }
     

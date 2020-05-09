@@ -26,6 +26,10 @@ struct RegisterView: View {
     @State var hobby = ""
     @State var selectedPersonality = 2
     
+    @State var selectedSchedule = 0
+    @State var selectedFee = 2
+    @State var selectedPlaces = 0
+    
     @State var selectedWork = 5
     @State var selectedStudyStyle = 0
     @State var selectedPurpose = 2
@@ -126,8 +130,10 @@ struct RegisterView: View {
                                 }
                             }
                             
+                            
+                            
                             VStack{
-                                 Text("希望するデート").foregroundColor(self.shareData.brown)
+                                 Text("希望するすたでいと").foregroundColor(self.shareData.brown)
                                Picker(selection: self.$selectedStudyStyle, label: Text("デートスタイル")
                                     .font(.title)
                                     .padding(.leading)) {
@@ -137,6 +143,43 @@ struct RegisterView: View {
                                 }.labelsHidden()
                                 //                                MultilineTextView(text: self.$introduction).frame(width: geometry.size.width * 0.7, height: geometry.size.height * 0.1).font(.body).background(Color(red: 250 / 255, green: 250 / 255, blue: 250 / 255)).cornerRadius(10).padding()
                             }
+                            
+                            VStack{
+                                 Text("希望する時間帯").foregroundColor(self.shareData.brown)
+                               Picker(selection: self.$selectedSchedule, label: Text("")
+                                    .font(.title)
+                                    .padding(.leading)) {
+                                        ForEach(0..<self.shareData.schedules.count){ index in
+                                            Text(self.shareData.schedules[index]).tag(index).font(.subheadline)
+                                        }
+                                }.labelsHidden()
+                                
+                            }
+                            
+                            VStack{
+                                 Text("希望する場所").foregroundColor(self.shareData.brown)
+                               Picker(selection: self.$selectedPlaces, label: Text("")
+                                    .font(.title)
+                                    .padding(.leading)) {
+                                        ForEach(0..<self.shareData.places.count){ index in
+                                            Text(self.shareData.places[index]).tag(index).font(.subheadline)
+                                        }
+                                }.labelsHidden()
+                                
+                            }
+                            
+                            VStack{
+                                 Text("デート代").foregroundColor(self.shareData.brown)
+                               Picker(selection: self.$selectedFee, label: Text("")
+                                    .font(.title)
+                                    .padding(.leading)) {
+                                        ForEach(0..<self.shareData.fee.count){ index in
+                                            Text(self.shareData.fee[index]).tag(index).font(.subheadline)
+                                        }
+                                }.labelsHidden()
+                                
+                            }
+                            
                             
                             
                             VStack{
@@ -190,7 +233,7 @@ struct RegisterView: View {
                         
                         
                         
-                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.shareData.studystyles[self.selectedStudyStyle], hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], pre: self.presentation).environmentObject(self.shareData), tag: 1, selection: self.$selection){
+                        NavigationLink(destination: PictureUploadView(email: self.email, password: self.password, name: self.name, age: self.shareData.ages[self.selectedAge], gender: self.genders[self.selectedGender], hometown: self.shareData.hometowns[self.selectedHometown], subject: self.subject, introduction: self.introduction, studystyle: self.shareData.studystyles[self.selectedStudyStyle], hobby: self.hobby, personality: self.shareData.personalities[self.selectedPersonality], job: self.shareData.jobs[self.selectedWork], purpose: self.shareData.purposes[self.selectedPurpose], place: self.shareData.places[self.selectedPlaces], schedule: self.shareData.schedules[self.selectedSchedule], fee: self.shareData.fee[self.selectedFee], pre: self.presentation).environmentObject(self.shareData), tag: 1, selection: self.$selection){
 //                            https://stackoverflow.com/questions/57799548/navigationview-and-navigation-link-on-button-click-swift-ui
                             Button(action: {
                                 if !self.allSectionsFilled {

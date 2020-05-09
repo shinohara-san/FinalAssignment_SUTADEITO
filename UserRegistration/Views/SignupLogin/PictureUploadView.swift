@@ -22,6 +22,9 @@ struct PictureUploadView: View {
     var personality:String
     var job:String
     var purpose:String
+    var place:String
+    var schedule:String
+    var fee:String
     
     @State var imageURL = ""
     @State var shown = false
@@ -71,7 +74,7 @@ struct PictureUploadView: View {
                             return
                         }
 
-                            self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL)
+                        self.datas.createData(self.email, self.name, self.age, self.gender, self.hometown, self.subject, self.introduction, self.studystyle, self.hobby, self.personality, self.job, self.purpose, self.imageURL, self.fee, self.place, self.schedule)
                             
                             //                    Authの処理
                             self.datas.signUp(self.email, self.password) { (res, err) in

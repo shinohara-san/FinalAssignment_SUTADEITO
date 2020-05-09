@@ -11,7 +11,7 @@ import SwiftUI
 struct LikeMeUserView: View {
         @EnvironmentObject var shareData: ShareData
         //    @State var favoriteProfileOn = false
-        @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
+        @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
         @State var isModal = false
         
         var body: some View {

@@ -12,7 +12,7 @@ struct LikeUserView: View {
     @EnvironmentObject var shareData: ShareData
     @State var likeListOn = false
     @State var likeProfileOn = false
-    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
+    @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
 
     var body: some View {
         GeometryReader{ geometry in

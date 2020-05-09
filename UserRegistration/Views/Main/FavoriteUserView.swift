@@ -11,7 +11,7 @@ import SwiftUI
 struct FavoriteUserView: View {
     @EnvironmentObject var shareData: ShareData
     //    @State var favoriteProfileOn = false
-    @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "")
+    @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
     @State var isModal = false
     
     var body: some View {
@@ -83,8 +83,8 @@ struct FavoriteUserView: View {
     } //body
 } //view
 
-struct FavoriteUserView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoriteUserView()
-    }
-}
+//struct FavoriteUserView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FavoriteUserView()
+//    }
+//}

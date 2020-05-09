@@ -113,7 +113,10 @@ struct UserProfileView: View {
                                                 "work":  user["work"] as! String,
                                                 "purpose":  user["purpose"] as! String,
                                                 "photoURL":  user["photoURL"] as! String,
-                                                "id": user["id"] as! String
+                                                "id": user["id"] as! String,
+                                                "fee": user["fee"] as! String,
+                                                "schedule": user["schedule"] as! String,
+                                                "place": user["place"] as! String
                                                 
                                             ]){ err in
                                                 if let err = err {
@@ -148,7 +151,10 @@ struct UserProfileView: View {
                                                 "work":  user["work"] as! String,
                                                 "purpose":  user["purpose"] as! String,
                                                 "photoURL":  user["photoURL"] as! String,
-                                                "id": user["id"] as! String
+                                                "id": user["id"] as! String,
+                                                "fee": user["fee"] as! String,
+                                                "schedule": user["schedule"] as! String,
+                                                "place": user["place"] as! String
                                                 
                                             ]){ err in
                                                 if let err = err {
@@ -306,7 +312,7 @@ struct UserProfileView: View {
                     
                     FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 0.8, height: geo.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 2).padding(.vertical)
                     
-                    ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose).frame(width: geo.size.width * 0.9)
+                    ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose, fee: self.user.fee, schedule: self.user.schedule, place: self.user.place).frame(width: geo.size.width * 0.9)
                     
                     Group{
                         if !self.matchUserProfile{

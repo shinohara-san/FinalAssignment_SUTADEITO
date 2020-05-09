@@ -39,7 +39,11 @@ struct SettingView: View {
                                                 hobby: String(describing: self.shareData.currentUserData["hobby"] ?? ""),
                                                 personality: String(describing: self.shareData.currentUserData["personality"] ?? ""),
                                                 work: String(describing: self.shareData.currentUserData["work"] ?? ""),
-                                                purpose: String(describing: self.shareData.currentUserData["purpose"] ?? "")).frame(width: geo.size.width * 0.9)
+                                                purpose: String(describing: self.shareData.currentUserData["purpose"] ?? ""),
+                                                fee: String(describing: self.shareData.currentUserData["fee"] ?? ""),
+                                                schedule: String(describing: self.shareData.currentUserData["schedule"] ?? ""),
+                                                place: String(describing: self.shareData.currentUserData["place"] ?? "")
+                                            ).frame(width: geo.size.width * 0.9)
                                             
                                             Button(action: {
                                                 self.isModal = true
