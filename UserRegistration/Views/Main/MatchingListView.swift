@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MatchingListView: View {
     @EnvironmentObject var shareData: ShareData
-    
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
     
     var body: some View {
         //       Group{
@@ -36,8 +38,9 @@ struct MatchingListView: View {
 //                                    }ggg@ggg.com
                                 }
                             }.disabled(self.shareData.naviLinkOff)
-                        }.listRowBackground(self.shareData.white) //foreachに
-                    }
+                            .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2) //foreachに
+                            }
+                        }
                     .onAppear { UITableView.appearance().separatorStyle = .none}
                     .onDisappear { UITableView.appearance().separatorStyle = .none }
                     .navigationBarTitle(Text("マッチ一覧"), displayMode: .inline)

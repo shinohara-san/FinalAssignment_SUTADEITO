@@ -26,16 +26,16 @@ struct UserRow: View{
                     if user.place == "カフェ" && user.schedule == "日中" && user.studystyle != "勉強はせずにお話をしてみたい" && user.studystyle != "その他"{
                        Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
                     }
-                       Text(user.age)
+                    Text(user.age)
                        Text(user.hometown)
                     
-                   }.frame(width: geometry.size.width * 0.4)
+                }.frame(minWidth: geometry.size.width * 0.4).foregroundColor(self.shareData.black)
                 
                }
             
                HStack(spacing: 0){
                    chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                   Text(user.subject).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
             }
                
            }
@@ -68,6 +68,6 @@ struct UserRow: View{
 
 //struct UserRow_Previews: PreviewProvider {
 //    static var previews: some View {
-//        UserRow()
+//        UserRow(user: User(id: <#String#>, email: <#String#>, name: <#String#>, gender: <#String#>, age: <#String#>, hometown: <#String#>, subject: <#String#>, introduction: <#String#>, studystyle: <#String#>, hobby: <#String#>, personality: <#String#>, work: <#String#>, purpose: <#String#>, photoURL: <#String#>, matchRoomId: <#String#>, fee: <#String#>, schedule: <#String#>, place: <#String#>), geometry: _ GeometryProxy)
 //    }
 //}

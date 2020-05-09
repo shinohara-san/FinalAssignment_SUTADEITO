@@ -12,7 +12,9 @@ struct UserListView: View {
     @EnvironmentObject var shareData: ShareData
     @State var userProfileOn = false
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
-    
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
 
     
     var body: some View {
@@ -30,14 +32,14 @@ struct UserListView: View {
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
-                            }
+                            } .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
                         } //foreach
-                            .listRowBackground(self.shareData.white)
+                           
                     }
                     .onAppear { UITableView.appearance().separatorStyle = .none }
                     .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     .onAppear{
-                            self.shareData.getCurrentUser()
+                        self.shareData.getCurrentUser()
                         
                     }
                    

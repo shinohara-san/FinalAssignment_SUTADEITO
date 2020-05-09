@@ -20,6 +20,10 @@ struct SearchView: View {
         return userInfo.schedule == "日中" && userInfo.place == "カフェ" && userInfo.schedule == "日中" && userInfo.studystyle != "勉強はせずにお話をしてみたい" && userInfo.studystyle != "その他"
     }
     
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
+    
     var body: some View {
         GeometryReader{ geometry in
             NavigationView{
@@ -52,8 +56,9 @@ struct SearchView: View {
                                 } else {
                                     Divider()
                                 }
-                            }
-                        }.listRowBackground(self.shareData.white)
+                            }.listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                        }
+                        
 
                         
                     } //list

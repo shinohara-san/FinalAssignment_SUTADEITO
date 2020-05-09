@@ -16,6 +16,9 @@ struct FavoriteUserView: View {
     var goodUser:Bool{
         return favoriteUserInfo.schedule == "日中" && favoriteUserInfo.place == "カフェ" && favoriteUserInfo.schedule == "日中" && favoriteUserInfo.studystyle != "勉強はせずにお話をしてみたい" && favoriteUserInfo.studystyle != "その他"
     }
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
     
     var body: some View {
         
@@ -49,7 +52,7 @@ struct FavoriteUserView: View {
                                     Divider()
                                 }
                             }
-                            .listRowBackground(self.shareData.white)
+                            .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
                                 .onTapGesture {
                                     if user.id == "" {return}
                                     self.favoriteUserInfo = user

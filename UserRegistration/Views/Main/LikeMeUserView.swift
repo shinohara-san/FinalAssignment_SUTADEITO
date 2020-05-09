@@ -17,6 +17,10 @@ struct LikeMeUserView: View {
     var goodUser:Bool{
         return likeUserInfo.schedule == "日中" && likeUserInfo.place == "カフェ" && likeUserInfo.schedule == "日中" && likeUserInfo.studystyle != "勉強はせずにお話をしてみたい" && likeUserInfo.studystyle != "その他"
     }
+    
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
         
         var body: some View {
             
@@ -49,7 +53,7 @@ struct LikeMeUserView: View {
                                     }
                             }
                                     .padding(.bottom)
-                                    .listRowBackground(self.shareData.white)
+                                .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
                                     .onTapGesture {
                                          if user.id == "" {return}
                                         self.likeUserInfo = user
@@ -69,7 +73,7 @@ struct LikeMeUserView: View {
                             Button(action: {
                                 self.shareData.myProfile = true
                             }, label: {
-                                Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                                Image(systemName: "house.fill").foregroundColor(self.shareData.white2)
                             })
                             )
                             .onAppear{
