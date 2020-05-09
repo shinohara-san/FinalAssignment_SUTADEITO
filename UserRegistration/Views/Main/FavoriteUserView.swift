@@ -13,6 +13,9 @@ struct FavoriteUserView: View {
     //    @State var favoriteProfileOn = false
     @State var favoriteUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
     @State var isModal = false
+    var goodUser:Bool{
+        return favoriteUserInfo.schedule == "日中" && favoriteUserInfo.place == "カフェ" && favoriteUserInfo.schedule == "日中" && favoriteUserInfo.studystyle != "勉強はせずにお話をしてみたい" && favoriteUserInfo.studystyle != "その他"
+    }
     
     var body: some View {
         
@@ -29,9 +32,14 @@ struct FavoriteUserView: View {
                                         .padding(.top, 8).padding(.leading).animation(.spring())
                                     VStack(alignment: .leading,spacing: 5){
                                         
+                                        HStack{
+                                         if self.goodUser{
+                                             Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                         }
                                         Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                        Text(user.age)
-                                            .frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                         }
+                                         Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                        
                                     }
                                     
                                 }

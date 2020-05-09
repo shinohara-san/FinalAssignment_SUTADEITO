@@ -16,6 +16,9 @@ struct SearchView: View {
     
     @State var isModal = false
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
+    var goodUser:Bool{
+        return userInfo.schedule == "日中" && userInfo.place == "カフェ" && userInfo.schedule == "日中" && userInfo.studystyle != "勉強はせずにお話をしてみたい" && userInfo.studystyle != "その他"
+    }
     
     var body: some View {
         GeometryReader{ geometry in
@@ -30,8 +33,13 @@ struct SearchView: View {
                                     .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
                                     .padding(.top, 8).padding(.leading).animation(.spring())
                                 VStack(alignment: .leading,spacing: 5){
+                                    HStack{
+                                     if self.goodUser{
+                                         Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                     }
                                     Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                    Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                     }
+                                     Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                 }
                             }
                                     .onTapGesture {

@@ -13,6 +13,10 @@ struct LikeMeUserView: View {
         //    @State var favoriteProfileOn = false
         @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
         @State var isModal = false
+    
+    var goodUser:Bool{
+        return likeUserInfo.schedule == "日中" && likeUserInfo.place == "カフェ" && likeUserInfo.schedule == "日中" && likeUserInfo.studystyle != "勉強はせずにお話をしてみたい" && likeUserInfo.studystyle != "その他"
+    }
         
         var body: some View {
             
@@ -28,10 +32,13 @@ struct LikeMeUserView: View {
                                             .clipShape(Circle()).shadow(radius: 2, x:2, y:5)
                                             .padding(.top, 8).padding(.leading).animation(.spring())
                                         VStack(alignment: .leading,spacing: 5){
-                                            
-                                            Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                            Text(user.age)
-                                                .frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                            HStack{
+                                            if self.goodUser{
+                                                Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                            }
+                                           Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                            }
+                                            Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                         }
                                         
                                     }
