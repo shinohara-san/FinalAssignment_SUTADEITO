@@ -65,7 +65,11 @@ struct ProfileUserDetailView: View {
                 VStack{
                     Text("すたでいと").font(.title).fontWeight(.bold).padding(.bottom)
                     if self.place == "カフェ" && self.schedule == "日中" && self.studystyle != "勉強はせずにお話をしてみたい" && self.studystyle != "その他"{
-                        Text("このユーザーは「すたでいと」ユーザーです").font(.subheadline).foregroundColor(.yellow).fontWeight(.bold).padding(.bottom)
+                        HStack(alignment: .firstTextBaseline){
+                            Image(systemName: "hand.thumbsup.fill")
+                            Text("「すたでいと」ユーザーです").fontWeight(.bold)
+                        }.font(.subheadline).foregroundColor(.yellow).padding(.bottom)
+                        
                     }
                     InfoRow(title: "勉強中:", info: self.subject)
                     InfoRow(title: "希望するすたでいと:", info: self.studystyle)
