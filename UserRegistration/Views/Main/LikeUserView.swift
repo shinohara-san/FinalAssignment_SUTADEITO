@@ -14,14 +14,6 @@ struct LikeUserView: View {
     @State var likeProfileOn = false
     @State var likeUserInfo = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
     
-    var goodUser:Bool{
-        return likeUserInfo.schedule == "日中" && likeUserInfo.place == "カフェ" && likeUserInfo.schedule == "日中" && likeUserInfo.studystyle != "勉強はせずにお話をしてみたい" && likeUserInfo.studystyle != "その他"
-    }
-    
-    func emptyUser(user: User)->Bool{
-        return user.id == ""
-    }
-
     var body: some View {
         GeometryReader{ geometry in
             NavigationView{
@@ -33,17 +25,20 @@ struct LikeUserView: View {
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
                                         .clipShape(Circle()).shadow(radius: 2, x:2, y:5)
-                                        .padding(.top, 8).padding(.leading).animation(.spring())
+                                        .padding(.top, 8).padding(.leading)
                                     VStack(alignment: .leading,spacing: 5){
-                                        
                                         HStack{
-                                         if self.goodUser{
-                                             Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
-                                         }
-                                        Text(user.name).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                         }
-                                         Text(user.age).frame(width: geometry.size.width * 0.5, alignment: .leading)
-                                    }
+                                            
+                                            if self.shareData.goodUser(user: user){
+                                                    Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                                }
+
+                                            Text(user.name)
+                                        }
+                                        
+                                        Text(user.age)
+                                        
+                                    }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                 } //hs
                                 if user.id == "" {
                                     Divider().hidden()
@@ -51,7 +46,7 @@ struct LikeUserView: View {
                                     Divider()
                                 }
                             }
-                            .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                            .listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
                             .onTapGesture {
                                 if user.id == "" {return}
                                 self.likeUserInfo = user
@@ -93,8 +88,8 @@ struct LikeUserView: View {
 } //body
 //view
 
-struct LikeUserView_Previews: PreviewProvider {
-    static var previews: some View {
-        LikeUserView()
-    }
-}
+//struct LikeUserView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LikeUserView()
+//    }
+//}

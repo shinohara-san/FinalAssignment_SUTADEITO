@@ -29,6 +29,14 @@ struct MessageView: View {
     @State var text = ""
     @State var matchId = ""
     @State var isModal = false
+    
+    @State private var textHeight: Double = 20
+    let listRowPadding: Double = 5 // This is a guess
+    let listRowMinHeight: Double = 45 // This is a guess
+    var listRowHeight: Double {
+        max(listRowMinHeight, textHeight + 2 * listRowPadding)
+    }
+    
     var body: some View {
         GeometryReader{ geometry in
             

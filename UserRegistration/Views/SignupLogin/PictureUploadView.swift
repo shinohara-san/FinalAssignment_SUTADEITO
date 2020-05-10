@@ -56,7 +56,7 @@ struct PictureUploadView: View {
                 
                 VStack{
                     if self.imageURL != "" {
-                        FirebaseImageView(imageURL: self.imageURL).frame(width: geometry.size.width * 1, height: geometry.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 2).padding(.vertical).animation(.spring())
+                        FirebaseImageView(imageURL: self.imageURL).frame(width: geometry.size.width * 1, height: geometry.size.height * 0.4).cornerRadius(10).shadow(radius: 2, x: 2, y: 2).padding(.vertical)
                     }
                     Button(action: {
                         self.shown.toggle()

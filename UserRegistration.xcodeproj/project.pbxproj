@@ -46,6 +46,7 @@
 		95E9C5EC245D4514009E11DF /* FavoriteUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E9C5EB245D4513009E11DF /* FavoriteUserView.swift */; };
 		95E9C5EE245D4526009E11DF /* LikeUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E9C5ED245D4526009E11DF /* LikeUserView.swift */; };
 		95F5045E2452B69900CB0A0F /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F5045D2452B69900CB0A0F /* MessageViewModel.swift */; };
+		95F51CF6246812B200F3F50B /* ThumbsUpIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F51CF5246812B200F3F50B /* ThumbsUpIconView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,6 +90,7 @@
 		95E9C5EB245D4513009E11DF /* FavoriteUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserView.swift; sourceTree = "<group>"; };
 		95E9C5ED245D4526009E11DF /* LikeUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeUserView.swift; sourceTree = "<group>"; };
 		95F5045D2452B69900CB0A0F /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
+		95F51CF5246812B200F3F50B /* ThumbsUpIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbsUpIconView.swift; sourceTree = "<group>"; };
 		AB33BADC0A6F2EF159C54F5F /* Pods-UserRegistration.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserRegistration.debug.xcconfig"; path = "Target Support Files/Pods-UserRegistration/Pods-UserRegistration.debug.xcconfig"; sourceTree = "<group>"; };
 		C469270F76DD005C72AA02D1 /* Pods-UserRegistration.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UserRegistration.release.xcconfig"; path = "Target Support Files/Pods-UserRegistration/Pods-UserRegistration.release.xcconfig"; sourceTree = "<group>"; };
 		FB47C0617E06AA2F429B756F /* Pods_UserRegistration.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UserRegistration.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +201,7 @@
 				95CDFAB22446B2BA0054FADF /* Info.plist */,
 				95CDFAAC2446B2BA0054FADF /* Preview Content */,
 				95DA4B66244AE869009921D4 /* Note.swift */,
+				95F51CF5246812B200F3F50B /* ThumbsUpIconView.swift */,
 				95C85F8C24603CAA00933CFC /* SmallUserRow.swift */,
 				95C85F8F2460ED8400933CFC /* MenuView.swift */,
 				95E9C5E9245C0CBB009E11DF /* MultilineTextView.swift */,
@@ -384,6 +387,7 @@
 				95C85F8D24603CAA00933CFC /* SmallUserRow.swift in Sources */,
 				95C458B0245D643600C4ADA1 /* MatchingListView.swift in Sources */,
 				953B24F4244921D2007BD077 /* SettingView.swift in Sources */,
+				95F51CF6246812B200F3F50B /* ThumbsUpIconView.swift in Sources */,
 				95CDFAA72446B2B60054FADF /* SceneDelegate.swift in Sources */,
 				95E9C5EC245D4514009E11DF /* FavoriteUserView.swift in Sources */,
 				959B9205244995BC00A16952 /* ShareData.swift in Sources */,

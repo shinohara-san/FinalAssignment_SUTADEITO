@@ -9,39 +9,43 @@
 import SwiftUI
 
 struct UserRow: View{
-       @EnvironmentObject var shareData: ShareData
-       let user : User
-       let geometry : GeometryProxy
-       
-       var body: some View{
+    @EnvironmentObject var shareData: ShareData
+    let user : User
+    let geometry : GeometryProxy
+    
+    var body: some View{
         VStack{
-           HStack(spacing: 0){
-               //                                        Spacer()
-               VStack{
-                   FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
-                       .clipShape(Circle()).shadow(radius: 2, x:2, y:2)
-                       .padding(.top, 8).animation(.spring())
-                HStack(alignment: .firstTextBaseline){
-//                       Spacer()
-                    if user.place == "カフェ" && user.schedule == "日中" && user.studystyle != "勉強はせずにお話をしてみたい" && user.studystyle != "その他"{
-                       Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
-                    }
-                    Text(user.age)
-                       Text(user.hometown)
+            HStack(spacing: 0){
+              
+                VStack{
+                        FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2, alignment: .leading)
+                            .clipShape(Circle())
+                            .shadow(radius: 2, x:2, y:2)
+                            .padding(.top, 8)
                     
-                }.frame(minWidth: geometry.size.width * 0.4).foregroundColor(self.shareData.black)
+                    HStack(alignment: .firstTextBaseline){
+                        if self.shareData.goodUser(user: user){
+                            Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                        }
+                        Text(user.age)
+                        Text(user.hometown).frame(width: 50)
+                        
+                    }.padding(.horizontal).font(.subheadline).foregroundColor(self.shareData.black)
+                        
+                }
+                        
+                        
+                        HStack(spacing: 0){
+                            chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
+                            Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                        }
+                    
+                    
                 
-               }
-            
-               HStack(spacing: 0){
-                   chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
             }
-               
-           }
             Divider()
         }
-       }
+    }
     
     private func chatBubbleTriange(
         width: CGFloat,
@@ -64,10 +68,4 @@ struct UserRow: View{
         .padding(.bottom, 12)
     }
     
-   }
-
-//struct UserRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserRow(user: User(id: <#String#>, email: <#String#>, name: <#String#>, gender: <#String#>, age: <#String#>, hometown: <#String#>, subject: <#String#>, introduction: <#String#>, studystyle: <#String#>, hobby: <#String#>, personality: <#String#>, work: <#String#>, purpose: <#String#>, photoURL: <#String#>, matchRoomId: <#String#>, fee: <#String#>, schedule: <#String#>, place: <#String#>), geometry: _ GeometryProxy)
-//    }
-//}
+}

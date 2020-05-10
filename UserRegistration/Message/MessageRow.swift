@@ -20,12 +20,12 @@ struct MessageRow: View {
 //                VStack{
                 HStack(spacing : 0){
                     Text(self.message)
-//                        .frame(height: 100)
-//                        .fixedSize(horizontal: false, vertical: true)//
+//                        .lineLimit(nil)
+                        
                     .padding(10)
                         .background(self.shareData.green)
                     .cornerRadius(6)
-                        .foregroundColor(Color.black)
+                        .foregroundColor(self.shareData.black)
                     .shadow(radius: 1, x: 2, y: 2)
                     .layoutPriority(1)
                     self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.2, isIncoming: false)
@@ -37,11 +37,12 @@ struct MessageRow: View {
                     HStack(spacing : 0){
                         self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.2, isIncoming: true)
                         Text(self.message)
+                            //.lineLimit(nil)
 //                            .fixedSize(horizontal: false, vertical: true)
                     .padding(10)
                     .background(self.shareData.yellow)
                     .cornerRadius(6)
-                    .foregroundColor(Color.black)
+                            .foregroundColor(self.shareData.black)
                     .shadow(radius: 1, x: 2, y: 2)
                     }
 //                }

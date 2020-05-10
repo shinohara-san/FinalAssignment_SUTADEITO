@@ -9,10 +9,7 @@ import SwiftUI
 
 struct MatchingListView: View {
     @EnvironmentObject var shareData: ShareData
-    func emptyUser(user: User)->Bool{
-        return user.id == ""
-    }
-    
+
     var body: some View {
         //       Group{
         GeometryReader{ geometry in
@@ -28,17 +25,19 @@ struct MatchingListView: View {
                                     HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15, height: geometry.size.height * 0.1)
                                         .clipShape(Circle()).shadow(radius: 2, x:2, y:2).animation(.spring())
+                                    
+                                        if self.shareData.goodUser(user: user){
+                                            Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                        
+                                        Text(user.name)
+                                    }
                                     Text(user.name)
                                     Text(user.age)
-                                }
-//                                    if user.id == ""{
-//                                        Divider().hidden()heima@aaa.com
-//                                    } else {fff@fff.com
-//                                        Divider()eee@eee.com
-//                                    }ggg@ggg.com
+                                }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 1, alignment: .leading)
+
                                 }
                             }.disabled(self.shareData.naviLinkOff)
-                            .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2) //foreachに
+                            .listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2) //foreachに
                             }
                         }
                     .onAppear { UITableView.appearance().separatorStyle = .none}

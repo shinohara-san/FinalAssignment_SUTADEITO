@@ -161,7 +161,7 @@ struct RegisterView: View {
                             }
                             Text("すたでいと").foregroundColor(self.shareData.black).font(.headline).fontWeight(.bold).padding(.top)
 //                            HStack(alignment: .firstTextBaseline){
-                                Text("勉強したい、日中、カフェを選ぶと「すたでいとユーザー」になれます").foregroundColor(.yellow).font(.subheadline).fontWeight(.bold).frame(width: geometry.size.width * 0.7).padding(.top)
+                                           Text("勉強したい、日中、カフェを選ぶと「すたでいとユーザー」になれます").foregroundColor(.yellow).font(.subheadline).fontWeight(.bold).frame(width: geometry.size.width * 0.7).padding(.top)
 //                            }
                             Section{
                                 VStack{

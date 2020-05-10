@@ -682,6 +682,13 @@ class ShareData:ObservableObject{
     @Published var matchNotification = false
     @Published var searchBoxOn = false
     
+    func goodUser(user: User)->Bool{
+           return user.schedule == "日中" && user.place == "カフェ" && user.schedule == "日中" && user.studystyle != "勉強はせずにお話をしてみたい" && user.studystyle != "その他"
+       }
+    func emptyUser(user: User)->Bool{
+        return user.id == ""
+    }
+    
 }//func
 
 
