@@ -30,46 +30,91 @@ struct MessageView: View {
     @State var matchId = ""
     @State var isModal = false
     
-    @State private var textHeight: Double = 20
-    let listRowPadding: Double = 5 // This is a guess
-    let listRowMinHeight: Double = 45 // This is a guess
-    var listRowHeight: Double {
-        max(listRowMinHeight, textHeight + 2 * listRowPadding)
+    private func talkBubbleTriange(
+        width: CGFloat,
+        height: CGFloat,
+        isIncoming: Bool) -> some View {
+        
+        Path { path in
+            path.move(to: CGPoint(x: isIncoming ? 0 : width, y: height * 0.5))
+            path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: height * 0.7))
+            path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: 0))
+            path.closeSubpath()
+        }
+        .fill(isIncoming ? shareData.yellow : shareData.green)
+        .frame(width: width, height: height)
+        .shadow(radius: 1, x: 2, y: 2)
+        .zIndex(10)
+        .clipped()
+        .padding(.trailing, isIncoming ? -1 : 10)
+        .padding(.leading, isIncoming ? 10 : -1)
+        .padding(.bottom, 12)
     }
+    
+//    @State var offset : CGFloat = 0.0
+    
     
     var body: some View {
         GeometryReader{ geometry in
             
             ZStack{
                 self.shareData.pink.edgesIgnoringSafeArea(.all)
-                //                NavigationView{
                 VStack{
                     List{
-                        ForEach(self.msgVM.messages){ i in
+                        ForEach(self.msgVM.messages.reversed()){ i in //.reversed()
                             if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
-                                MessageRow(message: i.msg, isMyMessage: true).frame(height: 63)//rowの高さが足りないと表示されない
+                                //                                MessageRow(message: i.msg, isMyMessage: true)
+                                ///MessegeRowをかますと高さが一行分になってしまう
+                                HStack{
+                                    Spacer()
+                                    HStack(spacing: 0){
+                                        Text(i.msg)
+                                            .padding(13)
+                                            .background(RoundedCorners(color: self.shareData.green, tl: 20, tr: 20, bl: 20, br: 2))
+                                            .foregroundColor(self.shareData.black)
+                                        
+                                    }
+                                }
+                                
                                 
                                 
                             } else {
-                                MessageRow(message: i.msg, isMyMessage: false)
+                                HStack{
+                                    
+                                    HStack(spacing: 0){
+                                        Text(i.msg)
+                                            .padding(13)
+                                            .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
+                                            .foregroundColor(self.shareData.black)
+                                    }
+                                    Spacer()
+                                }
                                 
                             }
-                            
-                        }.listRowBackground(self.shareData.white)
+                            ///メッセージがいっぱいになったらrotationEffectかける
+                        }
+                        .rotationEffect(.radians(.pi), anchor: .center)
+                        .listRowBackground(self.shareData.white)
+//
                     }
+//                        .offset(y: geometry.size.height * 0.35)
+//                    .frame(height: geometry.size.height * 1)
+                    .rotationEffect(.radians(.pi), anchor: .center)
                         .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
-                        .onAppear { UITableView.appearance().separatorStyle = .none }
+                        .onAppear {
+                            UITableView.appearance().separatorStyle = .none
+//                            self.msgVM.reverse()
+                    }
                         .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     
                     HStack{
                         TextField("メッセージ", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                         Button(action: {
-                            if self.text.count > 0 && self.text.count < 44{
-                                //                                print("送信時マッチID: \(self.msgVM.matchId)")
+                            if self.text.count > 0{
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
-                                
+//                                self.msgVM.reverse()
                                 self.text = ""
-                                //                                print("MessageViewでの送信後のmessages: \(self.msgVM.messages)")
+                         
                             }
                             
                         }) {
@@ -118,6 +163,41 @@ struct MessageView: View {
 struct MessageView_Previews: PreviewProvider {
     static var previews: some View {
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
+
+struct RoundedCorners: View {
+    var color: Color = .blue
+    var tl: CGFloat = 0.0
+    var tr: CGFloat = 0.0
+    var bl: CGFloat = 0.0
+    var br: CGFloat = 0.0
+    
+    var body: some View {
+        GeometryReader { geometry in
+            Path { path in
+                
+                let w = geometry.size.width
+                let h = geometry.size.height
+                
+                // Make sure we do not exceed the size of the rectangle
+                let tr = min(min(self.tr, h/2), w/2)
+                let tl = min(min(self.tl, h/2), w/2)
+                let bl = min(min(self.bl, h/2), w/2)
+                let br = min(min(self.br, h/2), w/2)
+                
+                path.move(to: CGPoint(x: w / 2.0, y: 0))
+                path.addLine(to: CGPoint(x: w - tr, y: 0))
+                path.addArc(center: CGPoint(x: w - tr, y: tr), radius: tr, startAngle: Angle(degrees: -90), endAngle: Angle(degrees: 0), clockwise: false)
+                path.addLine(to: CGPoint(x: w, y: h - br))
+                path.addArc(center: CGPoint(x: w - br, y: h - br), radius: br, startAngle: Angle(degrees: 0), endAngle: Angle(degrees: 90), clockwise: false)
+                path.addLine(to: CGPoint(x: bl, y: h))
+                path.addArc(center: CGPoint(x: bl, y: h - bl), radius: bl, startAngle: Angle(degrees: 90), endAngle: Angle(degrees: 180), clockwise: false)
+                path.addLine(to: CGPoint(x: 0, y: tl))
+                path.addArc(center: CGPoint(x: tl, y: tl), radius: tl, startAngle: Angle(degrees: 180), endAngle: Angle(degrees: 270), clockwise: false)
+            }
+            .fill(self.color)
+        }
     }
 }
 //

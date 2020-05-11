@@ -23,11 +23,11 @@ struct UserRow: View{
                             .shadow(radius: 2, x:2, y:2)
                             .padding(.top, 8)
                     
-                    HStack(alignment: .firstTextBaseline){
+                    HStack(alignment: .firstTextBaseline, spacing: 0){
                         if self.shareData.goodUser(user: user){
                             Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
                         }
-                        Text(user.age)
+                        Text(user.age).frame(width: 50)
                         Text(user.hometown).frame(width: 50)
                         
                     }.padding(.horizontal).font(.subheadline).foregroundColor(self.shareData.black)

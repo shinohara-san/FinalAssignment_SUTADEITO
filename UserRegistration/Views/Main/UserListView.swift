@@ -15,7 +15,9 @@ struct UserListView: View {
     func emptyUser(user: User)->Bool{
         return user.id == ""
     }
-
+    init() {
+        UITableView.appearance().showsVerticalScrollIndicator = false
+    }
     
     var body: some View {
         

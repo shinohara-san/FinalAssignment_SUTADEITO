@@ -28,16 +28,19 @@ class MessageViewModel: ObservableObject {
     @Published var matchId:String
     
     @Published var messages:[Message]
+    
+//    @Published var order: Bool
  
     init(matchId: String){
         self.matchId = matchId
 //        self.sharedData = shareData
+//        self.order = false
         self.messages = [Message]()
 //        イニシャライザ（initializer）とは、コンストラクタのようにインスタンス生成時に自動で呼び出されるメソッドのことです。
 //        print("loop用マッチID: \(self.matchId)")
 //        DispatchQueue.main.async {
         
-        self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date").addSnapshotListener { (snap, error) in
+        self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date",descending: false).addSnapshotListener { (snap, error) in
            
 //            DispatchQueue.global().sync {
             if let error = error {
@@ -56,12 +59,11 @@ class MessageViewModel: ObservableObject {
                         let id = i.document.documentID
                         let date = i.document.get("date") as! Timestamp
                         let matchId = i.document.get("matchId") as! String
-//                      DispatchQueue.global().async {
+
                         self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
-//                        }
-//                        self.messages = []
+
 //                        print("messagesの中身: \(self.messages)") //Ok
-                        
+                       
                     }
                 }
             }
@@ -87,7 +89,7 @@ class MessageViewModel: ObservableObject {
                 print(err.localizedDescription)
                 return
             }
-            print("メッセージを送信しました")
+            print("メッセージを送信しましたー")
         }
         
 
@@ -95,4 +97,13 @@ class MessageViewModel: ObservableObject {
     
     
 }//class
+    
+//    func reverse(){
+//        if messages.count > 11 {
+//            order = true
+//        } else {
+//            order = false
+//        }
+//        print("order: \(order)")
+//    }
 }
