@@ -27,7 +27,7 @@ struct SettingView: View {
                                     self.shareData.white.edgesIgnoringSafeArea(.all)
                                     ScrollView(showsIndicators: false){
                                         VStack{
-                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.white2, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical, 10)
+                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.brown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical, 10)
                                             ProfileUserDetailView(
                                                 name: String(describing: self.shareData.currentUserData["name"] ?? ""),
                                                 age: String(describing: self.shareData.currentUserData["age"] ?? ""),

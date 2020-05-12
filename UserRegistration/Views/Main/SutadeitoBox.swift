@@ -23,7 +23,7 @@ struct SutadeitoBox: View {
         Text("「日中」「カフェ」「勉強したい」をプロフィールで選択しているユーザーです。")
 //            .font(.subheadline)
             .foregroundColor(self.shareData.black).padding()
-        Text("あなたも、すたでいとユーザーになって、他のユーザーにアピールをしましょう。")
+        Text("すたでいとユーザーになって、他のユーザーにアピールしましょう。")
 //            .font(.subheadline)
             .foregroundColor(self.shareData.black).padding()
             

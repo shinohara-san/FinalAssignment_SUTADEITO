@@ -67,7 +67,7 @@ struct ProfileUserDetailView: View {
                     if self.place == "カフェ" && self.schedule == "日中" && self.studystyle != "勉強はせずにお話をしてみたい" && self.studystyle != "その他"{
                         HStack(alignment: .firstTextBaseline){
                             Image(systemName: "hand.thumbsup.fill")
-                            Text("「すたでいと」ユーザーです").fontWeight(.bold)
+                            Text("すたでいとユーザーです").fontWeight(.bold)
                         }.font(.subheadline).foregroundColor(.yellow).padding(.bottom)
                         
                     }
