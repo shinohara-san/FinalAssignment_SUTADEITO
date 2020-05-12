@@ -51,7 +51,9 @@ struct MessageView: View {
         .padding(.bottom, 12)
     }
     
-//    @State var offset : CGFloat = 0.0
+    var dummy = [Message(id: "", msg: "", fromUser: "", toUser: "", date: "", hinichi: "", matchId: "")]
+    
+    //    @State var offset : CGFloat = 0.0
     
     
     var body: some View {
@@ -63,58 +65,63 @@ struct MessageView: View {
                     List{
                         ForEach(self.msgVM.messages.reversed()){ i in //.reversed()
                             if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
-                                //                                MessageRow(message: i.msg, isMyMessage: true)
+                                // MessageRow(message: i.msg, isMyMessage: true)
                                 ///MessegeRowをかますと高さが一行分になってしまう
-                                HStack{
-                                    Spacer()
-                                    HStack(spacing: 0){
-                                        Text(i.msg)
-                                            .padding(13)
-                                            .background(RoundedCorners(color: self.shareData.green, tl: 20, tr: 20, bl: 20, br: 2))
-                                            .foregroundColor(self.shareData.black)
-                                        
-                                    }
-                                }
-                                
-                                
-                                
-                            } else {
-                                HStack{
+                                VStack(spacing: 0){
                                     
-                                    HStack(spacing: 0){
-                                        Text(i.msg)
-                                            .padding(13)
-                                            .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
-                                            .foregroundColor(self.shareData.black)
+                                    HStack{
+                                        Spacer()
+                                        HStack{
+                                            Text(i.msg)
+                                                .padding(13)
+                                                .background(RoundedCorners(color: self.shareData.green, tl: 20, tr: 20, bl: 20, br: 2))
+                                                .foregroundColor(self.shareData.black)
+                                            
+                                        }
                                     }
+                                    HStack{
+                                        Spacer()
+                                        Text(i.date).font(.footnote).foregroundColor(self.shareData.black)
+                                    }
+                                    
+                                }
+                            } else {
+                                VStack(spacing: 0){
+                                
+                                HStack{
+                                    Text(i.msg)
+                                        .padding(13)
+                                        .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
+                                        .foregroundColor(self.shareData.black)
+                                    
                                     Spacer()
                                 }
-                                
+                                HStack{
+                                    Text(i.date).font(.footnote).foregroundColor(self.shareData.black)
+                                    Spacer()
+                                }
+                            }
                             }
                             ///メッセージがいっぱいになったらrotationEffectかける
                         }
                         .rotationEffect(.radians(.pi), anchor: .center)
                         .listRowBackground(self.shareData.white)
-//
                     }
-//                        .offset(y: geometry.size.height * 0.35)
-//                    .frame(height: geometry.size.height * 1)
-                    .rotationEffect(.radians(.pi), anchor: .center)
+                        .rotationEffect(.radians(.pi), anchor: .center)
                         .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
                         .onAppear {
                             UITableView.appearance().separatorStyle = .none
-//                            self.msgVM.reverse()
                     }
-                        .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
+                    .onDisappear { UITableView.appearance().separatorStyle = .singleLine }
                     
                     HStack{
                         TextField("メッセージ", text: self.$text).textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                         Button(action: {
                             if self.text.count > 0{
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
-//                                self.msgVM.reverse()
+//                                print(self.msgVM.messages)
                                 self.text = ""
-                         
+                                
                             }
                             
                         }) {

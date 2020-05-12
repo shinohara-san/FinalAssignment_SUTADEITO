@@ -16,7 +16,8 @@ struct Message: Identifiable {
     var msg: String
     var fromUser: String
     var toUser: String
-    var date: Timestamp
+    var date: String
+    var hinichi: String
     var matchId : String
 }
 
@@ -37,8 +38,6 @@ class MessageViewModel: ObservableObject {
 //        self.order = false
         self.messages = [Message]()
 //        イニシャライザ（initializer）とは、コンストラクタのようにインスタンス生成時に自動で呼び出されるメソッドのことです。
-//        print("loop用マッチID: \(self.matchId)")
-//        DispatchQueue.main.async {
         
         self.db.collection("Messages").whereField("matchId", isEqualTo: self.matchId).order(by: "date",descending: false).addSnapshotListener { (snap, error) in
            
@@ -57,12 +56,24 @@ class MessageViewModel: ObservableObject {
                         let fromUser = i.document.get("fromUser") as! String
                         let message = i.document.get("message") as! String
                         let id = i.document.documentID
-                        let date = i.document.get("date") as! Timestamp
+                        let timestamp: Timestamp = i.document.get("date") as! Timestamp
+                        let dateValue = timestamp.dateValue()
+                        let f = DateFormatter()
+                           f.locale = Locale(identifier: "ja_JP")
+                           f.dateStyle = .none
+                           f.timeStyle = .short
+                           let date = f.string(from: dateValue)
+                        
+                        let f2 = DateFormatter()
+                        f2.locale = Locale(identifier: "ja_JP")
+                        f2.dateStyle = .full
+                        f2.timeStyle = .none
+                        let hinichi = f2.string(from: dateValue)
                         let matchId = i.document.get("matchId") as! String
+                        
 
-                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
+                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, hinichi: hinichi, matchId: matchId))
 
-//                        print("messagesの中身: \(self.messages)") //Ok
                        
                     }
                 }

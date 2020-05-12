@@ -315,7 +315,7 @@ class ShareData:ObservableObject{
     
     func getAllLikeMeUser(){
         self.likeMeUsers = [User]()
-        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.currentUserData["id"] as! String).getDocuments { (snap, err) in
+        db.collection("LikeTable").whereField("LikeUserId", isEqualTo: self.currentUserData["id"] as? String ?? "").getDocuments { (snap, err) in
             if let err = err {
                 print(err.localizedDescription)
                 return
