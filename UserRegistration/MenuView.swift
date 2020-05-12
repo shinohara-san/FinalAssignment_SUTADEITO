@@ -9,37 +9,25 @@
 import SwiftUI
 
 struct MenuView: View {
+    @EnvironmentObject var shareData: ShareData
     var body: some View {
+        ZStack{
+            self.shareData.white
         VStack(alignment: .leading) {
-            Image("coffee")
-                .resizable()
-                .overlay(
-                    Circle().stroke(Color.gray, lineWidth: 1))
-                .frame(width: 60, height: 60)
-                .clipShape(Circle())
-            Text("SwiftUIへの道")
-                .font(.largeTitle)
-            Text("@road2swiftui")
-                .font(.caption)
+            HStack(alignment: .firstTextBaseline){
+            Image(systemName: "hand.thumbsup.fill")
+                .foregroundColor(.yellow)
+                Text("「すたでいと」ユーザーとは？")
+                    .foregroundColor(self.shareData.black)
+            }.font(.title).padding()
+            Text("「日中」「カフェ」「勉強したい」をプロフィールで選択しているユーザーです。").foregroundColor(self.shareData.black).padding()
+            Text("あなたも「すたでいと」ユーザーになって、他のユーザーにアピールをしましょう。").foregroundColor(self.shareData.black).padding()
+            Spacer()
             Divider()
-            ScrollView (.vertical, showsIndicators: true) {
-                HStack {
-                    Image(systemName: "person")
-                    Text("Profile")
-                }
-                HStack {
-                    Image(systemName: "list.dash")
-                    Text("Lists")
-                }
-                HStack {
-                    Image(systemName: "text.bubble")
-                    Text("Topics")
-                }
-            }
-            Divider()
-            Text("Settings and privacy")
+            Text("Settings and privacy").padding()
         }
-        .padding(.horizontal, 20)
+//        .padding(.horizontal, 20)
+    }//zs
     }
 }
 

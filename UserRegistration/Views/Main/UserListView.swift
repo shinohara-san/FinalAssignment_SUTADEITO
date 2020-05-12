@@ -19,12 +19,14 @@ struct UserListView: View {
         UITableView.appearance().showsVerticalScrollIndicator = false
     }
     
+    @State var menuOn = false
+    
     var body: some View {
         
         GeometryReader{ geometry in
             NavigationView{
                 ZStack{
-                    self.shareData.white.edgesIgnoringSafeArea(.all)
+
                     //                    ScrollView(showsIndicators: false){
                     
                     List{
@@ -44,11 +46,21 @@ struct UserListView: View {
                         self.shareData.getCurrentUser()
                         
                     }
-                   
-                }
-                    //
+                    if self.menuOn{
+                        Color.black.opacity(0.3)
+                        SutadeitoBox(menuOn: self.$menuOn)
+                    }
+
+                }//zstack
                     .navigationBarTitle("すたでいと", displayMode: .inline)
-                    .navigationBarItems(trailing:
+                    .navigationBarItems(leading:
+                        Button(action: {
+                            self.menuOn.toggle()
+                        }, label: {
+                            Image(systemName: "hand.thumbsup.fill")
+                        })
+                        
+                        ,trailing:
                         Button(action: {
                             self.shareData.myProfile = true
                         }, label: {

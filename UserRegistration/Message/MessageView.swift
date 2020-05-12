@@ -51,9 +51,14 @@ struct MessageView: View {
         .padding(.bottom, 12)
     }
     
-    var dummy = [Message(id: "", msg: "", fromUser: "", toUser: "", date: "", hinichi: "", matchId: "")]
+//    var dummy = [Message(id: "", msg: "", fromUser: "", toUser: "", date: "", hinichi: "", matchId: "")]
     
-    //    @State var offset : CGFloat = 0.0
+//    var categories: [String:[Message]]{
+//        Dictionary(
+//            grouping: msgVM.messages, //msbVM.messages (reversed)
+//            by:{$0.hinichi} //hinichi
+//        )
+//    }
     
     
     var body: some View {
@@ -81,33 +86,32 @@ struct MessageView: View {
                                     }
                                     HStack{
                                         Spacer()
-                                        Text(i.date).font(.footnote).foregroundColor(self.shareData.black)
+                                        Text(i.date).font(.caption).foregroundColor(self.shareData.black)
                                     }
                                     
                                 }
                             } else {
                                 VStack(spacing: 0){
-                                
-                                HStack{
-                                    Text(i.msg)
-                                        .padding(13)
-                                        .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
-                                        .foregroundColor(self.shareData.black)
-                                    
-                                    Spacer()
+                                    HStack{
+                                        Text(i.msg)
+                                            .padding(13)
+                                            .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
+                                            .foregroundColor(self.shareData.black)
+                                        
+                                        Spacer()
+                                    }
+                                    HStack{
+                                        Text(i.date).font(.caption).foregroundColor(self.shareData.black)
+                                        Spacer()
+                                    }
                                 }
-                                HStack{
-                                    Text(i.date).font(.footnote).foregroundColor(self.shareData.black)
-                                    Spacer()
-                                }
-                            }
                             }
                             ///メッセージがいっぱいになったらrotationEffectかける
                         }
                         .rotationEffect(.radians(.pi), anchor: .center)
                         .listRowBackground(self.shareData.white)
                     }
-                        .rotationEffect(.radians(.pi), anchor: .center)
+                    .rotationEffect(.radians(.pi), anchor: .center)
                         .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
                         .onAppear {
                             UITableView.appearance().separatorStyle = .none
@@ -119,11 +123,10 @@ struct MessageView: View {
                         Button(action: {
                             if self.text.count > 0{
                                 self.msgVM.sendMsg(msg: self.text, toUser: self.matchUserInfo.id, fromUser: self.shareData.currentUserData["id"] as! String, matchId: self.msgVM.matchId)
-//                                print(self.msgVM.messages)
+                                //                                print(self.msgVM.messages)
                                 self.text = ""
                                 
                             }
-                            
                         }) {
                             Image(systemName: "paperplane.fill").foregroundColor(self.shareData.white)
                         }.padding(.horizontal)
@@ -153,6 +156,7 @@ struct MessageView: View {
         }// geo
     }
     
+    
     func getMatchId(partner: User){
         Firestore.firestore().collection("MatchTable").document(self.shareData.currentUserData["id"] as? String ?? "").collection("MatchUser").whereField("MatchUserId", isEqualTo: partner.id).getDocuments { (snap, err) in
             if let snap = snap {
@@ -167,11 +171,11 @@ struct MessageView: View {
     }
 }
 
-struct MessageView_Previews: PreviewProvider {
-    static var previews: some View {
-        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-    }
-}
+//struct MessageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+//    }
+//}
 
 struct RoundedCorners: View {
     var color: Color = .blue
@@ -216,3 +220,16 @@ struct RoundedCorners: View {
 //    }
 //}
 //
+//
+//GeometryReader{ geometry in
+//
+//          ZStack{
+//              self.shareData.pink.edgesIgnoringSafeArea(.all)
+//              VStack{
+//                  List{
+//                      ForEach(self.categories.keys.sorted(), id: \.self) { key in
+//                      Section(footer: Text(key)){
+//                          ForEach(self.categories[key]!){ i in //.reversed()
+//                          if i.fromUser == self.shareData.currentUserData["id"] as? String ?? "" {
+//                              // MessageRow高さが一行分だけになる
+//                              VStack(spacing: 0){

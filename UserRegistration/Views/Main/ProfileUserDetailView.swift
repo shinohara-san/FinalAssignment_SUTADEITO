@@ -47,7 +47,7 @@ struct ProfileUserDetailView: View {
             Section{
                 
                 VStack{
-                    Text("基本情報").font(.title).fontWeight(.bold).padding(.bottom)
+                    Text("基本情報").foregroundColor(self.shareData.black).font(.title).fontWeight(.bold).padding(.bottom)
                     InfoRow(title: "名前:", info: self.name)
                     InfoRow(title: "年齢:", info: self.age)
                     InfoRow(title: "現住所:", info: self.hometown)
@@ -63,7 +63,7 @@ struct ProfileUserDetailView: View {
             Section{
                 
                 VStack{
-                    Text("すたでいと").font(.title).fontWeight(.bold).padding(.bottom)
+                    Text("すたでいと").foregroundColor(self.shareData.black).font(.title).fontWeight(.bold).padding(.bottom)
                     if self.place == "カフェ" && self.schedule == "日中" && self.studystyle != "勉強はせずにお話をしてみたい" && self.studystyle != "その他"{
                         HStack(alignment: .firstTextBaseline){
                             Image(systemName: "hand.thumbsup.fill")

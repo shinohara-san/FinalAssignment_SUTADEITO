@@ -310,7 +310,7 @@ struct UserProfileView: View {
                 ScrollView(showsIndicators: false){
                 VStack{
                     
-                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.white2, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical)
+                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.brown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical)
                     
                     ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose, fee: self.user.fee, schedule: self.user.schedule, place: self.user.place).frame(width: geo.size.width * 1)
                     

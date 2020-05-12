@@ -17,7 +17,7 @@ struct Message: Identifiable {
     var fromUser: String
     var toUser: String
     var date: String
-    var hinichi: String
+//    var hinichi: String
     var matchId : String
 }
 
@@ -60,20 +60,21 @@ class MessageViewModel: ObservableObject {
                         let dateValue = timestamp.dateValue()
                         let f = DateFormatter()
                            f.locale = Locale(identifier: "ja_JP")
-                           f.dateStyle = .none
+//                           f.dateStyle = .none
+                           f.dateStyle = .short
                            f.timeStyle = .short
                            let date = f.string(from: dateValue)
                         
-                        let f2 = DateFormatter()
-                        f2.locale = Locale(identifier: "ja_JP")
-                        f2.dateStyle = .full
-                        f2.timeStyle = .none
-                        let hinichi = f2.string(from: dateValue)
-                        let matchId = i.document.get("matchId") as! String
+//                        let f2 = DateFormatter()
+//                        f2.locale = Locale(identifier: "ja_JP")
+//                        f2.dateStyle = .full
+//                        f2.timeStyle = .none
+//                        let hinichi = f2.string(from: dateValue)
+//                        let matchId = i.document.get("matchId") as! String
                         
 
-                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, hinichi: hinichi, matchId: matchId))
-
+                        self.messages.append(Message(id: id, msg: message, fromUser: fromUser, toUser: toUser, date: date, matchId: matchId))
+//                         hinichi: hinichi,
                        
                     }
                 }
