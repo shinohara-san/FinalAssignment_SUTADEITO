@@ -62,11 +62,7 @@ struct TopPageView: View {
                         
                         NavigationLink(destination: LoginView().environmentObject(self.shareData)) {
                             Text("ログイン")
-                                .foregroundColor(self.shareData.white)
-                                .padding()
-                                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-                                .background(self.shareData.pink).cornerRadius(10)
-                                .shadow(radius: 2, y:2)
+                                .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geometry)
                         }
                         .padding(.vertical)
 /// navigationlink?
@@ -74,12 +70,7 @@ struct TopPageView: View {
                              self.isModal = true
                         }) {
                             Text("新規登録")
-                            .foregroundColor(self.shareData.pink)
-                            .padding()
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-                            .background(self.shareData.white)
-                            .cornerRadius(10)
-                            .shadow(radius: 2, y:2)
+                                .textStyle(fcolor: self.shareData.pink, bgcolor: self.shareData.white, geometry: geometry)
                             .padding(.bottom, 140)
                         }
                         
@@ -159,5 +150,17 @@ struct cardView: View{
         }
         
         
+    }
+}
+
+extension Text {
+    func textStyle(fcolor: Color, bgcolor: Color, geometry: GeometryProxy) -> some View {
+        self
+            .foregroundColor(fcolor)
+            .padding()
+            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
+            .background(bgcolor).cornerRadius(10)
+            .shadow(radius: 2, y:2)
+            
     }
 }

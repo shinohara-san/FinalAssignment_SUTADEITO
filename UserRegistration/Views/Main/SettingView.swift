@@ -48,14 +48,11 @@ struct SettingView: View {
                                             Button(action: {
                                                 self.isModal = true
                                             }) {
-                                                Text("編集する").padding()
-                                                .frame(width: geo.size.width * 0.7, height: geo.size.height * 0.05)
+                                                Text("編集する")
+                                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
+                                                    .padding(.vertical)
                                             }
-                                            .foregroundColor(self.shareData.white)
-                                            .background(self.shareData.pink).cornerRadius(10)
-                                            .shadow(radius: 2, y: 2)
-                                            .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
-                                            .padding(.vertical)
+                                            
                                             .sheet(isPresented: self.$isModal) {
                                                 ProfileEditView(datas: self.datas).environmentObject(self.shareData)
                                             }

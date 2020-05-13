@@ -86,6 +86,7 @@ struct MessageView: View {
                                     }
                                     HStack{
                                         Spacer()
+//                                        Text(i.hinichi).font(.caption).foregroundColor(self.shareData.black)
                                         Text(i.date).font(.caption).foregroundColor(self.shareData.black)
                                     }
                                     
@@ -101,12 +102,14 @@ struct MessageView: View {
                                         Spacer()
                                     }
                                     HStack{
+                                        
+//                                        Text(i.hinichi).font(.caption).foregroundColor(self.shareData.black)
+                                        
                                         Text(i.date).font(.caption).foregroundColor(self.shareData.black)
                                         Spacer()
                                     }
                                 }
                             }
-                            ///メッセージがいっぱいになったらrotationEffectかける
                         }
                         .rotationEffect(.radians(.pi), anchor: .center)
                         .listRowBackground(self.shareData.white)

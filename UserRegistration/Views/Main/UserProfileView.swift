@@ -325,13 +325,9 @@ struct UserProfileView: View {
                                     self.removeUserFromFavorite()
                                 }
                             }) {
-                                Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加").padding()
-                                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
-                            }.foregroundColor(self.shareData.white)
-                            
-                            .background(self.shareData.brown)
-                            .cornerRadius(10)
-                            .shadow(radius: 2, y: 2)
+                                Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
+                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geo)
+                            }
                             .padding(.vertical)
                             
                             
@@ -345,14 +341,8 @@ struct UserProfileView: View {
                                 }
                             }) {
                                 Text(self.gaveLike ? "いいねを取り消す" : "いいね")
-                                    .padding()
-                                .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
-                                    .lineLimit(nil)
-                                }.foregroundColor(self.shareData.white)
-                                
-                                .background(self.shareData.pink)
-                                .cornerRadius(10)
-                                .shadow(radius: 2, y: 2)
+                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
+                                }
                                 .padding(.bottom)
 
                             

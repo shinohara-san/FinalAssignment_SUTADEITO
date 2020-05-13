@@ -20,7 +20,7 @@ struct MatchingListView: View {
                     List{
                         ForEach(self.shareData.filteredMatchUserArray, id: \.matchRoomId){ user in
                             //id: がないとForEachが狂う？ idでダメだったのでmatchRoomIdに変えたら行けた
-                            NavigationLink(destination: MessageView(user, user.matchRoomId)){
+                            NavigationLink(destination: MessageView(user, user.matchRoomId).environmentObject(self.shareData)){
 //                                VStack{
                                     HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.15, height: geometry.size.height * 0.1)

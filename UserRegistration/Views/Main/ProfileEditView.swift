@@ -186,14 +186,9 @@ struct ProfileEditView: View {
                                 Button(action: {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
-                                    Text("戻る").padding()
-                                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
+                                    Text("戻る")
+                                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geo)
                                 }
-                                    
-                                .foregroundColor(self.shareData.white)
-                                .background(self.shareData.brown)
-                                .cornerRadius(10)
-                                .shadow(radius: 2, y: 2)
                                 .padding(.bottom)
                                 
                                 Button(action: {
@@ -203,12 +198,7 @@ struct ProfileEditView: View {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
                                     Text("保存する")
-                                        .padding()
-                                        .frame(width: geo.size.width * 0.8, height: geo.size.height * 0.05)
-                                        .foregroundColor(self.shareData.white)
-                                        .background(self.shareData.pink).cornerRadius(10)
-                                        .shadow(radius: 2, y: 2)
-                                        .frame(width: geo.size.width * 1, height: geo.size.height * 0.05)
+                                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
                                         .padding(.bottom)
                                 }
                                 

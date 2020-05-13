@@ -122,11 +122,8 @@ struct LoginView: View {
                                     }
                                 }
                             }) {
-                                Text("ログイン").foregroundColor(self.shareData.white)
-                                    .padding()
-                                    .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-                                .background(self.shareData.pink).cornerRadius(10)
-                                .shadow(radius: 2, y:2)
+                                Text("ログイン")
+                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geometry)
                             }.padding(.bottom, 50)
                             
                             Button(action: {

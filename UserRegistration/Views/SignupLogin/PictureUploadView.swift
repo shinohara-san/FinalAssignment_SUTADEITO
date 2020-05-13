@@ -62,8 +62,7 @@ struct PictureUploadView: View {
                         self.shown.toggle()
                     }) {
                         Text("写真を追加する")
-                            .padding()
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05).foregroundColor(self.shareData.white).background(self.shareData.brown).cornerRadius(10).shadow(radius: 2, y:2)
+                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geometry)
                     }.padding(.bottom)
                     
                     Button(action: {
@@ -93,24 +92,11 @@ struct PictureUploadView: View {
                         
                         
                     }) {
-                        Text("登録する").padding()
-                            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-                            .foregroundColor(self.shareData.white)
-                            .background(self.buttonColor).cornerRadius(10)
-                        .shadow(radius: 2, y:2)
+                        Text("登録する")
+                            .textStyle(fcolor: self.shareData.white, bgcolor: self.buttonColor, geometry: geometry)
                         }
-//                        .alert(isPresented: self.$showingAlert) {
-//                                               Alert(title: Text("エラー"),
-//                                                     message: Text("写真を追加してください。"))
-//                                           }
                         .padding(.bottom)
-                   
-//                    Button("戻る"){
-//                        self.presentation.wrappedValue.dismiss()
-//                    }.foregroundColor(Color.gray)
-//
-                    
-                    
+
                 } //vstack
                     .alert(isPresented: self.$showingAlert) {
                         Alert(title: self.alertItem!.title,
