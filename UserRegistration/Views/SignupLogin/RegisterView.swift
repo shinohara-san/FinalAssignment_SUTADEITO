@@ -46,6 +46,7 @@ struct RegisterView: View {
     }
     
     @State var selection: Int? = nil
+    @State var visible = false
     
     var body: some View {
         
@@ -71,10 +72,22 @@ struct RegisterView: View {
                                 VStack{
                                     Text("あなたのパスワード").foregroundColor(self.shareData.brown)
                                     Text("※ログイン時に使用します。").foregroundColor(self.shareData.pink).font(.footnote)
-                                    SecureField("password", text: self.$password)
+                                    VStack{
+                                    if self.visible{
+                                         TextField("password", text: self.$password)
+                                    } else {
+                                         SecureField("password", text: self.$password)
+                                        }
+                                    }
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
                                         .padding().keyboardType(.emailAddress)
+                                    
+                                    Button(action: {
+                                        self.visible.toggle()
+                                    }) {
+                                        Text(self.visible ? "非表示にする" : "表示する").foregroundColor(Color.gray).font(.subheadline)
+                                    }.padding(.bottom)
                                 }
                                 
                                 VStack{

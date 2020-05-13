@@ -16,6 +16,7 @@
 		953B24F4244921D2007BD077 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953B24F3244921D2007BD077 /* SettingView.swift */; };
 		95547DE3246A6ED6002A3F4F /* MsgView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95547DE2246A6ED6002A3F4F /* MsgView.swift */; };
 		95652323246A875900B84989 /* SutadeitoBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95652322246A875900B84989 /* SutadeitoBox.swift */; };
+		95652347246B632800B84989 /* ImageCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95652346246B632800B84989 /* ImageCarouselView.swift */; };
 		95684ADD2451737900154A18 /* MessageRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95684ADC2451737900154A18 /* MessageRow.swift */; };
 		95684ADF2451740E00154A18 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95684ADE2451740E00154A18 /* MessageView.swift */; };
 		9569F6E824614E82006D3652 /* LikeMeUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6E724614E82006D3652 /* LikeMeUserView.swift */; };
@@ -60,6 +61,7 @@
 		953B24F3244921D2007BD077 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		95547DE2246A6ED6002A3F4F /* MsgView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgView.swift; sourceTree = "<group>"; };
 		95652322246A875900B84989 /* SutadeitoBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SutadeitoBox.swift; sourceTree = "<group>"; };
+		95652346246B632800B84989 /* ImageCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCarouselView.swift; sourceTree = "<group>"; };
 		95684ADC2451737900154A18 /* MessageRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRow.swift; sourceTree = "<group>"; };
 		95684ADE2451740E00154A18 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		9569F6E724614E82006D3652 /* LikeMeUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeMeUserView.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				95CDFB0E24482C300054FADF /* LoginView.swift */,
 				95DA4B60244A7F90009921D4 /* ImagePickerController.swift */,
 				95DA4B62244A83B4009921D4 /* FirebaseImageView.swift */,
+				95652346246B632800B84989 /* ImageCarouselView.swift */,
 			);
 			path = SignupLogin;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				9569F6EA24625570006D3652 /* SearchBoxView.swift in Sources */,
 				95684ADF2451740E00154A18 /* MessageView.swift in Sources */,
 				95CDFB0F24482C300054FADF /* LoginView.swift in Sources */,
+				95652347246B632800B84989 /* ImageCarouselView.swift in Sources */,
 				95CDFABB2446B4020054FADF /* User.swift in Sources */,
 				95CDFAA52446B2B60054FADF /* AppDelegate.swift in Sources */,
 				95C85F8B2460346000933CFC /* UserRow.swift in Sources */,

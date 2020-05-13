@@ -33,6 +33,8 @@ struct LoginView: View {
         datas.listen()
     }
     
+    @State var visible = false
+    
     var body: some View {
         
         Group {
@@ -47,48 +49,36 @@ struct LoginView: View {
                 NavigationView {
                     GeometryReader{ geometry in
                     ZStack{
-                        Color.gray.edgesIgnoringSafeArea(.all)
                         
-                            ScrollView(.horizontal, showsIndicators: true){
-                                HStack(spacing: 0) {
-                                    ForEach(0 ..< self.shareData.pictures.count) { index in
-                                        cardView(img: self.shareData.pictures[index], width: geometry.size.width, height: geometry.size.height)
-                                            .environmentObject(self.shareData)
-                                            .offset(x: self.x)
-                                            .highPriorityGesture(DragGesture()
-                                                .onChanged({ (value) in
-                                                    
-                                                    if value.translation.width > 0 {
-                                                        self.x = value.location.x
-                                                    } else {
-                                                        self.x = value.location.x - self.screen
-                                                    }
-                                                    
-                                                })
-                                                .onEnded({ (value) in
-                                                    if value.translation.width > 0{
-                                                        if value.translation.width > ((self.screen - 80)/2) && Int(self.count) != self.getMid(){
-                                                            self.count += 1
-                                                            self.x = (self.screen) * self.count
-                                                        } else {
-                                                            self.x = (self.screen) * self.count
-                                                        }
-                                                    }else{
-                                                        if -value.translation.width > ((self.screen - 80)/2) && -Int(self.count) != self.getMid(){
-                                                            self.count -= 1
-                                                            self.x = (self.screen) * self.count
-                                                        } else {
-                                                            self.x = (self.screen) * self.count
-                                                        }
-                                                    }
-                                                    
-                                                })
-                                        )
-                                        
-                                        //
-                                    }
-                                }
-                            }
+                        ScrollView {
+                                   // Add the ImageCarouselView Here.
+                                   GeometryReader { geometry in
+                                   ImageCarouselView(numberOfImages: 4) {
+                                      Image("coffeeheart")
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width: geometry.size.width)
+                                        .clipped()
+                                       Image("manwoman")
+                                       .resizable()
+                                        .scaledToFill()
+                                       .frame(width: geometry.size.width)
+                                       .clipped()
+                                      Image("holdpen")
+                                       .resizable()
+                                       .scaledToFill()
+                                       .frame(width: geometry.size.width)
+                                       .clipped()
+                                    Image("couple")
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: geometry.size.width)
+                                    .clipped()
+                                      }
+                                   .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
+                                   }
+                               }.edgesIgnoringSafeArea(.all)
+                        Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
                         
                         VStack{
                             Spacer()
@@ -98,11 +88,24 @@ struct LoginView: View {
                                 
                                 .keyboardType(.emailAddress)
                                 .padding(.bottom)
-                            SecureField("password", text: self.$password)
-                                .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                            VStack{
+                                if self.visible{
+                                    TextField("password", text: self.$password)
+                                }else{
+                                   SecureField("password", text: self.$password)
+                                }
                                 
-                                .keyboardType(.emailAddress)
-                                .padding(.bottom)
+                                
+                            }
+                            .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
+                            .keyboardType(.emailAddress)
+                            
+                            
+                            Button(action: {
+                                self.visible.toggle()
+                            }) {
+                                Text(self.visible ? "非表示にする" : "表示する").foregroundColor(self.shareData.white).font(.subheadline)
+                            }.padding(.bottom)
                             
                             Button(action: {
                                 if self.email == "" || self.password == ""{
