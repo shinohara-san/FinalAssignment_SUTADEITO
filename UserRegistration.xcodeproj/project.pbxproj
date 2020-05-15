@@ -23,10 +23,10 @@
 		9569F6EA24625570006D3652 /* SearchBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6E924625570006D3652 /* SearchBoxView.swift */; };
 		9569F6EC246521C0006D3652 /* DeleteAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6EB246521C0006D3652 /* DeleteAccountView.swift */; };
 		9569F6EE24653333006D3652 /* BridgeToDeleteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9569F6ED24653333006D3652 /* BridgeToDeleteView.swift */; };
-		958721CE245856120001ED81 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 958721CD245856110001ED81 /* GoogleService-Info.plist */; };
 		959B9205244995BC00A16952 /* ShareData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 959B9204244995BC00A16952 /* ShareData.swift */; };
 		95C458AE245D630000C4ADA1 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C458AD245D630000C4ADA1 /* UserListView.swift */; };
 		95C458B0245D643600C4ADA1 /* MatchingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C458AF245D643600C4ADA1 /* MatchingListView.swift */; };
+		95C73FDC246E3F8700ED1933 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95C73FDB246E3F8600ED1933 /* GoogleService-Info.plist */; };
 		95C85F89245FB50700933CFC /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C85F88245FB50700933CFC /* UserViewModel.swift */; };
 		95C85F8B2460346000933CFC /* UserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C85F8A2460346000933CFC /* UserRow.swift */; };
 		95C85F8D24603CAA00933CFC /* SmallUserRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C85F8C24603CAA00933CFC /* SmallUserRow.swift */; };
@@ -68,10 +68,10 @@
 		9569F6E924625570006D3652 /* SearchBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBoxView.swift; sourceTree = "<group>"; };
 		9569F6EB246521C0006D3652 /* DeleteAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountView.swift; sourceTree = "<group>"; };
 		9569F6ED24653333006D3652 /* BridgeToDeleteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeToDeleteView.swift; sourceTree = "<group>"; };
-		958721CD245856110001ED81 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		959B9204244995BC00A16952 /* ShareData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareData.swift; sourceTree = "<group>"; };
 		95C458AD245D630000C4ADA1 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		95C458AF245D643600C4ADA1 /* MatchingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingListView.swift; sourceTree = "<group>"; };
+		95C73FDB246E3F8600ED1933 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		95C85F88245FB50700933CFC /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		95C85F8A2460346000933CFC /* UserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRow.swift; sourceTree = "<group>"; };
 		95C85F8C24603CAA00933CFC /* SmallUserRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallUserRow.swift; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				95C85F8E2460427B00933CFC /* Data */,
 				95CDFAAA2446B2BA0054FADF /* Assets.xcassets */,
 				95CDFAAF2446B2BA0054FADF /* LaunchScreen.storyboard */,
-				958721CD245856110001ED81 /* GoogleService-Info.plist */,
+				95C73FDB246E3F8600ED1933 /* GoogleService-Info.plist */,
 				95CDFAB22446B2BA0054FADF /* Info.plist */,
 				95CDFAAC2446B2BA0054FADF /* Preview Content */,
 				95DA4B66244AE869009921D4 /* Note.swift */,
@@ -316,7 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				95CDFAB12446B2BA0054FADF /* LaunchScreen.storyboard in Resources */,
-				958721CE245856120001ED81 /* GoogleService-Info.plist in Resources */,
+				95C73FDC246E3F8700ED1933 /* GoogleService-Info.plist in Resources */,
 				95CDFAAE2446B2BA0054FADF /* Preview Assets.xcassets in Resources */,
 				95CDFAAB2446B2BA0054FADF /* Assets.xcassets in Resources */,
 			);
