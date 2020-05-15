@@ -109,4 +109,6 @@ fastlane/test_output
 
 iOSInjectionProject/
 
+Info.plist
+
 # End of https://www.gitignore.io/api/swift,macos
