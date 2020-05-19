@@ -28,8 +28,7 @@ struct UserListView: View {
                 ZStack{
                     List{
                         ForEach(self.shareData.filteredAllUsers, id: \.id){ user in
-                           
-//                            NavigationLink(destination: UserProfileView(user: user, matchUserProfile: false).environmentObject(self.shareData)){
+
                                 UserRow(user: user, geometry: geometry)
                                 
                                 .onTapGesture {

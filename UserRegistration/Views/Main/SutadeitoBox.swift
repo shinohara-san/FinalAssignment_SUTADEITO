@@ -21,10 +21,8 @@ struct SutadeitoBox: View {
                 .foregroundColor(Color.myBlack)
         }.padding()
         Text("「日中」「カフェ」「勉強したい」をプロフィールで選択しているユーザーです。")
-//            .font(.subheadline)
             .foregroundColor(Color.myBlack).padding()
         Text("すたでいとユーザーになって、他のユーザーにアピールしましょう。")
-//            .font(.subheadline)
             .foregroundColor(Color.myBlack).padding()
             
             HStack{
