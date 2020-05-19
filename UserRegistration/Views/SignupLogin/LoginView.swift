@@ -104,7 +104,7 @@ struct LoginView: View {
                             Button(action: {
                                 self.visible.toggle()
                             }) {
-                                Text(self.visible ? "非表示にする" : "表示する").foregroundColor(self.shareData.white).font(.subheadline)
+                                Text(self.visible ? "非表示にする" : "表示する").foregroundColor(Color.myWhite).font(.subheadline)
                             }.padding(.bottom)
                             
                             Button(action: {
@@ -123,13 +123,13 @@ struct LoginView: View {
                                 }
                             }) {
                                 Text("ログイン")
-                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geometry)
+                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geometry)
                             }.padding(.bottom, 50)
                             
                             Button(action: {
                                 self.presentation.wrappedValue.dismiss()
                             }, label: {
-                                Text("戻る").foregroundColor(self.shareData.white).underline(color: self.shareData.white)
+                                Text("戻る").foregroundColor(Color.myWhite).underline(color: Color.myWhite)
                             }).padding(.bottom, 50)
                             
                             Spacer()

@@ -32,7 +32,7 @@ struct SearchBoxView: View {
                         Button(action: {
                             self.shareData.searchBoxOn = false
                         }) {
-                            Image(systemName: "multiply").foregroundColor(self.shareData.pink)
+                            Image(systemName: "multiply").foregroundColor(Color.myPink)
                         }
                     }
                     
@@ -50,7 +50,7 @@ struct SearchBoxView: View {
                             self.shareData.searchUser(key: "hometown", value: self.shareData.hometowns[self.selectedHometown])
                             self.shareData.searchBoxOn = false
                         }) {
-                            Text("現住所で検索").padding().foregroundColor(self.shareData.white).background(self.shareData.pink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
+                            Text("現住所で検索").padding().foregroundColor(Color.myWhite).background(Color.myPink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
                         }
                     }
                     Section{
@@ -66,7 +66,7 @@ struct SearchBoxView: View {
                             self.shareData.searchUser(key: "studystyle", value: self.shareData.studystyles[self.selectedStudystyle])
                             self.shareData.searchBoxOn = false
                         }) {
-                            Text("すたでいとで検索").padding().foregroundColor(self.shareData.white).background(self.shareData.pink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
+                            Text("すたでいとで検索").padding().foregroundColor(Color.myWhite).background(Color.myPink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
                            
                         }
                     }
@@ -84,7 +84,7 @@ struct SearchBoxView: View {
                             self.shareData.searchUser(key: "purpose", value: self.shareData.purposes[self.selectedPurpose])
                             self.shareData.searchBoxOn = false
                         }) {
-                            Text("目的で検索").padding().foregroundColor(self.shareData.white).background(self.shareData.pink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
+                            Text("目的で検索").padding().foregroundColor(Color.myWhite).background(Color.myPink).shadow(radius: 2, x:2, y:2).cornerRadius(10)
                             //                                .frame(width: geo.size.width * 1, height: geo.size.height * 0.2)
                         }
                     }.padding(.bottom)

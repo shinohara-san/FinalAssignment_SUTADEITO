@@ -23,9 +23,9 @@ struct MessageRow: View {
 //                        .lineLimit(nil)
                         
                     .padding(10)
-                        .background(self.shareData.green)
+                        .background(Color.myGreen)
                     .cornerRadius(6)
-                        .foregroundColor(self.shareData.black)
+                        .foregroundColor(Color.myBlack)
                     .shadow(radius: 1, x: 2, y: 2)
                     .layoutPriority(1)
                     self.talkBubbleTriange(width: geometry.size.width * 0.05, height: geometry.size.height * 0.4, isIncoming: false)
@@ -40,9 +40,9 @@ struct MessageRow: View {
                             //.lineLimit(nil)
 //                            .fixedSize(horizontal: false, vertical: true)
                     .padding(10)
-                    .background(self.shareData.yellow)
+                    .background(Color.myYellow)
                     .cornerRadius(6)
-                            .foregroundColor(self.shareData.black)
+                            .foregroundColor(Color.myBlack)
                     .shadow(radius: 1, x: 2, y: 2)
                     }
 //                }
@@ -65,7 +65,7 @@ struct MessageRow: View {
             path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: 0))
             path.closeSubpath()
         }
-        .fill(isIncoming ? shareData.yellow : shareData.green)
+        .fill(isIncoming ? Color.myYellow : Color.myGreen)
         .frame(width: width, height: height)
         .shadow(radius: 1, x: 2, y: 2)
         .zIndex(10)

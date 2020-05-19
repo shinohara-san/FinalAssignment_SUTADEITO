@@ -24,10 +24,10 @@ struct SettingView: View {
                         Group{
                             NavigationView{
                                 ZStack{
-                                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                                    Color.myWhite.edgesIgnoringSafeArea(.all)
                                     ScrollView(showsIndicators: false){
                                         VStack{
-                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.brown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical, 10)
+                                            FirebaseImageView(imageURL: self.shareData.imageURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(Color.myBrown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical, 10)
                                             ProfileUserDetailView(
                                                 name: String(describing: self.shareData.currentUserData["name"] ?? ""),
                                                 age: String(describing: self.shareData.currentUserData["age"] ?? ""),
@@ -49,7 +49,7 @@ struct SettingView: View {
                                                 self.isModal = true
                                             }) {
                                                 Text("編集する")
-                                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
+                                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geo)
                                                     .padding(.vertical)
                                             }
                                             
@@ -81,7 +81,7 @@ struct SettingView: View {
                                         Button(action: {
                                             self.shareData.myProfile = false
                                         }, label: {
-                                            Image(systemName: "return").foregroundColor(self.shareData.white)
+                                            Image(systemName: "return").foregroundColor(Color.myWhite)
                                         })
                                         
                                 )

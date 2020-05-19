@@ -41,7 +41,7 @@ struct MessageView: View {
             path.addLine(to: CGPoint(x: isIncoming ? width : 0, y: 0))
             path.closeSubpath()
         }
-        .fill(isIncoming ? shareData.yellow : shareData.green)
+        .fill(isIncoming ? Color.myYellow : Color.myGreen)
         .frame(width: width, height: height)
         .shadow(radius: 1, x: 2, y: 2)
         .zIndex(10)
@@ -65,7 +65,7 @@ struct MessageView: View {
         GeometryReader{ geometry in
             
             ZStack{
-                self.shareData.pink.edgesIgnoringSafeArea(.all)
+                Color.myPink.edgesIgnoringSafeArea(.all)
                 VStack{
                     List{
                         ForEach(self.msgVM.messages.reversed()){ i in //.reversed()
@@ -79,15 +79,15 @@ struct MessageView: View {
                                         HStack{
                                             Text(i.msg)
                                                 .padding(13)
-                                                .background(RoundedCorners(color: self.shareData.green, tl: 20, tr: 20, bl: 20, br: 2))
-                                                .foregroundColor(self.shareData.black)
+                                                .background(RoundedCorners(color: Color.myGreen, tl: 20, tr: 20, bl: 20, br: 2))
+                                                .foregroundColor(Color.myBlack)
                                             
                                         }
                                     }
                                     HStack{
                                         Spacer()
 //                                        Text(i.hinichi).font(.caption).foregroundColor(self.shareData.black)
-                                        Text(i.date).font(.caption).foregroundColor(self.shareData.black)
+                                        Text(i.date).font(.caption).foregroundColor(Color.myBlack)
                                     }
                                     
                                 }
@@ -96,8 +96,8 @@ struct MessageView: View {
                                     HStack{
                                         Text(i.msg)
                                             .padding(13)
-                                            .background(RoundedCorners(color: self.shareData.yellow, tl: 20, tr: 20, bl: 2, br: 20))
-                                            .foregroundColor(self.shareData.black)
+                                            .background(RoundedCorners(color: Color.myYellow, tl: 20, tr: 20, bl: 2, br: 20))
+                                            .foregroundColor(Color.myBlack)
                                         
                                         Spacer()
                                     }
@@ -105,14 +105,14 @@ struct MessageView: View {
                                         
 //                                        Text(i.hinichi).font(.caption).foregroundColor(self.shareData.black)
                                         
-                                        Text(i.date).font(.caption).foregroundColor(self.shareData.black)
+                                        Text(i.date).font(.caption).foregroundColor(Color.myBlack)
                                         Spacer()
                                     }
                                 }
                             }
                         }
                         .rotationEffect(.radians(.pi), anchor: .center)
-                        .listRowBackground(self.shareData.white)
+                        .listRowBackground(Color.myWhite)
                     }
                     .rotationEffect(.radians(.pi), anchor: .center)
                         .padding(.bottom, 10)//メッセテキストフィールドの上にいい感じにスペースできた
@@ -131,7 +131,7 @@ struct MessageView: View {
                                 
                             }
                         }) {
-                            Image(systemName: "paperplane.fill").foregroundColor(self.shareData.white)
+                            Image(systemName: "paperplane.fill").foregroundColor(Color.myWhite)
                         }.padding(.horizontal)
                     }.padding(.bottom)
                         .sheet(isPresented: self.$isModal) {
@@ -144,12 +144,12 @@ struct MessageView: View {
                         Button(action: {
                             self.presentation.wrappedValue.dismiss()
                         }, label: {
-                            Image(systemName: "arrow.turn.up.left").foregroundColor(self.shareData.white)
+                            Image(systemName: "arrow.turn.up.left").foregroundColor(Color.myWhite)
                         }),
                                         trailing: Button(action: {
                                             self.isModal = true
                                         }, label: {
-                                            Image(systemName: "person.fill").foregroundColor(self.shareData.white)
+                                            Image(systemName: "person.fill").foregroundColor(Color.myWhite)
                                         })
                 )
                     .navigationBarBackButtonHidden(true)

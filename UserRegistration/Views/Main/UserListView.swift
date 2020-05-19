@@ -26,17 +26,17 @@ struct UserListView: View {
         GeometryReader{ geometry in
             NavigationView{
                 ZStack{
-
-                    //                    ScrollView(showsIndicators: false){
-                    
                     List{
                         ForEach(self.shareData.filteredAllUsers, id: \.id){ user in
-                            //                            VStack{
-                            UserRow(user: user, geometry: geometry)
+                           
+//                            NavigationLink(destination: UserProfileView(user: user, matchUserProfile: false).environmentObject(self.shareData)){
+                                UserRow(user: user, geometry: geometry)
+                                
                                 .onTapGesture {
                                     self.userInfo = user
                                     self.userProfileOn = true
-                            } .listRowBackground(self.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                            }
+                            .listRowBackground(self.emptyUser(user: user) ? Color.myWhite : Color.myWhite2)
                         } //foreach
                            
                     }
@@ -64,7 +64,7 @@ struct UserListView: View {
                         Button(action: {
                             self.shareData.myProfile = true
                         }, label: {
-                            Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                            Image(systemName: "house.fill").foregroundColor(Color.myWhite)
                         })
                 )
                     .sheet(isPresented: self.$userProfileOn) {

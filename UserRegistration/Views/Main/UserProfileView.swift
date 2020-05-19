@@ -306,11 +306,11 @@ struct UserProfileView: View {
             NavigationView{
             ZStack{
                 
-                self.shareData.white.edgesIgnoringSafeArea(.all)
+                Color.myWhite.edgesIgnoringSafeArea(.all)
                 ScrollView(showsIndicators: false){
                 VStack{
                     
-                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(self.shareData.brown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical)
+                    FirebaseImageView(imageURL: self.user.photoURL).frame(width: geo.size.width * 1, height: geo.size.height * 0.4).border(Color.myBrown, width: 5).cornerRadius(10).shadow(radius: 2, x: 2, y: 5).padding(.vertical)
                     
                     ProfileUserDetailView(name: self.user.name, age: self.user.age, gender: self.user.gender, hometown: self.user.hometown, subject: self.user.subject, introduction: self.user.introduction, studystyle: self.user.studystyle, hobby: self.user.hobby, personality: self.user.personality, work: self.user.work, purpose: self.user.purpose, fee: self.user.fee, schedule: self.user.schedule, place: self.user.place).frame(width: geo.size.width * 1)
                     
@@ -326,7 +326,7 @@ struct UserProfileView: View {
                                 }
                             }) {
                                 Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
-                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geo)
+                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myBrown, geometry: geo)
                             }
                             .padding(.vertical)
                             
@@ -341,7 +341,7 @@ struct UserProfileView: View {
                                 }
                             }) {
                                 Text(self.gaveLike ? "いいねを取り消す" : "いいね")
-                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
+                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geo)
                                 }
                                 .padding(.bottom)
 
@@ -354,12 +354,12 @@ struct UserProfileView: View {
                     
                 }
                     
-            } .navigationBarTitle(Text("\(self.user.name) のプロフィール"), displayMode: .inline)
+                }.navigationBarTitle(Text("\(self.user.name) のプロフィール"), displayMode: .inline)
                 .navigationBarItems(leading:
                     Button(action: {
                         self.presentation.wrappedValue.dismiss()
                     }, label: {
-                        Image(systemName: "multiply").foregroundColor(self.shareData.white)
+                        Image(systemName: "multiply").foregroundColor(Color.myWhite)
                     })
                 )
                 
@@ -368,7 +368,7 @@ struct UserProfileView: View {
                         Color.black.opacity(0.3).edgesIgnoringSafeArea(.all)
                         VStack(alignment: .center){
                             
-                            Text("\(self.user.name)さんとマッチしました！").fontWeight(.bold).foregroundColor(self.shareData.brown).padding()
+                            Text("\(self.user.name)さんとマッチしました！").fontWeight(.bold).foregroundColor(Color.myBrown).padding()
                         
                             Button("戻る"){
                                 self.shareData.matchNotification = false

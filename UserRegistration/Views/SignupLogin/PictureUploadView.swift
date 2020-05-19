@@ -43,7 +43,7 @@ struct PictureUploadView: View {
     }
     
     var buttonColor: Color {
-        return allSectionsFilled ? shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255)
+        return allSectionsFilled ? Color.myPink : Color(red: 220/255, green: 220/255, blue: 220/255)
     }
     
     @State private var alertItem: AlertItem?
@@ -52,7 +52,7 @@ struct PictureUploadView: View {
        
         GeometryReader{ geometry in
             ZStack{
-                self.shareData.white.edgesIgnoringSafeArea(.all)
+                Color.myWhite.edgesIgnoringSafeArea(.all)
                 
                 VStack{
                     if self.imageURL != "" {
@@ -62,7 +62,7 @@ struct PictureUploadView: View {
                         self.shown.toggle()
                     }) {
                         Text("写真を追加する")
-                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geometry)
+                        .textStyle(fcolor: Color.myWhite, bgcolor: Color.myBrown, geometry: geometry)
                     }.padding(.bottom)
                     
                     Button(action: {
@@ -93,7 +93,7 @@ struct PictureUploadView: View {
                         
                     }) {
                         Text("登録する")
-                            .textStyle(fcolor: self.shareData.white, bgcolor: self.buttonColor, geometry: geometry)
+                            .textStyle(fcolor: Color.myWhite, bgcolor: self.buttonColor, geometry: geometry)
                         }
                         .padding(.bottom)
 
@@ -112,7 +112,7 @@ struct PictureUploadView: View {
                 .navigationBarTitle("プロフィール作成", displayMode: .inline)
                 .navigationBarItems(leading: Button("戻る"){
                     self.presentation.wrappedValue.dismiss()
-                }.foregroundColor(self.shareData.white))
+                }.foregroundColor(Color.myWhite))
                     .navigationBarBackButtonHidden(true)
             }
         } //geometry

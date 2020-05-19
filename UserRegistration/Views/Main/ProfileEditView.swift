@@ -46,15 +46,15 @@ struct ProfileEditView: View {
         GeometryReader{ geo in
             NavigationView{
                 ZStack{
-                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                    Color.myWhite.edgesIgnoringSafeArea(.all)
                     VStack{
                         ScrollView(showsIndicators: false){
                             VStack{
-                                Text("名前").foregroundColor(self.shareData.brown)
+                                Text("名前").foregroundColor(Color.myBrown)
                                 TextField("name", text: self.$name).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                             }.padding(.top)
                             VStack{
-                                Text("年齢").foregroundColor(self.shareData.brown)
+                                Text("年齢").foregroundColor(Color.myBrown)
                                 Picker(selection: self.$selectedAge, label: Text("age")
                                     .font(.title)
                                     .padding(.leading)) {
@@ -63,7 +63,7 @@ struct ProfileEditView: View {
                                         }
                                 }.labelsHidden()
                                 VStack{
-                                    Text("現住所").foregroundColor(self.shareData.brown)
+                                    Text("現住所").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedHometown, label: Text("current city")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -73,12 +73,12 @@ struct ProfileEditView: View {
                                     }.labelsHidden()
                                 }
                                 VStack{
-                                    Text("趣味").foregroundColor(self.shareData.brown)
+                                    Text("趣味").foregroundColor(Color.myBrown)
                                     TextField("hobby", text: self.$hobby).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                                 }
                                 
                                 VStack{
-                                    Text("職業").foregroundColor(self.shareData.brown)
+                                    Text("職業").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedWork, label: Text("職業")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -89,7 +89,7 @@ struct ProfileEditView: View {
                                 }
                                 
                                 VStack{
-                                    Text("性格").foregroundColor(self.shareData.brown)
+                                    Text("性格").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPersonality, label: Text("性格")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -100,7 +100,7 @@ struct ProfileEditView: View {
                                 }
                                 
                                 VStack{
-                                    Text("自己紹介").foregroundColor(self.shareData.brown)
+                                    Text("自己紹介").foregroundColor(Color.myBrown)
                                     TextField("comment", text: self.$introduction).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                                 }
                             }
@@ -118,12 +118,12 @@ struct ProfileEditView: View {
                             
                             Section{
                                 VStack{
-                                    Text("勉強中").foregroundColor(self.shareData.brown)
+                                    Text("勉強中").foregroundColor(Color.myBrown)
                                     TextField("subject", text: self.$subject).textFieldStyle(CustomTextFieldStyle(geometry: geo)).padding()
                                 }
                                 
                                 VStack{
-                                    Text("希望するすたでいと").foregroundColor(self.shareData.brown)
+                                    Text("希望するすたでいと").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedStudyStyle, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -134,7 +134,7 @@ struct ProfileEditView: View {
                                 }
                                 
                                 VStack{
-                                    Text("希望する時間帯").foregroundColor(self.shareData.brown)
+                                    Text("希望する時間帯").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedSchedule, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -145,7 +145,7 @@ struct ProfileEditView: View {
                                 }
                                 
                                 VStack{
-                                    Text("希望する場所").foregroundColor(self.shareData.brown)
+                                    Text("希望する場所").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPlace, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -156,7 +156,7 @@ struct ProfileEditView: View {
                                 }
                                 
                                 VStack{
-                                    Text("デート代").foregroundColor(self.shareData.brown)
+                                    Text("デート代").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedFee, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -166,7 +166,7 @@ struct ProfileEditView: View {
                                     }.labelsHidden()
                                 }
                                 VStack{
-                                    Text("目的").foregroundColor(self.shareData.brown)
+                                    Text("目的").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPurpose, label: Text("目的")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -187,7 +187,7 @@ struct ProfileEditView: View {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
                                     Text("戻る")
-                                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.brown, geometry: geo)
+                                        .textStyle(fcolor: Color.myWhite, bgcolor: Color.myBrown, geometry: geo)
                                 }
                                 .padding(.bottom)
                                 
@@ -198,7 +198,7 @@ struct ProfileEditView: View {
                                     self.presentation.wrappedValue.dismiss()
                                 }) {
                                     Text("保存する")
-                                        .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geo)
+                                        .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geo)
                                         .padding(.bottom)
                                 }
                                 
@@ -231,7 +231,7 @@ struct ProfileEditView: View {
                     Button(action: {
                         self.presentation.wrappedValue.dismiss()
                     }, label: {
-                        Image(systemName: "multiply").foregroundColor(self.shareData.white)
+                        Image(systemName: "multiply").foregroundColor(Color.myWhite)
                     })
                 )
             }//navi

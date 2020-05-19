@@ -34,9 +34,9 @@ struct ProfileUserDetailView: View {
         var body: some View{
             
             HStack{
-                Text(title).foregroundColor(shareData.black)
+                Text(title).foregroundColor(Color.myBlack)
                 Spacer()
-                Text(info).foregroundColor(shareData.black)
+                Text(info).foregroundColor(Color.myBlack)
             }.padding(.bottom, 20)
             
         }
@@ -47,7 +47,7 @@ struct ProfileUserDetailView: View {
             Section{
                 
                 VStack{
-                    Text("基本情報").foregroundColor(self.shareData.black).font(.title).fontWeight(.bold).padding(.bottom)
+                    Text("基本情報").foregroundColor(Color.myBlack).font(.title).fontWeight(.bold).padding(.bottom)
                     InfoRow(title: "名前:", info: self.name)
                     InfoRow(title: "年齢:", info: self.age)
                     InfoRow(title: "現住所:", info: self.hometown)
@@ -58,12 +58,12 @@ struct ProfileUserDetailView: View {
                     
                     
                 }
-            }.padding().background(self.shareData.white2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
+            }.padding().background(Color.myWhite2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
             
             Section{
                 
                 VStack{
-                    Text("すたでいと").foregroundColor(self.shareData.black).font(.title).fontWeight(.bold).padding(.bottom)
+                    Text("すたでいと").foregroundColor(Color.myBlack).font(.title).fontWeight(.bold).padding(.bottom)
                     if self.place == "カフェ" && self.schedule == "日中" && self.studystyle != "勉強はせずにお話をしてみたい" && self.studystyle != "その他"{
                         HStack(alignment: .firstTextBaseline){
                             Image(systemName: "hand.thumbsup.fill")
@@ -80,7 +80,7 @@ struct ProfileUserDetailView: View {
                     
                 }
                 
-            }.padding().background(self.shareData.white2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
+            }.padding().background(Color.myWhite2).cornerRadius(10).shadow(radius: 2, y: 2).padding(.bottom)
         }
     }
 }

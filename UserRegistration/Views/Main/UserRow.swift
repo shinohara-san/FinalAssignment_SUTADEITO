@@ -30,14 +30,14 @@ struct UserRow: View{
                         Text(user.age).frame(width: 50)
                         Text(user.hometown).frame(width: 50)
                         
-                    }.padding(.horizontal).font(.subheadline).foregroundColor(self.shareData.black)
+                    }.padding(.horizontal).font(.subheadline).foregroundColor(Color.myBlack)
                         
                 }
                         
                         
                         HStack(spacing: 0){
                             chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                            Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(self.shareData.brown).foregroundColor(self.shareData.white).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                            Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(Color.myBrown).foregroundColor(Color.myWhite).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
                         }
                     
                     
@@ -58,7 +58,7 @@ struct UserRow: View{
             path.addLine(to: CGPoint(x: width, y: 0))
             path.closeSubpath()
         }
-        .fill(shareData.brown)
+        .fill(Color.myBrown)
         .frame(width: width, height: height)
         .shadow(radius: 2, x: 2, y: 2)
         .zIndex(10)

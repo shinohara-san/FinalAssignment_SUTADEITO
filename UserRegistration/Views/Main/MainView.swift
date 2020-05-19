@@ -5,8 +5,6 @@
 //  Created by Yuki Shinohara on 2020/04/16.
 //  Copyright © 2020 Yuki Shinohara. All rights reserved.
 //
-//shino@aaa.com
-//　1234shino
 
 import SwiftUI
 import FirebaseFirestore
@@ -21,15 +19,6 @@ struct MainView: View {
     
     @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
     
-    @State var messageOn = false
-    @State var userProfileOn = false
-    @State var text = ""
-    
-    @State var matchid = ""
-    
-    //    @State private var xOffset = CGFloat.zero
-    //    @State private var defaultOffset = CGFloat.zero
-    
     init(_ datas: FirebaseData) {
         self.datas = datas
         UITabBar.appearance().barTintColor = UIColor(red: 220/255, green: 220/255, blue: 220/255, alpha: 1)
@@ -41,11 +30,10 @@ struct MainView: View {
         GeometryReader{ geometry in
             ZStack{
                 TabView(selection: self.$selection) {
-                    //                HStack{
-                    //                    MenuView().frame(width: geometry.size.width * 0.68)
                     ////ユーザー一覧のページ
-                    UserListView().environmentObject(self.shareData).frame(width: geometry.size.width)
-                        //                }
+//                    NavigationView{
+                    UserListView().frame(width: geometry.size.width)
+//                    }
                         .tabItem {
                             VStack {
                                 Image(systemName: "book.fill")
@@ -53,19 +41,19 @@ struct MainView: View {
                     }.tag(1)
                     
                     ////                    検索ページ
-                    SearchView().environmentObject(self.shareData)
+                    SearchView()
                         .tabItem {
                             VStack {
                                 Image(systemName: "magnifyingglass")
                             }
                     }.tag(2)
                     
-                    ///お気に入りいいね一覧ページ
+                    ///お気に入り/いいね一覧ページ
                     Group{
                         if self.shareData.switchFavAndLike{
-                            LikeUserView().environmentObject(self.shareData)
+                            LikeUserView()
                         } else {
-                            FavoriteUserView().environmentObject(self.shareData)
+                            FavoriteUserView()
                         }
                     }
                     .tabItem {
@@ -77,7 +65,7 @@ struct MainView: View {
                     
                     
                     
-                    LikeMeUserView().environmentObject(self.shareData)
+                    LikeMeUserView()
                         
                         .tabItem {
                             VStack {
@@ -88,7 +76,7 @@ struct MainView: View {
                     
                     
                     ////                   マッチングページ
-                    MatchingListView().environmentObject(self.shareData)
+                    MatchingListView()
                         .tabItem {
                             VStack {
                                 Image(systemName: "suit.heart.fill")
@@ -98,7 +86,8 @@ struct MainView: View {
                     
                     
                 } //tabView
-                    .accentColor(self.shareData.pink)
+                    .environmentObject(self.shareData)
+                    .accentColor(Color.myPink)
                     .animation(nil)
                 
                 if self.shareData.myProfile{
@@ -108,14 +97,11 @@ struct MainView: View {
                 
                 if self.shareData.searchBoxOn{
                     Color.black.edgesIgnoringSafeArea(.all).opacity(0.3)
-                    //                        ScrollView(showsIndicators: false){
                     SearchBoxView()
-                        .background(self.shareData.white)
+                        .background(Color.myWhite)
                         .frame(width : geometry.size.width * 0.9, height: geometry.size.height * 0.7)
                         .cornerRadius(10)
-                    //                                .offset(y: 25)
-                    //                                .animation(.default)
-                    //                        }
+               
                 }
                 
             }//ZStack
@@ -124,8 +110,6 @@ struct MainView: View {
         .navigationBarTitle("")
             .navigationBarHidden(true) //自分のプロフィール用
             .onAppear{
-                //                self.shareData.getCurrentUser()
-                
                 self.shareData.myProfile = false
                 self.shareData.filteredMatchUserArray = [User]()//追記0507
         }

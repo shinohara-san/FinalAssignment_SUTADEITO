@@ -29,48 +29,31 @@ struct TopPageView: View {
     let messages = ["このアプリでは、\n「日中」に「カフェ」で\n「一緒に勉強する」\nという最初のデートを推奨しています。", "時間のかかるやり取りはなるべく短くし、会って、相手の空気感を感じてみてください。" , "お互いに勉強していれば会話が苦手でも大丈夫。「勉強」ですべての出会いが有意義なものになる。", "そんな真面目で安心な出会いを応援します。"]
     @State var index = 0
     
-//    @State var x: CGFloat = 0
-//    @State var count: CGFloat = 0
-//    @State var screen = UIScreen.main.bounds.width
-    
     @State var isModal = false
-//    func getMid()->Int{
-//        return self.shareData.pictures.count/2 //写真配列の中間地点を取得
-//    }
-    
     
     var body: some View {
         
         NavigationView {
             GeometryReader{ geometry in
                 ZStack{
-                    Color.gray.edgesIgnoringSafeArea(.all)
-                    
-//                    ScrollView(.horizontal, showsIndicators: false){
-//                        HStack(spacing: 0) {
-//                            ForEach(0 ..< self.shareData.pictures.count) { index in
+                    Color.myBlack.edgesIgnoringSafeArea(.all)
+
                         cardView(img: self.shareData.pictures[self.index], msg: self.messages[self.index], width: geometry.size.width, height: geometry.size.height).environmentObject(self.shareData)
-                                                                    //
-//                            }
-//                        }
-//                    }
-                    
-                    
-                    //
+
                     VStack{
                         Spacer()
                         
                         NavigationLink(destination: LoginView().environmentObject(self.shareData)) {
                             Text("ログイン")
-                                .textStyle(fcolor: self.shareData.white, bgcolor: self.shareData.pink, geometry: geometry)
+                                .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geometry)
                         }
                         .padding(.vertical)
-/// navigationlink?
+                        
                         Button(action: {
                              self.isModal = true
                         }) {
                             Text("新規登録")
-                                .textStyle(fcolor: self.shareData.pink, bgcolor: self.shareData.white, geometry: geometry)
+                                .textStyle(fcolor: Color.myPink, bgcolor: Color.myWhite, geometry: geometry)
                             .padding(.bottom, 140)
                         }
                         
@@ -83,7 +66,7 @@ struct TopPageView: View {
                                 }
                                 
                             }) {
-                                Text("前へ").foregroundColor(self.shareData.white)
+                                Text("前へ").foregroundColor(Color.myWhite)
                             }
                             
                             
@@ -95,7 +78,7 @@ struct TopPageView: View {
                                 }
                                 
                             }) {
-                                Text("次へ").foregroundColor(self.shareData.white)
+                                Text("次へ").foregroundColor(Color.myWhite)
                             }
                         }.padding(.bottom)
                     }
@@ -144,7 +127,7 @@ struct cardView: View{
                 .font(.headline)
                 .fontWeight(.medium)
                 .multilineTextAlignment(.leading)
-                .foregroundColor(self.shareData.white)
+                .foregroundColor(Color.myWhite)
                 .frame(width: width * 0.7)
                 .offset(y: -40)
         }
@@ -153,14 +136,5 @@ struct cardView: View{
     }
 }
 
-extension Text {
-    func textStyle(fcolor: Color, bgcolor: Color, geometry: GeometryProxy) -> some View {
-        self
-            .foregroundColor(fcolor)
-            .padding()
-            .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05)
-            .background(bgcolor).cornerRadius(10)
-            .shadow(radius: 2, y:2)
-            
-    }
-}
+
+

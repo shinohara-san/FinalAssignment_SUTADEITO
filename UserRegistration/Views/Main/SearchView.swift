@@ -21,9 +21,10 @@ struct SearchView: View {
         GeometryReader{ geometry in
             NavigationView{
                 ZStack{
-                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                    Color.myWhite.edgesIgnoringSafeArea(.all)
                     List{
                         ForEach(self.shareData.filteredSearchedUsers, id: \.id){ user in
+                            NavigationLink(destination: UserProfileView(user: user, matchUserProfile: false).environmentObject(self.shareData)){
                             VStack{
                                 HStack{
                                     FirebaseImageView(imageURL: user.photoURL).frame(width: geometry.size.width * 0.5, height: geometry.size.height * 0.2)
@@ -38,7 +39,7 @@ struct SearchView: View {
                                         }
                                         Text(user.age)
                                         
-                                    }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    }.foregroundColor(Color.myBlack).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                 }
                                 .onTapGesture {
                                     if user.id == "" {return}
@@ -50,7 +51,10 @@ struct SearchView: View {
                                 } else {
                                     Divider()
                                 }
-                            }.listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                            }
+                            
+                            }
+                           .listRowBackground(self.shareData.emptyUser(user: user) ? Color.myWhite : Color.myWhite2)
                         }
                         
                         
@@ -67,13 +71,13 @@ struct SearchView: View {
                         Button(action: {
                             self.shareData.searchBoxOn.toggle()
                         }, label: {
-                            Image(systemName: "magnifyingglass").foregroundColor(self.shareData.white)
+                            Image(systemName: "magnifyingglass").foregroundColor(Color.myWhite)
                         }),
                                         trailing:
                         Button(action: {
                             self.shareData.myProfile = true
                         }, label: {
-                            Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                            Image(systemName: "house.fill").foregroundColor(Color.myWhite)
                         })
                     )
                         .onAppear{

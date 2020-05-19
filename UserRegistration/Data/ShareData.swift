@@ -17,13 +17,7 @@ class ShareData:ObservableObject{
     let db = Firestore.firestore()
     let datas = firebaseData
     let pictures = ["coffeeheart" ,"manwoman" ,"holdpen" ,"couple"]
-    let pink = Color(red: 250 / 255, green: 138 / 255, blue: 148 / 255)
-    let white = Color(red: 242 / 255, green: 242 / 255, blue: 242 / 255)
-    let brown = Color(red: 205/255, green: 181/255, blue: 166/255)
-    let yellow = Color(red: 255/255, green: 244/255, blue: 148/255)
-    let green = Color(red: 144/255, green: 238/255, blue: 144/255)
-    let white2 = Color(red: 248/255, green: 248/255, blue: 248/255)
-    let black = Color(red: 51/255, green: 51/255, blue: 51/255)
+    
     
     @Published var currentUserData = [String : Any]()
     

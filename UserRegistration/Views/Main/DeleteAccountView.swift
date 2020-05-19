@@ -20,7 +20,7 @@ struct DeleteAccountView: View {
     }
     var body: some View {
         GeometryReader{ geometry in
-            ZStack{ self.shareData.white.edgesIgnoringSafeArea(.all)
+            ZStack{ Color.myWhite.edgesIgnoringSafeArea(.all)
                 VStack{
                     Text("一度退会処理をすると、あなたのユーザー情報、すべてのユーザーとのやり取りなどのデータが消えてしまいます。また、その復旧はできません。").frame(width: geometry.size.width * 0.8).padding(.bottom)
                     Button(action: {
@@ -47,7 +47,7 @@ struct DeleteAccountView: View {
                         }
                         
                     }, label: {
-                        Text("退会する").padding().frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.07).foregroundColor(self.shareData.white).background(self.isChecked ? self.shareData.pink : Color.gray).cornerRadius(10).shadow(radius: 2, x:2, y:2)
+                        Text("退会する").padding().frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.07).foregroundColor(Color.myWhite).background(self.isChecked ? Color.myPink : Color.gray).cornerRadius(10).shadow(radius: 2, x:2, y:2)
                     }).padding(.bottom)
                     Button("戻る"){
                         self.presentation.wrappedValue.dismiss()

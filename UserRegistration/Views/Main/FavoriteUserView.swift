@@ -19,7 +19,7 @@ struct FavoriteUserView: View {
         GeometryReader{ geometry in
             NavigationView{
                 ZStack{
-                    self.shareData.white.edgesIgnoringSafeArea(.all)
+                    Color.myWhite.edgesIgnoringSafeArea(.all)
                     List{
                         ForEach(self.shareData.filteredFavoriteUsers, id: \.id){ user in
                             VStack{
@@ -36,7 +36,7 @@ struct FavoriteUserView: View {
                                         }
                                          Text(user.age)
                                         
-                                    }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    }.foregroundColor(Color.myBlack).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                     
                                 }
                                 if user.id == "" {
@@ -45,7 +45,7 @@ struct FavoriteUserView: View {
                                     Divider()
                                 }
                             }
-                            .listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                            .listRowBackground(self.shareData.emptyUser(user: user) ? Color.myWhite : Color.myWhite2)
                                 .onTapGesture {
                                     if user.id == "" {return}
                                     self.favoriteUserInfo = user
@@ -65,12 +65,26 @@ struct FavoriteUserView: View {
                         Button(action: {
                             self.shareData.switchFavAndLike = true
                         }, label: {
-                            Image(systemName: "arrow.right.arrow.left").foregroundColor(self.shareData.white)
+                            Image(systemName: "arrow.right.arrow.left").foregroundColor(Color.myWhite)
+//                                .contextMenu{
+//                                Button(action: {
+//                                    self.shareData.switchFavAndLike = true
+//                                }) {
+//                                    Text("お気に入り")
+//                                }
+//
+//                                Button(action: {
+//                                    self.shareData.switchFavAndLike = false
+//                                }) {
+//                                    Text("いいね")
+//                                    }
+                                    
+                            
                         }), trailing:
                         Button(action: {
                             self.shareData.myProfile = true
                         }, label: {
-                            Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                            Image(systemName: "house.fill").foregroundColor(Color.myWhite)
                         })
                         )
                         .onAppear{

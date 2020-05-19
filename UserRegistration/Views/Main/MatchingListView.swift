@@ -14,7 +14,7 @@ struct MatchingListView: View {
         //       Group{
         GeometryReader{ geometry in
             ZStack{
-                self.shareData.pink.edgesIgnoringSafeArea(.all)
+                Color.myWhite.edgesIgnoringSafeArea(.all)
                 NavigationView{
                     
                     List{
@@ -32,11 +32,11 @@ struct MatchingListView: View {
                                     }
                                     Text(user.name)
                                     Text(user.age)
-                                }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 1, alignment: .leading)
+                                }.foregroundColor(Color.myBlack).frame(width: geometry.size.width * 1, alignment: .leading)
 
 //                                }
                             }.disabled(self.shareData.naviLinkOff)
-                            .listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2) //foreachに
+                            .listRowBackground(self.shareData.emptyUser(user: user) ? Color.myWhite : Color.myWhite2) //foreachに
                             }
                         }
                     .onAppear { UITableView.appearance().separatorStyle = .none}
@@ -46,7 +46,7 @@ struct MatchingListView: View {
                     Button(action: {
                         self.shareData.myProfile = true
                     }, label: {
-                        Image(systemName: "house.fill").foregroundColor(self.shareData.white)
+                        Image(systemName: "house.fill").foregroundColor(Color.myWhite)
                     })
                     )
                 }

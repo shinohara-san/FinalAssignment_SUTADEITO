@@ -18,14 +18,14 @@ struct SutadeitoBox: View {
         Image(systemName: "hand.thumbsup.fill")
             .foregroundColor(.yellow)
             Text("すたでいとユーザーとは？")
-                .foregroundColor(self.shareData.black)
+                .foregroundColor(Color.myBlack)
         }.padding()
         Text("「日中」「カフェ」「勉強したい」をプロフィールで選択しているユーザーです。")
 //            .font(.subheadline)
-            .foregroundColor(self.shareData.black).padding()
+            .foregroundColor(Color.myBlack).padding()
         Text("すたでいとユーザーになって、他のユーザーにアピールしましょう。")
 //            .font(.subheadline)
-            .foregroundColor(self.shareData.black).padding()
+            .foregroundColor(Color.myBlack).padding()
             
             HStack{
                 Button(action: {
@@ -37,7 +37,7 @@ struct SutadeitoBox: View {
                     }
                 }
             }.padding(.bottom)
-            }.background(self.shareData.white2).cornerRadius(10).frame(width: geometry.size.width * 0.8)
+            }.background(Color.myWhite2).cornerRadius(10).frame(width: geometry.size.width * 0.8)
         }
     }
 }

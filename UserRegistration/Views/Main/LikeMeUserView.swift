@@ -20,7 +20,7 @@ struct LikeMeUserView: View {
             GeometryReader{ geometry in
                 NavigationView{
                     ZStack{
-                        self.shareData.white.edgesIgnoringSafeArea(.all)
+                        Color.myWhite.edgesIgnoringSafeArea(.all)
                         List{
                             ForEach(self.shareData.filteredLikeMeUsers, id: \.id){ user in
                                 VStack{
@@ -37,7 +37,7 @@ struct LikeMeUserView: View {
                                             }
                                              Text(user.age)
                                             
-                                    }.foregroundColor(self.shareData.black).frame(width: geometry.size.width * 0.5, alignment: .leading)
+                                    }.foregroundColor(Color.myBlack).frame(width: geometry.size.width * 0.5, alignment: .leading)
                                     }
                                     if user.id == "" {
                                         Divider().hidden()
@@ -46,7 +46,7 @@ struct LikeMeUserView: View {
                                     }
                             }
                                     .padding(.bottom)
-                                .listRowBackground(self.shareData.emptyUser(user: user) ? self.shareData.white : self.shareData.white2)
+                                .listRowBackground(self.shareData.emptyUser(user: user) ? Color.myWhite : Color.myWhite2)
                                     .onTapGesture {
                                          if user.id == "" {return}
                                         self.likeUserInfo = user
@@ -66,7 +66,7 @@ struct LikeMeUserView: View {
                             Button(action: {
                                 self.shareData.myProfile = true
                             }, label: {
-                                Image(systemName: "house.fill").foregroundColor(self.shareData.white2)
+                                Image(systemName: "house.fill").foregroundColor(Color.myWhite2)
                             })
                             )
                             .onAppear{

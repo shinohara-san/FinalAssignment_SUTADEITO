@@ -57,12 +57,12 @@ struct RegisterView: View {
                     
                     ScrollView(showsIndicators: false){
                         VStack{
-                            Text("基本情報").foregroundColor(self.shareData.black).font(.headline).fontWeight(.bold).padding(.top)
+                            Text("基本情報").foregroundColor(Color.myBlack).font(.headline).fontWeight(.bold).padding(.top)
                             Section{
                                 
                                 VStack{
-                                    Text("あなたのEメールアドレス").foregroundColor(self.shareData.brown)
-                                    Text("※ログイン時に使用します。").foregroundColor(self.shareData.pink).font(.footnote)
+                                    Text("あなたのEメールアドレス").foregroundColor(Color.myBrown)
+                                    Text("※ログイン時に使用します。").foregroundColor(Color.myPink).font(.footnote)
                                     TextField("email", text: self.$email)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
@@ -70,8 +70,8 @@ struct RegisterView: View {
                                 }.padding(.top)
                                 
                                 VStack{
-                                    Text("あなたのパスワード").foregroundColor(self.shareData.brown)
-                                    Text("※ログイン時に使用します。").foregroundColor(self.shareData.pink).font(.footnote)
+                                    Text("あなたのパスワード").foregroundColor(Color.myBrown)
+                                    Text("※ログイン時に使用します。").foregroundColor(Color.myPink).font(.footnote)
                                     VStack{
                                     if self.visible{
                                          TextField("password", text: self.$password)
@@ -91,14 +91,14 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの名前").foregroundColor(self.shareData.brown)
+                                    Text("あなたの名前").foregroundColor(Color.myBrown)
                                     TextField("name", text: self.$name)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
                                         .padding()
                                 }
                                 VStack{
-                                    Text("あなたの性別").foregroundColor(self.shareData.brown)
+                                    Text("あなたの性別").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedGender, label: Text("性別")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -110,7 +110,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの年齢").foregroundColor(self.shareData.brown)
+                                    Text("あなたの年齢").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedAge, label: Text("年齢")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -121,7 +121,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの現住所").foregroundColor(self.shareData.brown)
+                                    Text("あなたの現住所").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedHometown, label: Text("current city")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -133,7 +133,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの趣味").foregroundColor(self.shareData.brown)
+                                    Text("あなたの趣味").foregroundColor(Color.myBrown)
                                     TextField("hobby", text: self.$hobby)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
@@ -142,7 +142,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの職業").foregroundColor(self.shareData.brown)
+                                    Text("あなたの職業").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedWork, label: Text("仕事")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -153,7 +153,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("あなたの性格").foregroundColor(self.shareData.brown)
+                                    Text("あなたの性格").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPersonality, label: Text("性格")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -164,7 +164,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("自己紹介").foregroundColor(self.shareData.brown)
+                                    Text("自己紹介").foregroundColor(Color.myBrown)
                                     TextField("comment", text: self.$introduction)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
@@ -172,13 +172,13 @@ struct RegisterView: View {
                                 }
                                 
                             }
-                            Text("すたでいと").foregroundColor(self.shareData.black).font(.headline).fontWeight(.bold).padding(.top)
+                            Text("すたでいと").foregroundColor(Color.myBlack).font(.headline).fontWeight(.bold).padding(.top)
 //                            HStack(alignment: .firstTextBaseline){
                                            Text("勉強したい、日中、カフェを選ぶと「すたでいとユーザー」になれます").foregroundColor(.yellow).font(.subheadline).fontWeight(.bold).frame(width: geometry.size.width * 0.7).padding(.top)
 //                            }
                             Section{
                                 VStack{
-                                    Text("あなたが今勉強していること").foregroundColor(self.shareData.brown)
+                                    Text("あなたが今勉強していること").foregroundColor(Color.myBrown)
                                     TextField("subject", text: self.$subject)
                                         .textFieldStyle(CustomTextFieldStyle(geometry: geometry))
                                         .disableAutocorrection(true)
@@ -186,7 +186,7 @@ struct RegisterView: View {
                                 }.padding(.top)
                                 
                                 VStack{
-                                    Text("希望するすたでいと").foregroundColor(self.shareData.brown)
+                                    Text("希望するすたでいと").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedStudyStyle, label: Text("デートスタイル")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -198,7 +198,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("希望する時間帯").foregroundColor(self.shareData.brown)
+                                    Text("希望する時間帯").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedSchedule, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -210,7 +210,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("希望する場所").foregroundColor(self.shareData.brown)
+                                    Text("希望する場所").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPlaces, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -222,7 +222,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("デート代").foregroundColor(self.shareData.brown)
+                                    Text("デート代").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedFee, label: Text("")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -234,7 +234,7 @@ struct RegisterView: View {
                                 }
                                 
                                 VStack{
-                                    Text("このアプリを使う目的").foregroundColor(self.shareData.brown)
+                                    Text("このアプリを使う目的").foregroundColor(Color.myBrown)
                                     Picker(selection: self.$selectedPurpose, label: Text("目的")
                                         .font(.title)
                                         .padding(.leading)) {
@@ -262,7 +262,7 @@ struct RegisterView: View {
                                 self.selection = 1
                             }) {
                                 Text("写真を追加")
-                                    .textStyle(fcolor: self.shareData.white, bgcolor: self.allSectionsFilled ? self.shareData.pink : Color(red: 220/255, green: 220/255, blue: 220/255), geometry: geometry)
+                                    .textStyle(fcolor: Color.myWhite, bgcolor: self.allSectionsFilled ? Color.myPink : Color(red: 220/255, green: 220/255, blue: 220/255), geometry: geometry)
                             }
                             .padding(.bottom)
                             //
@@ -279,7 +279,7 @@ struct RegisterView: View {
             .navigationBarTitle(Text("プロフィール作成"), displayMode: .inline)
             .navigationBarItems(leading: Button("戻る"){
                 self.presentation.wrappedValue.dismiss()
-            }.foregroundColor(self.shareData.white))
+            }.foregroundColor(Color.myWhite))
                 .navigationBarBackButtonHidden(true)
         } //navigationview
             .navigationBarTitle("")
