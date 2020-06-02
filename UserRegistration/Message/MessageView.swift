@@ -174,11 +174,6 @@ struct MessageView: View {
     }
 }
 
-//struct MessageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
-//    }
-//}
 
 struct RoundedCorners: View {
     var color: Color = .blue

@@ -15,7 +15,7 @@ struct SearchView: View {
     @State var subject = ""
     
     @State var isModal = false
-    @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
+    @State var userInfo:User = EmptyUser.forLayout
  
     var body: some View {
         GeometryReader{ geometry in

@@ -122,12 +122,6 @@ struct PictureUploadView: View {
 }
 
 
-//struct PictureUploadView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PictureUploadView()
-//    }
-//}
-
 struct AlertItem: Identifiable {
     var id = UUID()
     var title: Text

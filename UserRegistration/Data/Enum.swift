@@ -15,4 +15,11 @@ enum SFSymbol{
     static let forFaveriteLike = Image(systemName: "star.fill")
     static let forGivenLike = Image(systemName: "suit.heart")
     static let forMatch = Image(systemName: "suit.heart.fill")
+    static let thumbsUp = Image(systemName: "hand.thumbsup.fill")
+    static let home = Image(systemName: "house.fill")
 }
+
+enum EmptyUser{
+    static let forLayout = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
+}
+

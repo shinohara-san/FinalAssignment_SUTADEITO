@@ -10,9 +10,6 @@ import SwiftUI
 
 struct SearchBoxView: View {
     @EnvironmentObject var shareData:ShareData
-    //    @Binding var hometown: String
-    //    @Binding var purpose: String
-    //    @Binding var subject: String
     
     @State var selectedHometown = 20
     @State var selectedStudystyle = 1
