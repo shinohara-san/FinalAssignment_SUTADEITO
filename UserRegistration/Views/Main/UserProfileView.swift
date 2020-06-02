@@ -340,7 +340,7 @@ struct UserProfileView: View {
                                     self.removeUserFromLike()
                                 }
                             }) {
-                                Text(self.gaveLike ? "いいねを取り消す" : "いいね")
+                                Text(self.gaveLike ? "一緒に勉強したいいねを取り消す" : "一緒に勉強したいいね")
                                     .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geo)
                                 }
                                 .padding(.bottom)
@@ -369,7 +369,7 @@ struct UserProfileView: View {
                         VStack(alignment: .center){
                             
                             Text("\(self.user.name)さんとマッチしました！").fontWeight(.bold).foregroundColor(Color.myBrown).padding()
-                        
+                            
                             Button("戻る"){
                                 self.shareData.matchNotification = false
                                 self.presentation.wrappedValue.dismiss() //ok?
@@ -377,6 +377,8 @@ struct UserProfileView: View {
                         }.frame(width: geo.size.width * 0.7, height: geo.size.height * 0.4).background(Image("matchheart").resizable().aspectRatio(contentMode: .fill)).cornerRadius(10).animation(.spring())
 
                     }
+                    
+                    
                 }
                 
             }//zstack

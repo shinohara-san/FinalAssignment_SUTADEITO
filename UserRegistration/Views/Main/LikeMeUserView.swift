@@ -61,7 +61,7 @@ struct LikeMeUserView: View {
                             .sheet(isPresented: self.$isModal) {
                                 UserProfileView(user: self.likeUserInfo, matchUserProfile: false).environmentObject(self.shareData)
                         }
-                        .navigationBarTitle(Text("あなたにいいねしたユーザー"), displayMode: .inline)
+                        .navigationBarTitle(Text("あなたと一緒に勉強したいいねユーザー"), displayMode: .inline)
                         .navigationBarItems(trailing:
                             Button(action: {
                                 self.shareData.myProfile = true

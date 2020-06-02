@@ -40,6 +40,7 @@
 		95DA4B61244A7F90009921D4 /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B60244A7F90009921D4 /* ImagePickerController.swift */; };
 		95DA4B63244A83B4009921D4 /* FirebaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B62244A83B4009921D4 /* FirebaseImageView.swift */; };
 		95DA4B65244AA2F6009921D4 /* PictureUploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA4B64244AA2F6009921D4 /* PictureUploadView.swift */; };
+		95E202B924870DC50043A7BB /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E202B824870DC50043A7BB /* Enum.swift */; };
 		95E9C5EC245D4514009E11DF /* FavoriteUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E9C5EB245D4513009E11DF /* FavoriteUserView.swift */; };
 		95E9C5EE245D4526009E11DF /* LikeUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E9C5ED245D4526009E11DF /* LikeUserView.swift */; };
 		95EC576B24735B570007298F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95EC576A24735B570007298F /* Extension.swift */; };
@@ -81,6 +82,7 @@
 		95DA4B60244A7F90009921D4 /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
 		95DA4B62244A83B4009921D4 /* FirebaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseImageView.swift; sourceTree = "<group>"; };
 		95DA4B64244AA2F6009921D4 /* PictureUploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureUploadView.swift; sourceTree = "<group>"; };
+		95E202B824870DC50043A7BB /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		95E9C5EB245D4513009E11DF /* FavoriteUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteUserView.swift; sourceTree = "<group>"; };
 		95E9C5ED245D4526009E11DF /* LikeUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeUserView.swift; sourceTree = "<group>"; };
 		95EC576A24735B570007298F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				959B9204244995BC00A16952 /* ShareData.swift */,
 				95CDFABC2446BDC30054FADF /* Firebase.swift */,
 				95EC576A24735B570007298F /* Extension.swift */,
+				95E202B824870DC50043A7BB /* Enum.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				953B24F4244921D2007BD077 /* SettingView.swift in Sources */,
 				95CDFAA72446B2B60054FADF /* SceneDelegate.swift in Sources */,
 				95E9C5EC245D4514009E11DF /* FavoriteUserView.swift in Sources */,
+				95E202B924870DC50043A7BB /* Enum.swift in Sources */,
 				959B9205244995BC00A16952 /* ShareData.swift in Sources */,
 				95CDFAA92446B2B60054FADF /* RegisterView.swift in Sources */,
 				953B24EC244919EB007BD077 /* SearchView.swift in Sources */,

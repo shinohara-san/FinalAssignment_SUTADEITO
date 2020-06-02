@@ -19,7 +19,7 @@ struct ImageCarouselView<Content: View>: View {
     @State private var currentIndex: Int = 0
     
     // 5
-    private let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     
     // 6
     init(numberOfImages: Int, @ViewBuilder content: () -> Content) {

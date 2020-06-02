@@ -127,9 +127,7 @@ class ShareData:ObservableObject{
             }
         }
     }
-    
-    
-    
+
     
     func getAllUsers(){
         self.allUsers = [User]() //初期値で空配列を入れているが（scrollview用）まずはそれを掃除_

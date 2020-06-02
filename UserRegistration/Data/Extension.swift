@@ -30,3 +30,19 @@ extension Text {
             
     }
 }
+
+public struct CustomTextFieldStyle : TextFieldStyle {
+        var geometry: GeometryProxy
+        public func _body(configuration: TextField<Self._Label>) -> some View {
+            configuration
+                .padding(10)
+                .frame(width: geometry.size.width * 0.8, height: geometry.size.height * 0.05, alignment: .center)
+                .background(Color(red: 248 / 255, green: 248 / 255, blue: 248 / 255))
+            .cornerRadius(10)
+            
+                //Give it some style
+//                .background(
+//                    RoundedRectangle(cornerRadius: 10))
+//                        .strokeBorder(Color.primary.opacity(0.5), lineWidth: 3))
+        }
+    }

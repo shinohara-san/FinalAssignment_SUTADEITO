@@ -36,7 +36,7 @@ struct MainView: View {
 //                    }
                         .tabItem {
                             VStack {
-                                Image(systemName: "book.fill")
+                                SFSymbol.forList
                             }
                     }.tag(1)
                     
@@ -44,7 +44,7 @@ struct MainView: View {
                     SearchView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "magnifyingglass")
+                                SFSymbol.forSearch
                             }
                     }.tag(2)
                     
@@ -58,7 +58,7 @@ struct MainView: View {
                     }
                     .tabItem {
                         VStack {
-                            Image(systemName: "star.fill")
+                            SFSymbol.forFaveriteLike
                         }
                     }
                     .tag(3)
@@ -69,7 +69,7 @@ struct MainView: View {
                         
                         .tabItem {
                             VStack {
-                                Image(systemName: "suit.heart")
+                                SFSymbol.forGivenLike
                             }
                     }.tag(4)
                     
@@ -79,7 +79,7 @@ struct MainView: View {
                     MatchingListView()
                         .tabItem {
                             VStack {
-                                Image(systemName: "suit.heart.fill")
+                                SFSymbol.forMatch
                             }
                     }.tag(5)
                     
