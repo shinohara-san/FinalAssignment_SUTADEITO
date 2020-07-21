@@ -326,7 +326,9 @@ struct UserProfileView: View {
                                 }
                             }) {
                                 Text(self.isFavorite ? "お気に入りから削除" : "お気に入りに追加")
-                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myBrown, geometry: geo)
+                                    .textStyle(fcolor: Color.myWhite,
+                                               bgcolor: Color.myBrown,
+                                               geometry: geo)
                             }
                             .padding(.vertical)
                             
@@ -341,7 +343,9 @@ struct UserProfileView: View {
                                 }
                             }) {
                                 Text(self.gaveLike ? "一緒に勉強したいいねを取り消す" : "一緒に勉強したいいね")
-                                    .textStyle(fcolor: Color.myWhite, bgcolor: Color.myPink, geometry: geo)
+                                    .textStyle(fcolor: Color.myWhite,
+                                               bgcolor: Color.myPink,
+                                               geometry: geo)
                                 }
                                 .padding(.bottom)
 
@@ -359,7 +363,7 @@ struct UserProfileView: View {
                     Button(action: {
                         self.presentation.wrappedValue.dismiss()
                     }, label: {
-                        Image(systemName: "multiply").foregroundColor(Color.myWhite)
+                        SFSymbol.close.foregroundColor(Color.myWhite)
                     })
                 )
                 
@@ -372,10 +376,14 @@ struct UserProfileView: View {
                             
                             Button("戻る"){
                                 self.shareData.matchNotification = false
-                                self.presentation.wrappedValue.dismiss() //ok?
+                                self.presentation.wrappedValue.dismiss()
                             }.foregroundColor(.black)
-                        }.frame(width: geo.size.width * 0.7, height: geo.size.height * 0.4).background(Image("matchheart").resizable().aspectRatio(contentMode: .fill)).cornerRadius(10).animation(.spring())
-
+                        }.frame(width: geo.size.width * 0.7,
+                                height: geo.size.height * 0.4)
+                                .background(Image("matchheart")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill))
+                                .cornerRadius(10).animation(.spring())
                     }
                     
                     
@@ -397,9 +405,3 @@ struct UserProfileView: View {
 
     }
 }
-
-//struct UserProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserProfileView()
-//    }
-//}

@@ -73,9 +73,3 @@ struct UserListView: View {
         }//geo
     }//body
 }
-
-//struct UserListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        UserListView()
-//    }
-//}

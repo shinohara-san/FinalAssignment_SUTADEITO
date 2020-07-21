@@ -36,8 +36,19 @@ struct UserRow: View{
                         
                         
                         HStack(spacing: 0){
-                            chatBubbleTriange(width: geometry.size.width * 0.08, height: geometry.size.height * 0.05, isIncoming: true)
-                            Text(user.subject).fontWeight(.semibold).padding(7).frame(width: geometry.size.width * 0.3, height: geometry.size.height * 0.2, alignment: .leading).background(Color.myBrown).foregroundColor(Color.myWhite).cornerRadius(10).shadow(radius: 2, x: 2, y: 2)
+                            chatBubbleTriange(width: geometry.size.width * 0.08,
+                                              height: geometry.size.height * 0.05,
+                                              isIncoming: true)
+                            Text(user.subject)
+                                .fontWeight(.semibold)
+                                .padding(7)
+                                .frame(width: geometry.size.width * 0.3,
+                                       height: geometry.size.height * 0.2,
+                                       alignment: .leading)
+                                .background(Color.myBrown)
+                                .foregroundColor(Color.myWhite)
+                                .cornerRadius(10)
+                                .shadow(radius: 2, x: 2, y: 2)
                         }
                     
                     

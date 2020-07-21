@@ -17,6 +17,7 @@ enum SFSymbol{
     static let forMatch = Image(systemName: "suit.heart.fill")
     static let thumbsUp = Image(systemName: "hand.thumbsup.fill")
     static let home = Image(systemName: "house.fill")
+    static let close = Image(systemName: "multiply")
 }
 
 enum EmptyUser{

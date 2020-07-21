@@ -33,7 +33,7 @@ struct SearchView: View {
                                     VStack(alignment: .leading,spacing: 5){
                                         HStack{
                                             if self.shareData.goodUser(user: user){
-                                                Image(systemName: "hand.thumbsup.fill").foregroundColor(.yellow)
+                                                SFSymbol.thumbsUp.foregroundColor(.yellow)
                                             }
                                             Text(user.name)
                                         }

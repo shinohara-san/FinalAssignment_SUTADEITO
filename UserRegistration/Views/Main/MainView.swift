@@ -17,7 +17,7 @@ struct MainView: View {
     
     @State var selection = 0 //ないと表示が崩れる?
     
-    @State var userInfo:User = User(id: "", email: "", name: "", gender: "", age: "", hometown: "", subject: "", introduction: "", studystyle: "", hobby: "", personality: "", work: "", purpose: "", photoURL: "", matchRoomId: "", fee: "", schedule: "", place: "")
+    @State var userInfo:User = EmptyUser.forLayout
     
     init(_ datas: FirebaseData) {
         self.datas = datas
@@ -111,14 +111,8 @@ struct MainView: View {
             .navigationBarHidden(true) //自分のプロフィール用
             .onAppear{
                 self.shareData.myProfile = false
-                self.shareData.filteredMatchUserArray = [User]()//追記0507
+                //self.shareData.filteredMatchUserArray = [User]()//追記0507
         }
     }
 }
-
-//struct MainView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MainView()
-//    }
-//}
 
