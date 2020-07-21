@@ -1,6 +1,10 @@
 # SUTADEITO
  
-
+![スクショ](images/top.png "スクショ") 
+![スクショ](images/main.png "スクショ") 
+![スクショ](images/prof.png "スクショ")  
+![スクショ](images/fav.png "スクショ") 
+![スクショ](images/msg.png "スクショ")  
  
 # Features
  
@@ -10,9 +14,9 @@ SwiftUIを使って、勉強に特化したマッチングアプリを制作し�
  
 * Swift 5
 * Xcode 11.5
-* FirebaseAuth 6.4.3
-* FirebaseFirestore 1.10.1
-* FirebaseStorage 3.5.0
+* FirebaseAuth 6.7.0
+* FirebaseFirestore 1.16.2
+* FirebaseStorage 3.8.0
  
 # Installation
  
