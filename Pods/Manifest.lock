@@ -226,9 +226,6 @@ PODS:
   - Firebase/Firestore (6.28.1):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 1.16.2)
-  - Firebase/Messaging (6.28.1):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 4.6.0)
   - Firebase/Storage (6.28.1):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.8.0)
@@ -258,24 +255,6 @@ PODS:
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 1.30905.0)
-  - FirebaseInstallations (1.5.0):
-    - FirebaseCore (~> 6.8)
-    - GoogleUtilities/Environment (~> 6.7)
-    - GoogleUtilities/UserDefaults (~> 6.7)
-    - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (4.5.0):
-    - FirebaseCore (~> 6.8)
-    - FirebaseInstallations (~> 1.0)
-    - GoogleUtilities/Environment (~> 6.7)
-    - GoogleUtilities/UserDefaults (~> 6.7)
-  - FirebaseMessaging (4.6.0):
-    - FirebaseCore (~> 6.8)
-    - FirebaseInstanceID (~> 4.3)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
-    - GoogleUtilities/Environment (~> 6.7)
-    - GoogleUtilities/Reachability (~> 6.7)
-    - GoogleUtilities/UserDefaults (~> 6.7)
-    - Protobuf (>= 3.9.2, ~> 3.9)
   - FirebaseStorage (3.8.0):
     - FirebaseCore (~> 6.8)
     - GTMSessionFetcher/Core (~> 1.1)
@@ -295,8 +274,6 @@ PODS:
     - GoogleUtilities/Reachability
   - "GoogleUtilities/NSData+zlib (6.7.1)"
   - GoogleUtilities/Reachability (6.7.1):
-    - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (6.7.1):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -330,12 +307,10 @@ PODS:
   - nanopb/decode (1.30905.0)
   - nanopb/encode (1.30905.0)
   - PromisesObjC (1.2.9)
-  - Protobuf (3.12.0)
 
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Firestore
-  - Firebase/Messaging
   - Firebase/Storage
 
 SPEC REPOS:
@@ -347,9 +322,6 @@ SPEC REPOS:
     - FirebaseCore
     - FirebaseCoreDiagnostics
     - FirebaseFirestore
-    - FirebaseInstallations
-    - FirebaseInstanceID
-    - FirebaseMessaging
     - FirebaseStorage
     - GoogleDataTransport
     - GoogleUtilities
@@ -359,7 +331,6 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
-    - Protobuf
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -369,9 +340,6 @@ SPEC CHECKSUMS:
   FirebaseCore: 687b8e6a0a4337b898a6326d68254c2f80c143af
   FirebaseCoreDiagnostics: 7535fe695737f8c5b350584292a70b7f8ff0357b
   FirebaseFirestore: 436c2de95f42495fbb6daf86bebde483e66706c3
-  FirebaseInstallations: 3c520c951305cbf9ca54eb891ff9e6d1fd384881
-  FirebaseInstanceID: 358d5cb393d2750a745569ede06827c35aea530b
-  FirebaseMessaging: bdd4d573eab37ebee29bad4e7c4b0ef18fa1a952
   FirebaseStorage: 3ef81ca5fa7817f85451ca09d516a34d2c7542a7
   GoogleDataTransport: 8a40cb194ad242b6f6dfe72c14fe40fc67c4dcd7
   GoogleUtilities: e121a3867449ce16b0e35ddf1797ea7a389ffdf2
@@ -381,8 +349,7 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
-  Protobuf: 2793fcd0622a00b546c60e7cbbcc493e043e9bb9
 
-PODFILE CHECKSUM: 4b6d94b01d5212f899ad373aa061a9a8c672ce1d
+PODFILE CHECKSUM: f5aa901f195d808308bb250765330f7b14819b54
 
 COCOAPODS: 1.9.3
