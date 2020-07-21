@@ -32,3 +32,6 @@ pod install
 デモアカウント  
  email:  aaa@aaa.com  
  pass: 1234aaa
+ 
+# Video
+https://www.youtube.com/watch?v=xnaLtqhRRwg&feature=youtu.be
